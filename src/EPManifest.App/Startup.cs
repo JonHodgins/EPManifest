@@ -1,4 +1,5 @@
 using EPManifest.App.Data;
+using EPManifest.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Hosting;
@@ -31,6 +32,7 @@ namespace EPManifest.App
             services.AddServerSideBlazor();
             services.AddMudServices();
             services.AddSingleton<WeatherForecastService>();
+            services.AddScoped<IManifestData, InMemoryManifestData>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
