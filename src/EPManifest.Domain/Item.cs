@@ -14,5 +14,8 @@ namespace EPManifest.Domain
         public string Description { get; set; }
         public int Quantity { get; set; }
         public Unit Unit { get; set; }
+
+        public Manifest Manifest { get; set; }
+        public int ManifestId { get; set; }
     }
 }

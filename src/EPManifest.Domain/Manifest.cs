@@ -9,14 +9,12 @@ namespace EPManifest.Domain
     public class Manifest
     {
         public int Id { get; set; }
-        public DateTime DateShipped { get; set; } = DateTime.Now;
-        public DateTime DateScheduledArrival { get; set; } = DateTime.Today;
+        public DateTime DateShipped { get; set; }
+        public DateTime DateScheduledArrival { get; set; }
 
         public Company Consignor { get; set; }
         public Company Consignee { get; set; }
         public Company Carrier { get; set; }
-        public Address ConsignorAddress { get; set; }
-        public Address ConsigneeAddress { get; set; }
-        public List<Item> Items { get; set; }
+        public List<Item> Items { get; set; } = new List<Item>();
     }
 }
