@@ -7,10 +7,12 @@ using System.Threading.Tasks;
 
 namespace EPManifest.Core
 {
-    public class Company
+    public class Consignor : ICompany
     {
         public int Id { get; set; }
+        [Required]
         public string Name { get; set; }
         public List<Manifest> Manifests { get; set; } = new List<Manifest>();
+        public List<Address> Addresses { get; set; } = new List<Address>();
     }
 }

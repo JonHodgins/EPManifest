@@ -20,7 +20,10 @@ namespace EPManifest.Data
         }
 
         public DbSet<Manifest> Manifests { get; set; }
-        public DbSet<Company> Companies { get; set; }
+        public DbSet<Consignor> Consignors { get; set; }
+        public DbSet<Consignee> Consignees { get; set; }
+        public DbSet<Carrier> Carriers { get; set; }
+        public DbSet<Address> Addresses { get; set; }
         public DbSet<Item> Items { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -37,17 +40,24 @@ namespace EPManifest.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Manifest>()
-                .HasMany(m => m.Companies)
-                .WithMany(c => c.Manifests);
+            modelBuilder.Entity<Consignor>()
+                .HasMany(c => c.Addresses)
+                .WithOne(a => a.Consignor)
+                .HasForeignKey(a => a.ConsignorId);
 
-            modelBuilder.Entity<Item>()
-                .Property(i => i.Description)
-                .IsRequired();
+            modelBuilder.Entity<Consignee>()
+                .HasMany(c => c.Addresses)
+                .WithOne(a => a.Consignee)
+                .HasForeignKey(a => a.ConsigneeId);
 
-            modelBuilder.Entity<Company>()
-                .Property(c => c.Name)
-                .IsRequired();
+            modelBuilder.Entity<Carrier>()
+                .HasMany(c => c.Addresses)
+                .WithOne(a => a.Carrier)
+                .HasForeignKey(a => a.CarrierId);
+
+            //modelBuilder.Entity<Item>()
+            //    .Property(i => i.Description)
+            //    .IsRequired();
         }
     }
 }

@@ -1,0 +1,18 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace EPManifest.Core
+{
+    public class Consignee : ICompany
+    {
+        public int Id { get; set; }
+        [Required]
+        public string Name { get; set; }
+        public List<Manifest> Manifests { get; set; } = new List<Manifest>();
+        public List<Address> Addresses { get; set; } = new List<Address>();
+    }
+}

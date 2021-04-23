@@ -11,13 +11,20 @@ namespace EPManifest.Core
     {
         public int Id { get; set; }
         public int StreetNumber { get; set; }
+        [Required]
         public string StreetName { get; set; }
+        [Required]
         public string City { get; set; }
+        [Required]
         public string Province { get; set; }
-        //[RegularExpression(@"^[ABCEGHJ-NPRSTVXY]\d[ABCEGHJ-NPRSTV-Z][ -]?\d[ABCEGHJ-NPRSTV-Z]\d$", ErrorMessage = "Postal Codes must be formatted as: X1X-1X1 or X1X 1X1")]
+        [Required]
         public string PostalCode { get; set; }
+        public int? ConsignorId { get; set; }
+        public int? ConsigneeId { get; set; }
+        public int? CarrierId { get; set; }
 
-        public Company Company { get; set; } = default!;
-        public int CompanyId { get; set; }
+        public Consignor Consignor { get; set; }
+        public Consignee Consignee { get; set; }
+        public Carrier Carrier { get; set; }
     }
 }

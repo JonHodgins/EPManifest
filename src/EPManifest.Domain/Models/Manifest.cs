@@ -12,7 +12,9 @@ namespace EPManifest.Core
         public int Id { get; set; }
         public DateTime DateShipped { get; set; }
         public DateTime? DateScheduledArrival { get; set; }
-        public List<Company> Companies { get; set; } = new List<Company>();
+        public Consignor Consignor { get; set; }
+        public Consignee Consignee { get; set; }
+        public Carrier Carrier { get; set; }
         public List<Item> Items { get; set; } = new List<Item>();
     }
 }
