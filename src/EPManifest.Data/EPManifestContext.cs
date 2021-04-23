@@ -1,4 +1,4 @@
-﻿using EPManifest.Domain;
+﻿using EPManifest.Core;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
@@ -40,6 +40,14 @@ namespace EPManifest.Data
             modelBuilder.Entity<Manifest>()
                 .HasMany(m => m.Companies)
                 .WithMany(c => c.Manifests);
+
+            modelBuilder.Entity<Item>()
+                .Property(i => i.Description)
+                .IsRequired();
+
+            modelBuilder.Entity<Company>()
+                .Property(c => c.Name)
+                .IsRequired();
         }
     }
 }

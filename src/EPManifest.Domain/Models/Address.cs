@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EPManifest.Domain
+namespace EPManifest.Core
 {
     public class Address
     {
@@ -14,7 +14,6 @@ namespace EPManifest.Domain
         public string StreetName { get; set; }
         public string City { get; set; }
         public string Province { get; set; }
-
         //[RegularExpression(@"^[ABCEGHJ-NPRSTVXY]\d[ABCEGHJ-NPRSTV-Z][ -]?\d[ABCEGHJ-NPRSTV-Z]\d$", ErrorMessage = "Postal Codes must be formatted as: X1X-1X1 or X1X 1X1")]
         public string PostalCode { get; set; }
 

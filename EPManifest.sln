@@ -5,11 +5,11 @@ VisualStudioVersion = 16.0.31205.134
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EPManifest.App", "src\EPManifest.App\EPManifest.App.csproj", "{F9B2586C-96A7-4875-8ED8-8679431A87F2}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EPManifest.Domain", "src\EPManifest.Domain\EPManifest.Domain.csproj", "{A76539CA-703F-49E4-B388-4D0583A7F9AB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EPManifest.Core", "src\EPManifest.Domain\EPManifest.Core.csproj", "{A76539CA-703F-49E4-B388-4D0583A7F9AB}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EPManifest.Data", "src\EPManifest.Data\EPManifest.Data.csproj", "{ADBA37A3-F9D7-4CFC-A680-61D22FF00381}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EPManifest.ConsoleUI", "EPManifest.ConsoleUI\EPManifest.ConsoleUI.csproj", "{110EEBFA-8B1D-46AF-8EB2-7DAAAA0ECDB3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EPManifest.ConsoleUI", "EPManifest.ConsoleUI\EPManifest.ConsoleUI.csproj", "{110EEBFA-8B1D-46AF-8EB2-7DAAAA0ECDB3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

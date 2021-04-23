@@ -1,4 +1,4 @@
-﻿namespace EPManifest.Domain
+﻿namespace EPManifest.Core
 {
     public enum Unit
     {

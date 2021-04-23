@@ -1,0 +1,38 @@
+﻿@page "/manifests/list"
+
+<MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="mt-16">
+    <MudText Typo="Typo.h3" GutterBottom="true">Manifests</MudText>
+
+    <MudItem xs="12" sm="6" md="4">
+        <MudAutocomplete T="string" Label="Search"/>
+    </MudItem>
+
+    <MudSimpleTable Style="overflow-x: auto;">
+        <MudTh>Id</MudTh>
+        <MudTh>Consignor</MudTh>
+        <MudTh>Consignee</MudTh>
+        <MudTh>Carrier</MudTh>
+        <MudTh>Shipped</MudTh>
+        <MudTh>Arrival</MudTh>
+        <MudTh># Items</MudTh>
+    </MudSimpleTable>
+
+    @*<MudTable Hover="true">
+        <HeaderContent>
+            <MudTh>Id</MudTh>
+            <MudTh>Consignor</MudTh>
+            <MudTh>Consignee</MudTh>
+            <MudTh>Carrier</MudTh>
+            <MudTh>Shipped</MudTh>
+            <MudTh>Arrival</MudTh>
+            <MudTh># Items</MudTh>
+        </HeaderContent>
+        <RowTemplate>
+            <MudTd DataLabel="Id"></MudTd>
+        </RowTemplate>
+    </MudTable>*@
+
+</MudContainer>
+@code {
+
+}

@@ -15,7 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\EPManifest.Data\EPManifest.Data.csproj" />
-    <ProjectReference Include="..\EPManifest.Domain\EPManifest.Domain.csproj" />
+    <ProjectReference Include="..\EPManifest.Domain\EPManifest.Core.csproj" />
   </ItemGroup>
 
 </Project>

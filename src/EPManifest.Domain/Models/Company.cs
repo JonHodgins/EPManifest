@@ -5,12 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EPManifest.Domain
+namespace EPManifest.Core
 {
     public class Company
     {
         public int Id { get; set; }
-        [Required]
         public string Name { get; set; }
         public List<Manifest> Manifests { get; set; } = new List<Manifest>();
     }

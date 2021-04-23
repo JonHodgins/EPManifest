@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EPManifest.Domain
+namespace EPManifest.Core
 {
     public enum State
     {
