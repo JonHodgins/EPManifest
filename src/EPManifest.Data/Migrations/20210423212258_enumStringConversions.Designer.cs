@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EPManifest.Data.Migrations
 {
     [DbContext(typeof(EPManifestContext))]
-    [Migration("20210423061541_requiredprops")]
-    partial class requiredprops
+    [Migration("20210423212258_enumStringConversions")]
+    partial class enumStringConversions
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,52 +20,6 @@ namespace EPManifest.Data.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.5")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-            modelBuilder.Entity("EPManifest.Core.Address", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("CarrierId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("City")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("ConsigneeId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("ConsignorId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("PostalCode")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Province")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("StreetName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("StreetNumber")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CarrierId");
-
-                    b.HasIndex("ConsigneeId");
-
-                    b.HasIndex("ConsignorId");
-
-                    b.ToTable("Addresses");
-                });
 
             modelBuilder.Entity("EPManifest.Core.Carrier", b =>
                 {
@@ -132,11 +86,13 @@ namespace EPManifest.Data.Migrations
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
-                    b.Property<int>("State")
-                        .HasColumnType("int");
+                    b.Property<string>("State")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Unit")
-                        .HasColumnType("int");
+                    b.Property<string>("Unit")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -178,27 +134,6 @@ namespace EPManifest.Data.Migrations
                     b.ToTable("Manifests");
                 });
 
-            modelBuilder.Entity("EPManifest.Core.Address", b =>
-                {
-                    b.HasOne("EPManifest.Core.Carrier", "Carrier")
-                        .WithMany("Addresses")
-                        .HasForeignKey("CarrierId");
-
-                    b.HasOne("EPManifest.Core.Consignee", "Consignee")
-                        .WithMany("Addresses")
-                        .HasForeignKey("ConsigneeId");
-
-                    b.HasOne("EPManifest.Core.Consignor", "Consignor")
-                        .WithMany("Addresses")
-                        .HasForeignKey("ConsignorId");
-
-                    b.Navigation("Carrier");
-
-                    b.Navigation("Consignee");
-
-                    b.Navigation("Consignor");
-                });
-
             modelBuilder.Entity("EPManifest.Core.Item", b =>
                 {
                     b.HasOne("EPManifest.Core.Manifest", "Manifest")
@@ -224,31 +159,99 @@ namespace EPManifest.Data.Migrations
                         .WithMany("Manifests")
                         .HasForeignKey("ConsignorId");
 
+                    b.OwnsOne("EPManifest.Core.Address", "ConsigneeAddress", b1 =>
+                        {
+                            b1.Property<int>("ManifestId")
+                                .HasColumnType("int");
+
+                            b1.Property<string>("AddressLine1")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<string>("AddressLine2")
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<string>("City")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<string>("PhoneNumber")
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<string>("PostalCode")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<string>("Province")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.HasKey("ManifestId");
+
+                            b1.ToTable("ConsigneeAddresses");
+
+                            b1.WithOwner()
+                                .HasForeignKey("ManifestId");
+                        });
+
+                    b.OwnsOne("EPManifest.Core.Address", "ConsignorAddress", b1 =>
+                        {
+                            b1.Property<int>("ManifestId")
+                                .HasColumnType("int");
+
+                            b1.Property<string>("AddressLine1")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<string>("AddressLine2")
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<string>("City")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<string>("PhoneNumber")
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<string>("PostalCode")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<string>("Province")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.HasKey("ManifestId");
+
+                            b1.ToTable("ConsignorAddresses");
+
+                            b1.WithOwner()
+                                .HasForeignKey("ManifestId");
+                        });
+
                     b.Navigation("Carrier");
 
                     b.Navigation("Consignee");
 
+                    b.Navigation("ConsigneeAddress");
+
                     b.Navigation("Consignor");
+
+                    b.Navigation("ConsignorAddress");
                 });
 
             modelBuilder.Entity("EPManifest.Core.Carrier", b =>
                 {
-                    b.Navigation("Addresses");
-
                     b.Navigation("Manifests");
                 });
 
             modelBuilder.Entity("EPManifest.Core.Consignee", b =>
                 {
-                    b.Navigation("Addresses");
-
                     b.Navigation("Manifests");
                 });
 
             modelBuilder.Entity("EPManifest.Core.Consignor", b =>
                 {
-                    b.Navigation("Addresses");
-
                     b.Navigation("Manifests");
                 });
 

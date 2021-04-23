@@ -13,6 +13,5 @@ namespace EPManifest.Core
         [Required]
         public string Name { get; set; }
         public List<Manifest> Manifests { get; set; } = new List<Manifest>();
-        public List<Address> Addresses { get; set; } = new List<Address>();
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
@@ -9,22 +10,46 @@ namespace EPManifest.Core
 {
     public class Address
     {
-        public int Id { get; set; }
-        public int StreetNumber { get; set; }
+        //public int Id { get; set; }
         [Required]
-        public string StreetName { get; set; }
+        public string AddressLine1 { get; set; }
+        public string AddressLine2 { get; set; }
         [Required]
         public string City { get; set; }
         [Required]
-        public string Province { get; set; }
+        public Provinces Province { get; set; }
         [Required]
         public string PostalCode { get; set; }
-        public int? ConsignorId { get; set; }
-        public int? ConsigneeId { get; set; }
-        public int? CarrierId { get; set; }
+        public string PhoneNumber { get; set; }
+    }
 
-        public Consignor Consignor { get; set; }
-        public Consignee Consignee { get; set; }
-        public Carrier Carrier { get; set; }
+    public enum Provinces
+    {
+        [Display(Name = "Alberta")]
+        AB,
+        [Display(Name = "British Columbia")]
+        BC,
+        [Display(Name = "Manitoba")]
+        MB,
+        [Display(Name = "New Brunswick")]
+        NB,
+        [Display(Name = "Newfoundland and Labrador")]
+        NL,
+        [Display(Name = "Northwest Territories")]
+        NT,
+        [Display(Name = "Nova Scotia")]
+        NS,
+        [Display(Name = "Nunavut")]
+        NU,
+        [Display(Name = "Ontario")]
+        ON,
+        [Display(Name = "Prince Edward Island")]
+        PE,
+        [Display(Name = "Quebec")]
+        QC,
+        [Display(Name = "Saskatchewan")]
+        SK,
+        [Display(Name = "Yukon")]
+        YT
     }
 }

@@ -6,7 +6,6 @@ namespace EPManifest.Core
     {
         int Id { get; set; }
         string Name { get; set; }
-        List<Address> Addresses { get; set; }
         List<Manifest> Manifests { get; set; }
     }
 }

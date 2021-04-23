@@ -16,5 +16,8 @@ namespace EPManifest.Core
         public Consignee Consignee { get; set; }
         public Carrier Carrier { get; set; }
         public List<Item> Items { get; set; } = new List<Item>();
+
+        public Address ConsignorAddress { get; set; }
+        public Address ConsigneeAddress { get; set; }
     }
 }

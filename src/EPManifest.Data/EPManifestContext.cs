@@ -40,24 +40,21 @@ namespace EPManifest.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Consignor>()
-                .HasMany(c => c.Addresses)
-                .WithOne(a => a.Consignor)
-                .HasForeignKey(a => a.ConsignorId);
+            modelBuilder.Entity<Manifest>().OwnsOne(m => m.ConsignorAddress,
+                a =>
+                {
+                    a.Property(a => a.Province).HasConversion<string>();
+                    a.ToTable("ConsignorAddresses");
+                }).OwnsOne(m => m.ConsigneeAddress,
+                a =>
+                {
+                    a.Property(a => a.Province).HasConversion<string>();
+                    a.ToTable("ConsigneeAddresses");
+                });
 
-            modelBuilder.Entity<Consignee>()
-                .HasMany(c => c.Addresses)
-                .WithOne(a => a.Consignee)
-                .HasForeignKey(a => a.ConsigneeId);
+            modelBuilder.Entity<Item>().Property(i => i.State).HasConversion<string>();
+            modelBuilder.Entity<Item>().Property(i => i.Unit).HasConversion<string>();
 
-            modelBuilder.Entity<Carrier>()
-                .HasMany(c => c.Addresses)
-                .WithOne(a => a.Carrier)
-                .HasForeignKey(a => a.CarrierId);
-
-            //modelBuilder.Entity<Item>()
-            //    .Property(i => i.Description)
-            //    .IsRequired();
         }
     }
 }

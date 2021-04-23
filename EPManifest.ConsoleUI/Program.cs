@@ -49,10 +49,10 @@ namespace EPManifest.ConsoleUI
                 Consignee = new Consignee { Name = "Whitehorse General Hospital" },
                 Carrier = new Carrier { Name = "Northwest Freight" }
              };
-            manifest.Consignor.Addresses.Add(new Address
-            { StreetNumber = 1, StreetName = "Alsek Road", City = "Whitehorse", Province = "Yukon", PostalCode = "Y1A5H9" });
-            manifest.Consignee.Addresses.Add(new Address
-            { StreetNumber = 105, StreetName = "Range Road", City = "Whitehorse", Province = "Yukon", PostalCode = "Y1A5M3" });
+            manifest.ConsignorAddress = new Address
+            { AddressLine1 = "1 Alsek Road", City = "Whitehorse", Province = Provinces.YT, PostalCode = "Y1A 5H9" };
+            manifest.ConsigneeAddress = new Address
+            { AddressLine1 = "248 Lewes Blvd", City = "Whitehorse", Province = Provinces.YT, PostalCode = "Y1A 1X9" };
             _context.Manifests.Add(manifest);
             _context.SaveChanges();
         }
