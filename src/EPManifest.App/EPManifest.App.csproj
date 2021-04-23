@@ -5,11 +5,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.5">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="MudBlazor" Version="5.0.7" />
+
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\EPManifest.Data\EPManifest.Data.csproj" />
+    <ProjectReference Include="..\EPManifest.Domain\EPManifest.Domain.csproj" />
   </ItemGroup>
 
 </Project>

@@ -18,7 +18,7 @@ namespace EPManifest.Domain
         //[RegularExpression(@"^[ABCEGHJ-NPRSTVXY]\d[ABCEGHJ-NPRSTV-Z][ -]?\d[ABCEGHJ-NPRSTV-Z]\d$", ErrorMessage = "Postal Codes must be formatted as: X1X-1X1 or X1X 1X1")]
         public string PostalCode { get; set; }
 
-        public Company Company { get; set; }
+        public Company Company { get; set; } = default!;
         public int CompanyId { get; set; }
     }
 }

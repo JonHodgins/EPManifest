@@ -10,9 +10,8 @@ namespace EPManifest.Domain
     public class Company
     {
         public int Id { get; set; }
-
+        [Required]
         public string Name { get; set; }
-
-        public Address Address { get; set; }
+        public List<Manifest> Manifests { get; set; } = new List<Manifest>();
     }
 }

@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EPManifest.Domain", "src\EP
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EPManifest.Data", "src\EPManifest.Data\EPManifest.Data.csproj", "{ADBA37A3-F9D7-4CFC-A680-61D22FF00381}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EPManifest.ConsoleUI", "EPManifest.ConsoleUI\EPManifest.ConsoleUI.csproj", "{110EEBFA-8B1D-46AF-8EB2-7DAAAA0ECDB3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{ADBA37A3-F9D7-4CFC-A680-61D22FF00381}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ADBA37A3-F9D7-4CFC-A680-61D22FF00381}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ADBA37A3-F9D7-4CFC-A680-61D22FF00381}.Release|Any CPU.Build.0 = Release|Any CPU
+		{110EEBFA-8B1D-46AF-8EB2-7DAAAA0ECDB3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{110EEBFA-8B1D-46AF-8EB2-7DAAAA0ECDB3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{110EEBFA-8B1D-46AF-8EB2-7DAAAA0ECDB3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{110EEBFA-8B1D-46AF-8EB2-7DAAAA0ECDB3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
