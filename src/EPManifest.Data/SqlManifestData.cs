@@ -50,7 +50,7 @@ namespace EPManifest.Data
 
         public IEnumerable<Manifest> GetManifestsByConsignorName(string name)
         {
-            if(string.IsNullOrEmpty(name))
+            if (string.IsNullOrEmpty(name))
             {
                 return _context.Manifests;
             }

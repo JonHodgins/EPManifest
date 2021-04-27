@@ -7,9 +7,9 @@ namespace EPManifest.ConsoleUI
 {
     internal static class Program
     {
-        private static EPManifestDbContext _context = new EPManifestDbContext();
+        private static readonly EPManifestDbContext s_context = new();
 
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             //AddCompaniesByName("A1", "Pacific Northwest", "Mayo Health Clinic", "Watson Lake Hospital");
             //AddManifest();
@@ -17,11 +17,11 @@ namespace EPManifest.ConsoleUI
 
         private static void AddConsignorByName(params string[] names)
         {
-            foreach (string name in names)
+            foreach (var name in names)
             {
-                _context.Consignors.Add(new Consignor { Name = name });
+                s_context.Consignors.Add(new Consignor { Name = name });
             }
-            _context.SaveChanges();
+            s_context.SaveChanges();
         }
 
         //private static void InsertManifestWithCompanies()

@@ -22,10 +22,10 @@ namespace EPManifest.Tests
 
         private void Seed()
         {
-            using var _context = new EPManifestDbContext(ContextOptions);
+            using var context = new EPManifestDbContext(ContextOptions);
 
-            _context.Database.EnsureDeleted();
-            _context.Database.EnsureCreated();
+            context.Database.EnsureDeleted();
+            context.Database.EnsureCreated();
 
             var consignor = new Consignor { Name = "Mayo Health Centre" };
             var consignee = new Consignee { Name = "Pete's Disposal" };
@@ -46,9 +46,9 @@ namespace EPManifest.Tests
                 ConsigneeAddress = consigneeAddress
             };
 
-            _context.AddRange(consignor, consignee, carrier, consignorTwo, consigneeTwo, carrierTwo, manifest, manifestTwo);
+            context.AddRange(consignor, consignee, carrier, consignorTwo, consigneeTwo, carrierTwo, manifest, manifestTwo);
 
-            _context.SaveChanges();
+            context.SaveChanges();
         }
     }
 }

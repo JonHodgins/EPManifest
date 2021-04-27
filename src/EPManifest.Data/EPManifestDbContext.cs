@@ -56,7 +56,6 @@ namespace EPManifest.Data
 
             modelBuilder.Entity<Item>().Property(i => i.State).HasConversion<string>();
             modelBuilder.Entity<Item>().Property(i => i.Unit).HasConversion<string>();
-
         }
     }
 }

@@ -29,6 +29,11 @@ namespace EPManifest.Core
         public Carrier Carrier { get; set; }
         public List<Item> Items { get; set; } = new List<Item>();
 
+        //Nullable foreign keys as these are optional relationships
+        public int? ConsignorId { get; set; }
+        public int? ConsigneeId { get; set; }
+        public int? CarrierId { get; set; }
+
         public Address ConsignorAddress { get; set; }
         public Address ConsigneeAddress { get; set; }
     }
