@@ -33,8 +33,8 @@ namespace EPManifest.App
             services.AddServerSideBlazor();
             services.AddMudServices();
             services.AddSingleton<WeatherForecastService>();
-            //////Use AddDbContextFactory instead
-            services.AddDbContext<EPManifestContext>(options =>
+            //////Use AddDbContextFactory for Blazor
+            services.AddDbContext<EPManifestDbContext>(options =>
             options.UseSqlServer("Data Source = (localdb)\\MSSQLLocalDB; Initial Catalog = EPManifest")
                    .EnableSensitiveDataLogging());
             //services.AddScoped<IManifestData, InMemoryManifestData>();

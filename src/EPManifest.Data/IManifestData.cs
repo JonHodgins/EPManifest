@@ -9,8 +9,6 @@ namespace EPManifest.Data
 {
     public interface IManifestData
     {
-        IEnumerable<Manifest> GetManifestsByName(string name);
-
         Manifest GetManifestById(int id);
 
         Manifest Update(Manifest updatedManifest);

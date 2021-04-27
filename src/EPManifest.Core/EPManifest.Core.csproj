@@ -2,8 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
-    <RootNamespace>EPManifest.Domain</RootNamespace>
-    <AssemblyName>EPManifest.Domain</AssemblyName>
+    <RootNamespace>EPManifest.Core</RootNamespace>
+    <AssemblyName>EPManifest.Core</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>

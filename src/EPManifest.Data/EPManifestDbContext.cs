@@ -9,13 +9,13 @@ using System.Threading.Tasks;
 
 namespace EPManifest.Data
 {
-    public class EPManifestContext : DbContext
+    public class EPManifestDbContext : DbContext
     {
-        public EPManifestContext()
+        public EPManifestDbContext()
         {
         }
 
-        public EPManifestContext(DbContextOptions<EPManifestContext> options) : base(options)
+        public EPManifestDbContext(DbContextOptions<EPManifestDbContext> options) : base(options)
         {
         }
 
@@ -40,9 +40,11 @@ namespace EPManifest.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            //The ConsignorAddress and ConsigneeAddress properties must point to separate tables
             modelBuilder.Entity<Manifest>().OwnsOne(m => m.ConsignorAddress,
                 a =>
                 {
+                    //Stores the enum's string value instead of the underlying int value
                     a.Property(a => a.Province).HasConversion<string>();
                     a.ToTable("ConsignorAddresses");
                 }).OwnsOne(m => m.ConsigneeAddress,

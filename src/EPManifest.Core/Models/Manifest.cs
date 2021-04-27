@@ -9,6 +9,18 @@ namespace EPManifest.Core
 {
     public class Manifest
     {
+        private Manifest()
+        {
+        }
+
+        public Manifest(DateTime dateShipped, Consignor consignor, Consignee consignee, Carrier carrier)
+        {
+            DateShipped = dateShipped;
+            Consignor = consignor;
+            Consignee = consignee;
+            Carrier = carrier;
+        }
+
         public int Id { get; set; }
         public DateTime DateShipped { get; set; }
         public DateTime? DateScheduledArrival { get; set; }

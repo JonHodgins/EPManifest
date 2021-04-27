@@ -10,6 +10,20 @@ namespace EPManifest.Core
 {
     public class Address
     {
+        private Address()
+        {
+        }
+
+        public Address(string addressLine1, string city, Provinces province, string postalCode, string addressLine2 = "", string phoneNumber = "")
+        {
+            AddressLine1 = addressLine1;
+            AddressLine2 = addressLine2;
+            City = city;
+            Province = province;
+            PostalCode = postalCode;
+            PhoneNumber = phoneNumber;
+        }
+
         //public int Id { get; set; }
         [Required]
         public string AddressLine1 { get; set; }

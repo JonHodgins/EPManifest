@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EPManifest.Data.Migrations
 {
-    [DbContext(typeof(EPManifestContext))]
+    [DbContext(typeof(EPManifestDbContext))]
     partial class EPManifestContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
