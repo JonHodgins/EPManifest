@@ -40,7 +40,7 @@ namespace EPManifest.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //The ConsignorAddress and ConsigneeAddress properties must point to separate tables
+            //The ConsignorAddress and ConsigneeAddress properties must be stored in separate tables
             modelBuilder.Entity<Manifest>().OwnsOne(m => m.ConsignorAddress,
                 a =>
                 {

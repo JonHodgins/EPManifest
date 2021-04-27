@@ -34,7 +34,7 @@ namespace EPManifest.Tests
             var actual = _context.Manifests.Find(3);
 
             //Assert
-            Assert.Equal(manifest, actual);
+            actual.Should().BeEquivalentTo(manifest);
         }
 
         [Fact]
@@ -51,7 +51,7 @@ namespace EPManifest.Tests
             _context.Add(manifest);
             _context.SaveChanges();
 
-            Assert.NotEqual(0, manifest.Id);
+            manifest.Id.Should().NotBe(0);
         }
 
         [Fact]
@@ -65,7 +65,7 @@ namespace EPManifest.Tests
             _context.SaveChanges();
             var actual = manifest.Items[0];
 
-            Assert.Equal(itemOne, actual);
+            actual.Should().BeEquivalentTo(itemOne);
         }
 
         [Fact]
@@ -83,7 +83,7 @@ namespace EPManifest.Tests
             var expected = new List<Item>() { itemOne, itemTwo };
             var actual = manifest.Items;
 
-            Assert.Equal(expected, actual);
+            actual.Should().BeEquivalentTo(expected);
         }
 
         [Fact]
@@ -97,7 +97,7 @@ namespace EPManifest.Tests
 
             _context.SaveChanges();
 
-            Assert.Equal(address, manifest.ConsignorAddress);
+            manifest.ConsignorAddress.Should().BeEquivalentTo(address);
         }
 
         [Fact]
@@ -111,7 +111,7 @@ namespace EPManifest.Tests
 
             _context.SaveChanges();
 
-            Assert.Equal(address, manifest.ConsigneeAddress);
+            manifest.ConsigneeAddress.Should().BeEquivalentTo(address);
         }
 
         [Fact]
@@ -133,7 +133,7 @@ namespace EPManifest.Tests
             actual.Should().BeEquivalentTo(expected);
 
             //reference-based equality
-            Assert.Equal(expected, actual);
+            //Assert.Equal(expected, actual);
         }
     }
 }
