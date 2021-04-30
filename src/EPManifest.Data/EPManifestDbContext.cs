@@ -1,11 +1,7 @@
-﻿using EPManifest.Core;
+﻿using System;
+using EPManifest.Core;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EPManifest.Data
 {
@@ -40,22 +36,12 @@ namespace EPManifest.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //The ConsignorAddress and ConsigneeAddress properties must be stored in separate tables
-            modelBuilder.Entity<Manifest>().OwnsOne(m => m.ConsignorAddress,
-                a =>
-                {
-                    //Stores the enum's string value instead of the underlying int value
-                    a.Property(a => a.Province).HasConversion<string>();
-                    a.ToTable("ConsignorAddresses");
-                }).OwnsOne(m => m.ConsigneeAddress,
-                a =>
-                {
-                    a.Property(a => a.Province).HasConversion<string>();
-                    a.ToTable("ConsigneeAddresses");
-                });
+            new ManifestEntityTypeConfiguration().Configure(modelBuilder.Entity<Manifest>());
+            new ItemEntityTypeConfiguration().Configure(modelBuilder.Entity<Item>());
 
-            modelBuilder.Entity<Item>().Property(i => i.State).HasConversion<string>();
-            modelBuilder.Entity<Item>().Property(i => i.Unit).HasConversion<string>();
+            modelBuilder.Entity<Consignor>().Property(c => c.Name).IsRequired().HasMaxLength(50);
+            modelBuilder.Entity<Consignee>().Property(c => c.Name).IsRequired().HasMaxLength(50);
+            modelBuilder.Entity<Carrier>().Property(c => c.Name).IsRequired().HasMaxLength(50);
         }
     }
 }

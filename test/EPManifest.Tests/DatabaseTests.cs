@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Collections.Generic;
 using FluentAssertions;
+using System.Diagnostics;
 
 namespace EPManifest.Tests
 {
@@ -14,6 +15,8 @@ namespace EPManifest.Tests
         public DatabaseTests() : base(
                     new DbContextOptionsBuilder<EPManifestDbContext>()
                         .UseSqlServer("Data Source= (localdb)\\MSSQLLocalDB; Initial Catalog=EPManifestTest")
+                        .LogTo(message => Debug.WriteLine(message), Microsoft.Extensions.Logging.LogLevel.Information)
+                        .EnableSensitiveDataLogging()
                         .Options)
         {
         }
@@ -129,11 +132,7 @@ namespace EPManifest.Tests
 
             var actual = contextTwo.Manifests.Find(1).ConsigneeAddress;
 
-            //value-based equality
             actual.Should().BeEquivalentTo(expected);
-
-            //reference-based equality
-            //Assert.Equal(expected, actual);
         }
     }
 }

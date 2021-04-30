@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace EPManifest.Data
 {
-    public class SqlManifestData : IManifestData
+    public class SqlManifestData
     {
         private readonly EPManifestDbContext _context;
 

@@ -1,4 +1,4 @@
-using EPManifest.App.Data;
+﻿using EPManifest.App.Data;
 using EPManifest.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Components;
@@ -33,11 +33,9 @@ namespace EPManifest.App
             services.AddServerSideBlazor();
             services.AddMudServices();
             services.AddSingleton<WeatherForecastService>();
-            //////Use AddDbContextFactory for Blazor
-            services.AddDbContext<EPManifestDbContext>(options =>
+            services.AddDbContextFactory<EPManifestDbContext>(options =>
             options.UseSqlServer("Data Source = (localdb)\\MSSQLLocalDB; Initial Catalog = EPManifest")
                    .EnableSensitiveDataLogging());
-            //services.AddScoped<IManifestData, InMemoryManifestData>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
