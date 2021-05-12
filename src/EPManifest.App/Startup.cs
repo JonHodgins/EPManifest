@@ -1,5 +1,4 @@
-﻿using EPManifest.App.Data;
-using EPManifest.Data;
+﻿using EPManifest.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Hosting;
@@ -32,7 +31,6 @@ namespace EPManifest.App
             services.AddRazorPages();
             services.AddServerSideBlazor();
             services.AddMudServices();
-            services.AddSingleton<WeatherForecastService>();
             services.AddDbContextFactory<EPManifestDbContext>(options =>
             options.UseSqlServer("Data Source = (localdb)\\MSSQLLocalDB; Initial Catalog = EPManifest")
                    .EnableSensitiveDataLogging());

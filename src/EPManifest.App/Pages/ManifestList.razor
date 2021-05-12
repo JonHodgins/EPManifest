@@ -8,7 +8,7 @@ else
 {
     <MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="mt-16">
 
-        <MudTable Items="@manifests" Dense="@dense" Hover="@hover" Bordered="@bordered" Striped="@striped" @bind-SelectedItem="selectedItem">
+        <MudTable Items="@manifests" Dense="@dense" Hover="@hover" Bordered="@bordered" Striped="@striped" Filter="new Func<EPManifest.Core.Manifest,bool>(FilterFunc)" @bind-SelectedItem="selectedItem">
             <ToolBarContent>
                 <MudText Typo="Typo.h6">Manifests</MudText>
                 <MudToolBarSpacer />
@@ -17,19 +17,26 @@ else
             <HeaderContent>
                 <MudTh>Id</MudTh>
                 <MudTh>Consignor</MudTh>
-                @*<MudTh>Consignee</MudTh>
-                    <MudTh>Carrier</MudTh>*@
-                <MudTh>Shipped</MudTh>
-                @*<MudTh>Arrival</MudTh>
-                    <MudTh># Items</MudTh>*@
+                <MudTh>Consignee</MudTh>
+                <MudTh>Carrier</MudTh>
+                <MudTh><MudTableSortLabel SortBy="new Func<EPManifest.Core.Manifest, object>(m => m.DateShipped.ToString())">Date Shipped</MudTableSortLabel></MudTh>
+                <MudTh>Scheduled Arrival</MudTh>
+                <MudTh># Items</MudTh>
+                <MudTh></MudTh>
             </HeaderContent>
             <RowTemplate>
                 <MudTd DataLabel="Id">@context.Id</MudTd>
                 <MudTd DataLabel="Consignor">@context.Consignor.Name</MudTd>
-                @*<MudTd DataLabel="Consignee">@context.Consignee.Name</MudTd>*@
-                @*<MudTd DataLabel="Carrier">@context.Carrier.Name</MudTd>*@
-                <MudTd DataLabel="Shipped">@context.DateShipped.ToLongDateString()</MudTd>
-                @*<MudTd DataLabel="Arrival">@context.DateScheduledArrival</MudTd>*@
+                <MudTd DataLabel="Consignee">@context.Consignee.Name</MudTd>
+                <MudTd DataLabel="Carrier">@context.Carrier.Name</MudTd>
+                <MudTd DataLabel="Date Shipped">@context.DateShipped.ToLongDateString()</MudTd>
+                <MudTd DataLabel="Scheduled Arrival">@context.DateScheduledArrival?.ToLongDateString()</MudTd>
+                <MudTd DataLabel="# Items">@context.Items.Count</MudTd>
+                <MudTd>
+                    <MudIconButton Icon="@Icons.Material.Filled.Info"></MudIconButton>
+                    <MudIconButton Icon="@Icons.Material.Filled.Edit" Color="Color.Primary"></MudIconButton>
+                    <MudIconButton Icon="@Icons.Material.Filled.Delete" Color="Color.Error"></MudIconButton>
+                </MudTd>
             </RowTemplate>
             <PagerContent>
                 <MudTablePager />

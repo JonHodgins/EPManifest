@@ -48,5 +48,18 @@ namespace EPManifest.App.Pages
 
             await base.OnInitializedAsync();
         }
+
+        private bool FilterFunc(Manifest manifest)
+        {
+            if (string.IsNullOrWhiteSpace(searchString))
+                return true;
+            if (manifest.Consignor.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+                return true;
+            if (manifest.Consignee.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+                return true;
+            //if ($"{element.Number} {element.Position} {element.Molar}".Contains(searchString))
+            //    return true;
+            return false;
+        }
     }
 }
