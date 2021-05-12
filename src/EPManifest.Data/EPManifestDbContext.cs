@@ -83,7 +83,6 @@ namespace EPManifest.Data
             modelBuilder.Entity<Carrier>().HasData(new Carrier { Id = 5, Name = "Frank's Freight" });
 
             var manifestId = 1;
-            var tempDate = new DateTime(2021, 05, 07);
             var manifests = new Faker<Manifest>()
                 .RuleFor(m => m.Id, _ => manifestId++)
                 .RuleFor(m => m.ConsignorId, _ => _.Random.Number(1, 5))
@@ -91,7 +90,6 @@ namespace EPManifest.Data
                 .RuleFor(m => m.CarrierId, _ => _.Random.Number(1, 5))
                 .RuleFor(m => m.DateShipped, _ => _.Date.Between(new DateTime(2021, 05, 08), new DateTime(2021, 08, 31)))
                 .RuleFor(m => m.DateScheduledArrival, _ => _.Date.Between(new DateTime(2021, 09, 01), new DateTime(2021, 12, 31)));
-
             modelBuilder.Entity<Manifest>().HasData(manifests.Generate(100));
 
             //modelBuilder.Entity<Manifest>().HasData(new Manifest { Id = 1, ConsignorId = 1, ConsigneeId = 1, CarrierId = 1, DateShipped = DateTime. });

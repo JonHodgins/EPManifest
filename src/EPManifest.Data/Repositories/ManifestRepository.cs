@@ -24,8 +24,8 @@ namespace EPManifest.Data.Repositories
                 .Include(m => m.Consignor)
                 .Include(m => m.Consignee)
                 .Include(m => m.Carrier)
-                .Include(m => m.ConsignorAddress)
-                .Include(m => m.ConsigneeAddress)
+                //.Include(m => m.ConsignorAddress)
+                //.Include(m => m.ConsigneeAddress)
                 .ToListAsync();
         }
 

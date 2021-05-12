@@ -77,7 +77,7 @@ namespace EPManifest.App.Pages
 
             if (!result.Cancelled)
             {
-                //Need to prevent mid-method rerendering of the component to avoid overlapping threads
+                //Prevents mid-method rerendering of the component to avoid overlapping threads
                 _mayRender = false;
                 try
                 {
