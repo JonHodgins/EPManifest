@@ -9,8 +9,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EPManifest.Data", "src\EPMa
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EPManifest.Tests", "test\EPManifest.Tests\EPManifest.Tests.csproj", "{A6DFD723-BF39-45F8-AA5C-92EF0A99E571}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EPManifest.ConsoleUI", "src\EPManifest.ConsoleUI\EPManifest.ConsoleUI.csproj", "{31507677-83C0-49E9-A94F-92A7F219C9D5}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EPManifest.Core", "src\EPManifest.Core\EPManifest.Core.csproj", "{CD01DCE4-81D7-4321-8AF5-EAAEACC680C3}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{EE4983F0-6EFB-4DFA-B814-3141D583008C}"
@@ -36,10 +34,6 @@ Global
 		{A6DFD723-BF39-45F8-AA5C-92EF0A99E571}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A6DFD723-BF39-45F8-AA5C-92EF0A99E571}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A6DFD723-BF39-45F8-AA5C-92EF0A99E571}.Release|Any CPU.Build.0 = Release|Any CPU
-		{31507677-83C0-49E9-A94F-92A7F219C9D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{31507677-83C0-49E9-A94F-92A7F219C9D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{31507677-83C0-49E9-A94F-92A7F219C9D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{31507677-83C0-49E9-A94F-92A7F219C9D5}.Release|Any CPU.Build.0 = Release|Any CPU
 		{CD01DCE4-81D7-4321-8AF5-EAAEACC680C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{CD01DCE4-81D7-4321-8AF5-EAAEACC680C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CD01DCE4-81D7-4321-8AF5-EAAEACC680C3}.Release|Any CPU.ActiveCfg = Release|Any CPU

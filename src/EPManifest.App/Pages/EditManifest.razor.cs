@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using EPManifest.Core;
 using EPManifest.Data;
 using EPManifest.Data.Repositories;
@@ -10,18 +7,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EPManifest.App.Pages
 {
-    public partial class ManifestList : IDisposable
+    public partial class EditManifest
     {
         private bool isLoaded;
-        private bool dense;
-        private bool hover = true;
-        private bool striped;
-        private bool bordered;
         private ManifestRepository repo;
-        private string searchString = "";
-        private Manifest selectedItem = null;
-        private HashSet<Manifest> selectedItems = new HashSet<Manifest>();
-        private IQueryable<Manifest> manifests;
+        private Manifest manifest;
+
+        [Parameter]
+        public int Id { get; set; }
 
         [Inject]
         public IDbContextFactory<EPManifestDbContext> ContextFactory { get; set; }
@@ -39,7 +32,7 @@ namespace EPManifest.App.Pages
             try
             {
                 repo = new ManifestRepository(ContextFactory.CreateDbContext());
-                manifests = repo.GetAllManifests();
+                manifest = await repo.GetManifestById(Id);
             }
             finally
             {
@@ -47,6 +40,12 @@ namespace EPManifest.App.Pages
             }
 
             await base.OnInitializedAsync();
+        }
+
+        private async Task Update()
+        {
+            await repo.UpdateManifest(manifest);
+            Navigation.NavigateTo("/manifests/list");
         }
     }
 }

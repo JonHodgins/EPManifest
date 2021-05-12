@@ -11,16 +11,16 @@ namespace EPManifest.ConsoleUI
 
         private static void Main(string[] args)
         {
-            AddConsignorByName("Bob's Disposal");
+            //AddConsignorByName("Bob's Disposal");
         }
 
-        private static void AddConsignorByName(params string[] names)
-        {
-            foreach (var name in names)
-            {
-                s_context.Consignors.Add(new Consignor { Name = name });
-            }
-            s_context.SaveChanges();
-        }
+        //private static void AddConsignorByName(params string[] names)
+        //{
+        //    foreach (var name in names)
+        //    {
+        //        s_context.Consignors.Add(new Consignor { Name = name });
+        //    }
+        //    s_context.SaveChanges();
+        //}
     }
 }

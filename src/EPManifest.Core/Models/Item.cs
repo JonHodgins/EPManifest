@@ -1,4 +1,6 @@
-﻿namespace EPManifest.Core
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace EPManifest.Core
 {
     public class Item
     {
@@ -15,9 +17,17 @@
         }
 
         public int Id { get; set; }
+
+        [Required]
         public State State { get; set; }
+
+        [Required]
         public string Description { get; set; }
+
+        [Required]
         public decimal Quantity { get; set; }
+
+        [Required]
         public Unit Unit { get; set; }
 
         public Manifest Manifest { get; set; }

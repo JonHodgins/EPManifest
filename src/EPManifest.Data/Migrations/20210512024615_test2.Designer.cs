@@ -4,14 +4,16 @@ using EPManifest.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EPManifest.Data.Migrations
 {
     [DbContext(typeof(EPManifestDbContext))]
-    partial class EPManifestDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210512024615_test2")]
+    partial class test2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -68,23 +70,6 @@ namespace EPManifest.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Consignors");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "A1 Delivery"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Frank's Shipping"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "Whitehorse General Hospital"
-                        });
                 });
 
             modelBuilder.Entity("EPManifest.Core.Item", b =>
@@ -160,80 +145,67 @@ namespace EPManifest.Data.Migrations
                         new
                         {
                             Id = 1,
-                            ConsignorId = 1,
-                            DateShipped = new DateTime(2021, 5, 11, 19, 53, 36, 442, DateTimeKind.Local).AddTicks(5971)
+                            DateShipped = new DateTime(2021, 5, 11, 19, 46, 14, 817, DateTimeKind.Local).AddTicks(5952)
                         },
                         new
                         {
                             Id = 2,
-                            ConsignorId = 2,
-                            DateShipped = new DateTime(2021, 5, 11, 19, 53, 36, 443, DateTimeKind.Local).AddTicks(4361)
+                            DateShipped = new DateTime(2021, 5, 11, 19, 46, 14, 819, DateTimeKind.Local).AddTicks(3517)
                         },
                         new
                         {
                             Id = 3,
-                            ConsignorId = 2,
-                            DateShipped = new DateTime(2021, 5, 11, 19, 53, 36, 443, DateTimeKind.Local).AddTicks(4391)
+                            DateShipped = new DateTime(2021, 5, 11, 19, 46, 14, 819, DateTimeKind.Local).AddTicks(3602)
                         },
                         new
                         {
                             Id = 4,
-                            ConsignorId = 2,
-                            DateShipped = new DateTime(2021, 5, 11, 19, 53, 36, 443, DateTimeKind.Local).AddTicks(4408)
+                            DateShipped = new DateTime(2021, 5, 11, 19, 46, 14, 819, DateTimeKind.Local).AddTicks(3619)
                         },
                         new
                         {
                             Id = 5,
-                            ConsignorId = 2,
-                            DateShipped = new DateTime(2021, 5, 11, 19, 53, 36, 443, DateTimeKind.Local).AddTicks(4424)
+                            DateShipped = new DateTime(2021, 5, 11, 19, 46, 14, 819, DateTimeKind.Local).AddTicks(3635)
                         },
                         new
                         {
                             Id = 6,
-                            ConsignorId = 2,
-                            DateShipped = new DateTime(2021, 5, 11, 19, 53, 36, 443, DateTimeKind.Local).AddTicks(4444)
+                            DateShipped = new DateTime(2021, 5, 11, 19, 46, 14, 819, DateTimeKind.Local).AddTicks(3655)
                         },
                         new
                         {
                             Id = 7,
-                            ConsignorId = 3,
-                            DateShipped = new DateTime(2021, 5, 11, 19, 53, 36, 443, DateTimeKind.Local).AddTicks(4459)
+                            DateShipped = new DateTime(2021, 5, 11, 19, 46, 14, 819, DateTimeKind.Local).AddTicks(3671)
                         },
                         new
                         {
                             Id = 8,
-                            ConsignorId = 3,
-                            DateShipped = new DateTime(2021, 5, 11, 19, 53, 36, 443, DateTimeKind.Local).AddTicks(4475)
+                            DateShipped = new DateTime(2021, 5, 11, 19, 46, 14, 819, DateTimeKind.Local).AddTicks(3686)
                         },
                         new
                         {
                             Id = 9,
-                            ConsignorId = 3,
-                            DateShipped = new DateTime(2021, 5, 11, 19, 53, 36, 443, DateTimeKind.Local).AddTicks(4490)
+                            DateShipped = new DateTime(2021, 5, 11, 19, 46, 14, 819, DateTimeKind.Local).AddTicks(3701)
                         },
                         new
                         {
                             Id = 10,
-                            ConsignorId = 3,
-                            DateShipped = new DateTime(2021, 5, 11, 19, 53, 36, 443, DateTimeKind.Local).AddTicks(4507)
+                            DateShipped = new DateTime(2021, 5, 11, 19, 46, 14, 819, DateTimeKind.Local).AddTicks(3718)
                         },
                         new
                         {
                             Id = 11,
-                            ConsignorId = 3,
-                            DateShipped = new DateTime(2021, 5, 11, 19, 53, 36, 443, DateTimeKind.Local).AddTicks(4522)
+                            DateShipped = new DateTime(2021, 5, 11, 19, 46, 14, 819, DateTimeKind.Local).AddTicks(3733)
                         },
                         new
                         {
                             Id = 12,
-                            ConsignorId = 1,
-                            DateShipped = new DateTime(2021, 5, 11, 19, 53, 36, 443, DateTimeKind.Local).AddTicks(4567)
+                            DateShipped = new DateTime(2021, 5, 11, 19, 46, 14, 819, DateTimeKind.Local).AddTicks(3749)
                         },
                         new
                         {
                             Id = 13,
-                            ConsignorId = 1,
-                            DateShipped = new DateTime(2021, 5, 11, 19, 53, 36, 443, DateTimeKind.Local).AddTicks(4583)
+                            DateShipped = new DateTime(2021, 5, 11, 19, 46, 14, 819, DateTimeKind.Local).AddTicks(3764)
                         });
                 });
 
