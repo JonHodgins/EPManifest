@@ -36,6 +36,9 @@ namespace EPManifest.App.Pages
         [Inject]
         public IDialogService DialogService { get; set; }
 
+        [Inject]
+        public ISnackbar Snackbar { get; set; }
+
         public void Dispose()
         {
             repo.Dispose();
@@ -84,6 +87,7 @@ namespace EPManifest.App.Pages
                 {
                     manifests.Remove(manifest);
                     _mayRender = true;
+                    Snackbar.Add($"Deleted manifest #{manifest.Id}", Severity.Success);
                 }
             }
         }
