@@ -9,7 +9,7 @@ namespace EPManifest.App.Pages
 {
     public partial class EditManifest
     {
-        private bool isLoaded;
+        private bool _isLoaded;
         private ManifestRepository repo;
         private Manifest manifest;
 
@@ -36,7 +36,7 @@ namespace EPManifest.App.Pages
             }
             finally
             {
-                isLoaded = true;
+                _isLoaded = true;
             }
 
             await base.OnInitializedAsync();

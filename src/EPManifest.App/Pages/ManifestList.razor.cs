@@ -2,26 +2,30 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using EPManifest.App.Components;
 using EPManifest.Core;
 using EPManifest.Data;
 using EPManifest.Data.Repositories;
 using Microsoft.AspNetCore.Components;
 using Microsoft.EntityFrameworkCore;
+using MudBlazor;
 
 namespace EPManifest.App.Pages
 {
     public partial class ManifestList : IDisposable
     {
-        private bool isLoaded;
         private bool dense;
         private bool hover = true;
         private bool striped;
         private bool bordered;
-        private ManifestRepository repo;
         private string searchString = "";
-        private Manifest selectedItem = null;
-        private HashSet<Manifest> selectedItems = new HashSet<Manifest>();
-        private IQueryable<Manifest> manifests;
+
+        private ManifestRepository repo;
+        private Manifest selectedItem;
+        private List<Manifest> manifests;
+
+        private bool _isLoaded;
+        private bool _mayRender = true;
 
         [Inject]
         public IDbContextFactory<EPManifestDbContext> ContextFactory { get; set; }
@@ -29,24 +33,59 @@ namespace EPManifest.App.Pages
         [Inject]
         public NavigationManager Navigation { get; set; }
 
+        [Inject]
+        public IDialogService DialogService { get; set; }
+
         public void Dispose()
         {
             repo.Dispose();
         }
+
+        protected override bool ShouldRender() => _mayRender;
 
         protected override async Task OnInitializedAsync()
         {
             try
             {
                 repo = new ManifestRepository(ContextFactory.CreateDbContext());
-                manifests = repo.GetAllManifests();
+                manifests = await repo.GetAllManifests();
             }
             finally
             {
-                isLoaded = true;
+                _isLoaded = true;
             }
 
             await base.OnInitializedAsync();
+        }
+
+        private async Task Delete(Manifest manifest)
+        {
+            var parameters = new DialogParameters
+            {
+                { "ContentText", $"Are you sure that you want to delete manifest #{manifest.Id}? This action cannot be undone." },
+                { "ButtonText", "Delete" },
+                { "Color", Color.Error }
+            };
+
+            var options = new DialogOptions() { CloseButton = true, MaxWidth = MaxWidth.ExtraSmall };
+
+            var dialog = DialogService.Show<DeleteManifestDialog>("Delete Manifest", parameters, options);
+            var result = await dialog.Result;
+
+            if (!result.Cancelled)
+            {
+                //Need to prevent mid-method rerendering of the component to avoid overlapping threads
+                _mayRender = false;
+                try
+                {
+                    await repo.DeleteManifest(manifest);
+                }
+                finally
+                {
+                    manifests.Remove(manifest);
+                    _mayRender = true;
+                }
+            }
         }
 
         private bool FilterFunc(Manifest manifest)

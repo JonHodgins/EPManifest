@@ -18,14 +18,15 @@ namespace EPManifest.Data.Repositories
             _context = context;
         }
 
-        public IQueryable<Manifest> GetAllManifests()
+        public async Task<List<Manifest>> GetAllManifests()
         {
-            return _context.Manifests
+            return await _context.Manifests
                 .Include(m => m.Consignor)
                 .Include(m => m.Consignee)
                 .Include(m => m.Carrier)
                 .Include(m => m.ConsignorAddress)
-                .Include(m => m.ConsigneeAddress);
+                .Include(m => m.ConsigneeAddress)
+                .ToListAsync();
         }
 
         public async Task<Manifest> GetManifestById(int manifestId)
@@ -39,16 +40,22 @@ namespace EPManifest.Data.Repositories
                 .FirstOrDefaultAsync(m => m.Id == manifestId);
         }
 
-        public Manifest AddManifest(Manifest manifest)
+        public async Task<Manifest> AddManifest(Manifest manifest)
         {
             var newManifest = _context.Manifests.Add(manifest);
-            _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
             return newManifest.Entity;
         }
 
         public async Task UpdateManifest(Manifest manifest)
         {
             _context.Manifests.Update(manifest);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task DeleteManifest(Manifest manifest)
+        {
+            _context.Manifests.Remove(manifest);
             await _context.SaveChangesAsync();
         }
 

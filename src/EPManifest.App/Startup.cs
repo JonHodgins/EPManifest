@@ -10,6 +10,7 @@ using Microsoft.Extensions.Hosting;
 using MudBlazor.Services;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -31,9 +32,15 @@ namespace EPManifest.App
             services.AddRazorPages();
             services.AddServerSideBlazor();
             services.AddMudServices();
+#if DEBUG
             services.AddDbContextFactory<EPManifestDbContext>(options =>
             options.UseSqlServer("Data Source = (localdb)\\MSSQLLocalDB; Initial Catalog = EPManifest")
+                   .LogTo(message => Debug.WriteLine(message), Microsoft.Extensions.Logging.LogLevel.Information)
                    .EnableSensitiveDataLogging());
+#else
+            services.AddDbContextFactory<EPManifestDbContext>(options =>
+            options.UseSqlServer("Data Source = (localdb)\\MSSQLLocalDB; Initial Catalog = EPManifest");
+#endif
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
