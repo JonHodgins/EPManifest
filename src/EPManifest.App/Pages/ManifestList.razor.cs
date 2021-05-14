@@ -92,6 +92,11 @@ namespace EPManifest.App.Pages
             }
         }
 
+        private void Edit(int manifestId)
+        {
+            Navigation.NavigateTo("/manifests/edit/" + manifestId);
+        }
+
         private bool FilterFunc(Manifest manifest)
         {
             if (string.IsNullOrWhiteSpace(searchString))

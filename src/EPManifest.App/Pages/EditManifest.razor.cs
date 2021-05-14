@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using EPManifest.Core;
 using EPManifest.Data;
 using EPManifest.Data.Repositories;
@@ -7,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EPManifest.App.Pages
 {
-    public partial class EditManifest
+    public partial class EditManifest : IDisposable
     {
         private bool _isLoaded;
         private ManifestRepository repo;
@@ -21,11 +22,6 @@ namespace EPManifest.App.Pages
 
         [Inject]
         public NavigationManager Navigation { get; set; }
-
-        public void Dispose()
-        {
-            repo.Dispose();
-        }
 
         protected override async Task OnInitializedAsync()
         {
@@ -46,6 +42,11 @@ namespace EPManifest.App.Pages
         {
             await repo.UpdateManifest(manifest);
             Navigation.NavigateTo("/manifests/list");
+        }
+
+        public void Dispose()
+        {
+            repo.Dispose();
         }
     }
 }
