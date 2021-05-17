@@ -40,6 +40,21 @@ namespace EPManifest.Data.Repositories
                 .FirstOrDefaultAsync(m => m.Id == manifestId);
         }
 
+        public async Task<List<Carrier>> GetCarriers()
+        {
+            return await _context.Carriers.OrderBy(c => c.Name).ToListAsync();
+        }
+
+        public async Task<List<Consignee>> GetConsignees()
+        {
+            return await _context.Consignees.OrderBy(c => c.Name).ToListAsync();
+        }
+
+        public async Task<List<Consignor>> GetConsignors()
+        {
+            return await _context.Consignors.OrderBy(c => c.Name).ToListAsync();
+        }
+
         public async Task<Manifest> AddManifest(Manifest manifest)
         {
             var newManifest = _context.Manifests.Add(manifest);

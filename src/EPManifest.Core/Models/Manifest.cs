@@ -33,9 +33,9 @@ namespace EPManifest.Core
 
         public List<Item> Items { get; set; } = new List<Item>();
 
-        public int? ConsignorId { get; set; }
-        public int? ConsigneeId { get; set; }
-        public int? CarrierId { get; set; }
+        public int ConsignorId { get; set; }
+        public int ConsigneeId { get; set; }
+        public int CarrierId { get; set; }
 
         public Address ConsignorAddress { get; set; }
         public Address ConsigneeAddress { get; set; }
