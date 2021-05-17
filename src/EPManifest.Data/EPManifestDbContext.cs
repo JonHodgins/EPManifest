@@ -85,7 +85,6 @@ namespace EPManifest.Data
             var manifestId = 1;
             var manifests = new Faker<Manifest>()
                 .RuleFor(m => m.Id, _ => manifestId++)
-                .RuleFor(m => m.ConsignorId, _ => _.Random.Number(1, 5))
                 .RuleFor(m => m.ConsigneeId, _ => _.Random.Number(1, 5))
                 .RuleFor(m => m.CarrierId, _ => _.Random.Number(1, 5))
                 .RuleFor(m => m.DateShipped, _ => _.Date.Between(new DateTime(2021, 05, 08), new DateTime(2021, 08, 31)))

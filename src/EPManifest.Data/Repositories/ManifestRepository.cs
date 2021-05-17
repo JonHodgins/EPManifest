@@ -21,7 +21,7 @@ namespace EPManifest.Data.Repositories
         public async Task<List<Manifest>> GetAllManifests()
         {
             return await _context.Manifests
-                .Include(m => m.Consignor)
+                .Include(m => m.Consignors)
                 .Include(m => m.Consignee)
                 .Include(m => m.Carrier)
                 //.Include(m => m.ConsignorAddress)
@@ -32,7 +32,7 @@ namespace EPManifest.Data.Repositories
         public async Task<Manifest> GetManifestById(int manifestId)
         {
             return await _context.Manifests
-                .Include(m => m.Consignor)
+                .Include(m => m.Consignors)
                 .Include(m => m.Consignee)
                 .Include(m => m.Carrier)
                 .Include(m => m.ConsignorAddress)

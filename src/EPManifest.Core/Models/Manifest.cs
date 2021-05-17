@@ -6,18 +6,6 @@ namespace EPManifest.Core
 {
     public class Manifest
     {
-        //public Manifest(DateTime dateShipped, Consignor consignor, Consignee consignee, Carrier carrier)
-        //{
-        //    DateShipped = dateShipped;
-        //    Consignor = consignor;
-        //    Consignee = consignee;
-        //    Carrier = carrier;
-        //}
-
-        //private Manifest()
-        //{
-        //}
-
         public int Id { get; set; }
 
         [Required]
@@ -25,7 +13,7 @@ namespace EPManifest.Core
 
         public DateTime? DateScheduledArrival { get; set; }
 
-        public Consignor Consignor { get; set; }
+        public List<Consignor> Consignors { get; set; } = new List<Consignor>();
 
         public Consignee Consignee { get; set; }
 
@@ -33,7 +21,6 @@ namespace EPManifest.Core
 
         public List<Item> Items { get; set; } = new List<Item>();
 
-        public int ConsignorId { get; set; }
         public int ConsigneeId { get; set; }
         public int CarrierId { get; set; }
 

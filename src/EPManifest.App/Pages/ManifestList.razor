@@ -19,14 +19,14 @@ else
                 <MudTh>Consignor</MudTh>
                 <MudTh>Consignee</MudTh>
                 <MudTh><MudTableSortLabel SortBy="new Func<EPManifest.Core.Manifest, object>(m => m.Carrier.Name)">Carrier</MudTableSortLabel></MudTh>
-                <MudTh><MudTableSortLabel SortBy="new Func<EPManifest.Core.Manifest, object>(m => m.DateShipped.ToString())">Date Shipped</MudTableSortLabel></MudTh>
+                <MudTh><MudTableSortLabel SortBy="new Func<EPManifest.Core.Manifest, object>(m => m.DateShipped?.ToString())">Date Shipped</MudTableSortLabel></MudTh>
                 <MudTh>Scheduled Arrival</MudTh>
                 <MudTh># Items</MudTh>
                 <MudTh></MudTh>
             </HeaderContent>
             <RowTemplate>
                 <MudTd DataLabel="Id">@context.Id</MudTd>
-                <MudTd DataLabel="Consignor">@context.Consignor.Name</MudTd>
+                <MudTd DataLabel="Consignors">@String.Join(", ", context.Consignors.Select(c => c.Name))</MudTd>
                 <MudTd DataLabel="Consignee">@context.Consignee.Name</MudTd>
                 <MudTd DataLabel="Carrier">@context.Carrier.Name</MudTd>
                 <MudTd DataLabel="Date Shipped">@context.DateShipped?.ToLongDateString()</MudTd>

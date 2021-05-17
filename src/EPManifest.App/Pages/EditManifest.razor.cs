@@ -14,9 +14,9 @@ namespace EPManifest.App.Pages
         private bool _isLoaded;
         private ManifestRepository repo;
         private Manifest manifest;
-        public IEnumerable<Consignor> Consignors { get; set; }
-        public IEnumerable<Consignee> Consignees { get; set; }
-        public IEnumerable<Carrier> Carriers { get; set; }
+        public IEnumerable<Consignor> AllConsignors { get; set; }
+        public IEnumerable<Consignee> AllConsignees { get; set; }
+        public IEnumerable<Carrier> AllCarriers { get; set; }
 
         [Parameter]
         public int Id { get; set; }
@@ -27,15 +27,24 @@ namespace EPManifest.App.Pages
         [Inject]
         public NavigationManager Navigation { get; set; }
 
+        private HashSet<Consignor> SelectedConsignors { get; set; } = new HashSet<Consignor>();
+        private string value { get; set; } = "Nothing selected";
+
+        public void Dispose()
+        {
+            repo.Dispose();
+        }
+
         protected override async Task OnInitializedAsync()
         {
             try
             {
                 repo = new ManifestRepository(ContextFactory.CreateDbContext());
                 manifest = await repo.GetManifestById(Id);
-                Consignors = await repo.GetConsignors();
-                Consignees = await repo.GetConsignees();
-                Carriers = await repo.GetCarriers();
+                PopulateSelectedConsignors();
+                AllConsignors = await repo.GetConsignors();
+                AllConsignees = await repo.GetConsignees();
+                AllCarriers = await repo.GetCarriers();
             }
             finally
             {
@@ -45,15 +54,28 @@ namespace EPManifest.App.Pages
             await base.OnInitializedAsync();
         }
 
-        private async Task Update()
+        private void PopulateSelectedConsignors()
         {
-            await repo.UpdateManifest(manifest);
-            Navigation.NavigateTo("/manifests/list");
+            foreach (var consignor in manifest.Consignors)
+            {
+                SelectedConsignors.Add(consignor);
+            }
         }
 
-        public void Dispose()
+        private void PopulateManifestConsignors()
         {
-            repo.Dispose();
+            manifest.Consignors.RemoveAll(_ => true);
+            foreach (var consignor in SelectedConsignors)
+            {
+                manifest.Consignors.Add(consignor);
+            }
+        }
+
+        private async Task Update()
+        {
+            PopulateManifestConsignors();
+            await repo.UpdateManifest(manifest);
+            Navigation.NavigateTo("/manifests/list");
         }
     }
 }

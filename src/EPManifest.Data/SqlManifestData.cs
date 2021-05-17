@@ -48,14 +48,14 @@ namespace EPManifest.Data
             return _context.Manifests.Find(id);
         }
 
-        public IEnumerable<Manifest> GetManifestsByConsignorName(string name)
-        {
-            if (string.IsNullOrEmpty(name))
-            {
-                return _context.Manifests;
-            }
-            return _context.Manifests.Where(m => m.Consignor.Name.StartsWith(name)).OrderBy(m => m.Consignor.Name);
-        }
+        //public IEnumerable<Manifest> GetManifestsByConsignorName(string name)
+        //{
+        //    if (string.IsNullOrEmpty(name))
+        //    {
+        //        return _context.Manifests;
+        //    }
+        //    return _context.Manifests.Where(m => m.Consignor.Name.StartsWith(name)).OrderBy(m => m.Consignor.Name);
+        //}
 
         public IEnumerable<Manifest> GetManifestsByConsigneeName(string name)
         {

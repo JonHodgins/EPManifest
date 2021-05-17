@@ -30,19 +30,17 @@ namespace EPManifest.Data
                     a.ToTable("ConsigneeAddresses");
                 });
 
-            builder.HasOne("EPManifest.Core.Carrier", "Carrier")
-                        .WithMany("Manifests")
-                        .HasForeignKey("CarrierId")
-                        .OnDelete(DeleteBehavior.Restrict);
+            //builder.HasOne("EPManifest.Core.Consignor", "Consignor")
+            //            .WithMany("Manifests");
 
             builder.HasOne("EPManifest.Core.Consignee", "Consignee")
                         .WithMany("Manifests")
                         .HasForeignKey("ConsigneeId")
                         .OnDelete(DeleteBehavior.Restrict);
 
-            builder.HasOne("EPManifest.Core.Consignor", "Consignor")
+            builder.HasOne("EPManifest.Core.Carrier", "Carrier")
                         .WithMany("Manifests")
-                        .HasForeignKey("ConsignorId")
+                        .HasForeignKey("CarrierId")
                         .OnDelete(DeleteBehavior.Restrict);
         }
     }

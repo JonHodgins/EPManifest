@@ -101,7 +101,7 @@ namespace EPManifest.App.Pages
         {
             if (string.IsNullOrWhiteSpace(searchString))
                 return true;
-            if (manifest.Consignor.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            if (manifest.Consignors.Any(c => c.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase)))
                 return true;
             if (manifest.Consignee.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase))
                 return true;
