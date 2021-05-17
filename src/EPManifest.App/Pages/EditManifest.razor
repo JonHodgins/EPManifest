@@ -12,66 +12,55 @@ else
         <EditForm Model="@manifest" OnValidSubmit="Update">
             <DataAnnotationsValidator />
             <MudCard>
-                <MudCardContent>
-                    <MudSelect T="int" Label="Consignor" @bind-Value="manifest.ConsignorId">
-                        @foreach (var consignor in Consignors)
-                        {
-                            <MudSelectItem Value="@consignor.Id">@consignor.Name</MudSelectItem>
-                        }
-                    </MudSelect>
-                    <MudSelect T="int" Label="Consignee" @bind-Value="manifest.ConsigneeId">
-                        @foreach (var consignee in Consignees)
-                        {
-                            <MudSelectItem Value="@consignee.Id">@consignee.Name</MudSelectItem>
-                        }
-                    </MudSelect>
-                    <MudSelect T="int" Label="Carrier" @bind-Value="manifest.CarrierId">
-                        @foreach (var carrier in Carriers)
-                        {
-                            <MudSelectItem Value="@carrier.Id">@carrier.Name</MudSelectItem>
-                        }
-                    </MudSelect>
-                </MudCardContent>
-                <MudCardActions>
-                    <MudButton ButtonType="ButtonType.Button" Variant="Variant.Filled" Color="Color.Secondary" Link="/manifests/list">Cancel</MudButton>
-                    <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto">Update manifest</MudButton>
-                </MudCardActions>
+                <MudGrid>
+                    <MudCardContent>
+                        <MudSelect T="int" Label="Consignor" @bind-Value="manifest.ConsignorId">
+                            @foreach (var consignor in Consignors)
+                            {
+                                <MudSelectItem Value="@consignor.Id">@consignor.Name</MudSelectItem>
+                            }
+                        </MudSelect>
+                        <MudSelect T="int" Label="Consignee" @bind-Value="manifest.ConsigneeId">
+                            @foreach (var consignee in Consignees)
+                            {
+                                <MudSelectItem Value="@consignee.Id">@consignee.Name</MudSelectItem>
+                            }
+                        </MudSelect>
+                        <MudSelect T="int" Label="Carrier" @bind-Value="manifest.CarrierId">
+                            @foreach (var carrier in Carriers)
+                            {
+                                <MudSelectItem Value="@carrier.Id">@carrier.Name</MudSelectItem>
+                            }
+                        </MudSelect>
+                    </MudCardContent>
+                    <MudCardContent>
+                        <MudDatePicker Label="Date Shipped" @bind-Date="manifest.DateShipped" />
+                        <MudDatePicker Label="Scheduled Arrival" @bind-Date="manifest.DateScheduledArrival" />
+                    </MudCardContent>
+                    <MudCardActions>
+                        <MudButton ButtonType="ButtonType.Button" Variant="Variant.Filled" Color="Color.Secondary" Link="/manifests/list">Cancel</MudButton>
+                        <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto">Update manifest</MudButton>
+                    </MudCardActions>
+                </MudGrid>
             </MudCard>
-            <MudText Typo="Typo.body2" Align="Align.Center" Class="my-4">
-                Fill out the form correctly to see the success message.
-            </MudText>
+            @*<MudText Typo="Typo.body2" Align="Align.Center" Class="my-4">
+                    Fill out the form correctly to see the success message.
+                </MudText>
 
-            @*<MudExpansionPanels>
-                    <MudExpansionPanel Text="Show Validation Summary">
-                        @if (success)
-                        {
-                            <MudText Color="Color.Success">Success</MudText>
-                        }
-                        else
-                        {
-                            <MudText Color="@Color.Error">
-                                <ValidationSummary />
-                            </MudText>
-                        }
-                    </MudExpansionPanel>
-                </MudExpansionPanels>*@
+                <MudExpansionPanels>
+                        <MudExpansionPanel Text="Show Validation Summary">
+                            @if (success)
+                            {
+                                <MudText Color="Color.Success">Success</MudText>
+                            }
+                            else
+                            {
+                                <MudText Color="@Color.Error">
+                                    <ValidationSummary />
+                                </MudText>
+                            }
+                        </MudExpansionPanel>
+                    </MudExpansionPanels>*@
         </EditForm>
     </div>
-
-    @*<div class="row">
-            <EditForm Model="@manifest" OnValidSubmit="Update">
-                <div class="form-group">
-                    <strong><label>Id: </label> @Id</strong>
-                </div>
-
-                <div class="form-group">
-                    <label>Shipped: </label>
-                    <InputDate @bind-Value="manifest.DateShipped" />
-                </div>
-                <div class="form-group">
-                    <NavLink href="/manifests/list" class="btn btn-info">Back to manifests</NavLink>
-                    <input type="submit" class="btn btn-primary" value="Update manifest" />
-                </div>
-            </EditForm>
-        </div>*@
 }

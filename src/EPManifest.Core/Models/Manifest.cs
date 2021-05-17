@@ -21,7 +21,7 @@ namespace EPManifest.Core
         public int Id { get; set; }
 
         [Required]
-        public DateTime DateShipped { get; set; }
+        public DateTime? DateShipped { get; set; }
 
         public DateTime? DateScheduledArrival { get; set; }
 

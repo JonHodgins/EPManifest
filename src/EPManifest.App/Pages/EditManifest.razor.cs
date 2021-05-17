@@ -14,9 +14,9 @@ namespace EPManifest.App.Pages
         private bool _isLoaded;
         private ManifestRepository repo;
         private Manifest manifest;
-        public List<Consignor> Consignors { get; set; }
-        public List<Consignee> Consignees { get; set; }
-        public List<Carrier> Carriers { get; set; }
+        public IEnumerable<Consignor> Consignors { get; set; }
+        public IEnumerable<Consignee> Consignees { get; set; }
+        public IEnumerable<Carrier> Carriers { get; set; }
 
         [Parameter]
         public int Id { get; set; }
