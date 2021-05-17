@@ -14,9 +14,9 @@ namespace EPManifest.App.Pages
         private bool _isLoaded;
         private ManifestRepository repo;
         private Manifest manifest;
-        public IEnumerable<Consignor> AllConsignors { get; set; }
-        public IEnumerable<Consignee> AllConsignees { get; set; }
-        public IEnumerable<Carrier> AllCarriers { get; set; }
+        public IEnumerable<Consignor> Consignors { get; set; }
+        public IEnumerable<Consignee> Consignees { get; set; }
+        public IEnumerable<Carrier> Carriers { get; set; }
 
         [Parameter]
         public int Id { get; set; }
@@ -28,12 +28,6 @@ namespace EPManifest.App.Pages
         public NavigationManager Navigation { get; set; }
 
         private HashSet<Consignor> SelectedConsignors { get; set; } = new HashSet<Consignor>();
-        private string value { get; set; } = "Nothing selected";
-
-        public void Dispose()
-        {
-            repo.Dispose();
-        }
 
         protected override async Task OnInitializedAsync()
         {
@@ -42,9 +36,9 @@ namespace EPManifest.App.Pages
                 repo = new ManifestRepository(ContextFactory.CreateDbContext());
                 manifest = await repo.GetManifestById(Id);
                 PopulateSelectedConsignors();
-                AllConsignors = await repo.GetConsignors();
-                AllConsignees = await repo.GetConsignees();
-                AllCarriers = await repo.GetCarriers();
+                Consignors = await repo.GetConsignors();
+                Consignees = await repo.GetConsignees();
+                Carriers = await repo.GetCarriers();
             }
             finally
             {
@@ -62,7 +56,7 @@ namespace EPManifest.App.Pages
             }
         }
 
-        private void PopulateManifestConsignors()
+        private void AddSelectedConsignorsToManifest()
         {
             manifest.Consignors.RemoveAll(_ => true);
             foreach (var consignor in SelectedConsignors)
@@ -73,9 +67,14 @@ namespace EPManifest.App.Pages
 
         private async Task Update()
         {
-            PopulateManifestConsignors();
+            AddSelectedConsignorsToManifest();
             await repo.UpdateManifest(manifest);
             Navigation.NavigateTo("/manifests/list");
+        }
+
+        public void Dispose()
+        {
+            repo.Dispose();
         }
     }
 }

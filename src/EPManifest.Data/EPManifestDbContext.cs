@@ -82,6 +82,14 @@ namespace EPManifest.Data
             modelBuilder.Entity<Carrier>().HasData(new Carrier { Id = 4, Name = "NM Shipping Inc" });
             modelBuilder.Entity<Carrier>().HasData(new Carrier { Id = 5, Name = "Frank's Freight" });
 
+            //modelBuilder.Entity<Address>().HasData(new Address
+            //{
+            //    AddressLine1 = "1 Main Street",
+            //    City = "Whitehorse",
+            //    Province = Provinces.YT,
+            //    PostalCode = "Y1A 3M5"
+            //});
+
             var manifestId = 1;
             var manifests = new Faker<Manifest>()
                 .RuleFor(m => m.Id, _ => manifestId++)

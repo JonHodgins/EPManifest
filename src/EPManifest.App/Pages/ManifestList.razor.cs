@@ -105,8 +105,6 @@ namespace EPManifest.App.Pages
                 return true;
             if (manifest.Consignee.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase))
                 return true;
-            //if ($"{element.Number} {element.Position} {element.Molar}".Contains(searchString))
-            //    return true;
             return false;
         }
     }

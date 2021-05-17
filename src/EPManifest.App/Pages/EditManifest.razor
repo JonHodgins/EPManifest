@@ -1,6 +1,6 @@
 ﻿@page "/manifests/edit/{id:int}"
 
-<h3>Edit Manifest</h3>
+<MudText Typo="Typo.h3" GutterBottom="true">Edit Manifest</MudText>
 
 @if (_isLoaded == false)
 {
@@ -8,57 +8,82 @@
 }
 else
 {
-    <div style="max-width: 400px;">
+    <div>
         <EditForm Model="@manifest" OnValidSubmit="Update">
             <DataAnnotationsValidator />
             <MudCard>
-                <MudCardContent>
-                    <MudSelect T="@EPManifest.Core.Consignor" Label="Consignor(s)" @bind-SelectedValues="@SelectedConsignors" MultiSelection="true" ToStringFunc="c => c.Name">
-                        @foreach (var consignor in AllConsignors)
-                        {
-                            <MudSelectItem Value="@consignor">@consignor.Name</MudSelectItem>
-                        }
-                    </MudSelect>
-                    <MudSelect T="int" Label="Consignee" @bind-Value="manifest.ConsigneeId">
-                        @foreach (var consignee in AllConsignees)
-                        {
-                            <MudSelectItem Value="@consignee.Id">@consignee.Name</MudSelectItem>
-                        }
-                    </MudSelect>
-                    <MudSelect T="int" Label="Carrier" @bind-Value="manifest.CarrierId">
-                        @foreach (var carrier in AllCarriers)
-                        {
-                            <MudSelectItem Value="@carrier.Id">@carrier.Name</MudSelectItem>
-                        }
-                    </MudSelect>
-                </MudCardContent>
-                <MudCardContent>
-                    <MudDatePicker Label="Date Shipped" @bind-Date="manifest.DateShipped" />
-                    <MudDatePicker Label="Scheduled Arrival" @bind-Date="manifest.DateScheduledArrival" />
-                </MudCardContent>
-                <MudCardActions>
-                    <MudButton ButtonType="ButtonType.Button" Variant="Variant.Filled" Color="Color.Secondary" Link="/manifests/list">Cancel</MudButton>
-                    <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto">Update manifest</MudButton>
-                </MudCardActions>
-            </MudCard>
-            @*<MudText Typo="Typo.body2" Align="Align.Center" Class="my-4">
-                        Fill out the form correctly to see the success message.
-                    </MudText>
+                <MudGrid>
+                    <MudItem xs="6">
+                        <MudCard>
+                            <MudCardContent>
+                                <MudSelect T="@EPManifest.Core.Consignor" Label="Consignor(s)" @bind-SelectedValues="@SelectedConsignors" MultiSelection="true" ToStringFunc="c => c.Name">
+                                    @foreach (var consignor in Consignors)
+                                    {
+                                        <MudSelectItem Value="@consignor">@consignor.Name</MudSelectItem>
+                                    }
+                                </MudSelect>
+                                <MudTextField Label="Address Line 1" @bind-Value="@manifest.ConsignorAddress.AddressLine1"
+                                              For="@(() => manifest.ConsignorAddress.AddressLine1)">
+                                </MudTextField>
+                                <MudTextField Label="Address Line 2" @bind-Value="@manifest.ConsignorAddress.AddressLine2"
+                                              For="@(() => manifest.ConsignorAddress.AddressLine2)">
+                                </MudTextField>
+                                <MudTextField Label="City" @bind-Value="@manifest.ConsignorAddress.City"
+                                              For="@(() => manifest.ConsignorAddress.City)">
+                                </MudTextField>
+                                @*<MudSelect Label="Province/Territory" @bind-Value="@manifest.ConsignorAddress.Province">
+                                        @foreach (var province in Provinces)
+                                            {
+                                            <MudSelectItem Value="@">@</MudSelectItem>
+                                            }
+                                    </MudSelect>*@
+                                <MudTextField Label="Postal Code" @bind-Value="@manifest.ConsignorAddress.PostalCode"
+                                              For="@(() => manifest.ConsignorAddress.PostalCode)">
+                                </MudTextField>
+                            </MudCardContent>
+                        </MudCard>
+                    </MudItem>
+                    <MudItem xs=" 6">
+                        <MudCard>
+                            <MudCardContent>
+                                <MudSelect T="int" Label="Consignee" @bind-Value="manifest.ConsigneeId">
+                                    @foreach (var consignee in Consignees)
+                                    {
+                                        <MudSelectItem Value="@consignee.Id">@consignee.Name</MudSelectItem>
+                                    }
+                                </MudSelect>
+                            </MudCardContent>
+                        </MudCard>
+                    </MudItem>
+                    <MudItem xs="6">
+                        <MudCard>
+                            <MudCardContent>
+                                <MudSelect T="int" Label="Carrier" @bind-Value="manifest.CarrierId">
+                                    @foreach (var carrier in Carriers)
+                                    {
+                                        <MudSelectItem Value="@carrier.Id">@carrier.Name</MudSelectItem>
+                                    }
+                                </MudSelect>
+                            </MudCardContent>
+                        </MudCard>
+                    </MudItem>
+                    <MudItem xs="6">
+                        <MudCard>
+                            <MudCardContent>
+                                <MudDatePicker Label="Shipped" @bind-Date="manifest.DateShipped" />
+                                <MudDatePicker Label="Scheduled Arrival" @bind-Date="manifest.DateScheduledArrival" />
+                            </MudCardContent>
+                        </MudCard>
+                    </MudItem>
 
-                <MudExpansionPanels>
-                        <MudExpansionPanel Text="Show Validation Summary">
-                            @if (success)
-                            {
-                                <MudText Color="Color.Success">Success</MudText>
-                            }
-                            else
-                            {
-                                <MudText Color="@Color.Error">
-                                    <ValidationSummary />
-                                </MudText>
-                            }
-                        </MudExpansionPanel>
-                    </MudExpansionPanels>*@
+                    <MudItem xs="12">
+                        <MudCardActions>
+                            <MudButton ButtonType="ButtonType.Button" Variant="Variant.Filled" Color="Color.Secondary" Link="/manifests/list">Cancel</MudButton>
+                            <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto">Update manifest</MudButton>
+                        </MudCardActions>
+                    </MudItem>
+                </MudGrid>
+            </MudCard>
         </EditForm>
     </div>
 }
