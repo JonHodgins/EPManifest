@@ -6,6 +6,7 @@ using EPManifest.Data;
 using EPManifest.Data.Repositories;
 using Microsoft.AspNetCore.Components;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace EPManifest.App.Pages
 {
@@ -20,6 +21,9 @@ namespace EPManifest.App.Pages
 
         [Parameter]
         public int Id { get; set; }
+
+        [Inject]
+        public ILogger<EditManifest> Logger { get; set; }
 
         [Inject]
         public IDbContextFactory<EPManifestDbContext> ContextFactory { get; set; }
@@ -69,6 +73,7 @@ namespace EPManifest.App.Pages
         {
             AddSelectedConsignorsToManifest();
             await repo.UpdateManifest(manifest);
+            Logger.LogInformation($"Successfully updated Manifest {manifest.Id}");
             Navigation.NavigateTo("/manifests/list");
         }
 

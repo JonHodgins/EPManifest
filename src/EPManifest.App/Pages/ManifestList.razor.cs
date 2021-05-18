@@ -8,6 +8,7 @@ using EPManifest.Data;
 using EPManifest.Data.Repositories;
 using Microsoft.AspNetCore.Components;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using MudBlazor;
 
 namespace EPManifest.App.Pages
@@ -26,6 +27,9 @@ namespace EPManifest.App.Pages
 
         private bool _isLoaded;
         private bool _mayRender = true;
+
+        [Inject]
+        public ILogger<ManifestList> Logger { get; set; }
 
         [Inject]
         public IDbContextFactory<EPManifestDbContext> ContextFactory { get; set; }
@@ -87,6 +91,7 @@ namespace EPManifest.App.Pages
                 {
                     manifests.Remove(manifest);
                     _mayRender = true;
+                    Logger.LogInformation($"Manifest {manifest.Id} was deleted.");
                     Snackbar.Add($"Deleted manifest #{manifest.Id}", Severity.Success);
                 }
             }
@@ -94,6 +99,7 @@ namespace EPManifest.App.Pages
 
         private void Edit(int manifestId)
         {
+            Logger.LogInformation($"Started editing Manifest {manifestId}");
             Navigation.NavigateTo("/manifests/edit/" + manifestId);
         }
 

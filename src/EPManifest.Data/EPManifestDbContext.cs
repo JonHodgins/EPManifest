@@ -21,14 +21,14 @@ namespace EPManifest.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            if (!optionsBuilder.IsConfigured)
-            {
-                optionsBuilder
-                    .UseSqlServer("Data Source= (localdb)\\MSSQLLocalDB; Initial Catalog=EPManifest")
-                    .LogTo(Console.WriteLine, new[] {
-                           DbLoggerCategory.Database.Command.Name }, LogLevel.Information)
-                    .EnableSensitiveDataLogging();
-            }
+            //if (!optionsBuilder.IsConfigured)
+            //{
+            //    optionsBuilder
+            //        .UseSqlServer("Data Source= (localdb)\\MSSQLLocalDB; Initial Catalog=EPManifest")
+            //        .LogTo(Console.WriteLine, new[] {
+            //               DbLoggerCategory.Database.Command.Name }, LogLevel.Information)
+            //        .EnableSensitiveDataLogging();
+            //}
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

@@ -34,12 +34,11 @@ namespace EPManifest.App
             services.AddMudServices();
 #if DEBUG
             services.AddDbContextFactory<EPManifestDbContext>(options =>
-            options.UseSqlServer("Data Source = (localdb)\\MSSQLLocalDB; Initial Catalog = EPManifest")
-                   .LogTo(message => Debug.WriteLine(message), Microsoft.Extensions.Logging.LogLevel.Information)
-                   .EnableSensitiveDataLogging());
+                options.UseSqlServer("Data Source = (localdb)\\MSSQLLocalDB; Initial Catalog = EPManifest")
+                       .EnableSensitiveDataLogging());
 #else
             services.AddDbContextFactory<EPManifestDbContext>(options =>
-            options.UseSqlServer("Data Source = (localdb)\\MSSQLLocalDB; Initial Catalog = EPManifest");
+                options.UseSqlServer("Data Source = (localdb)\\MSSQLLocalDB; Initial Catalog = EPManifest");
 #endif
         }
 
