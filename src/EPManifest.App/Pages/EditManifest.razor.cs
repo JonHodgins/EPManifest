@@ -73,8 +73,8 @@ namespace EPManifest.App.Pages
         {
             AddSelectedConsignorsToManifest();
             await repo.UpdateManifest(manifest);
-            Logger.LogInformation($"Successfully updated Manifest {manifest.Id}");
-            Navigation.NavigateTo("/manifests/list");
+            Logger.LogInformation($"Successfully updated manifest id:{manifest.Id}");
+            Navigation.NavigateTo("/manifests");
         }
 
         public void Dispose()

@@ -81,25 +81,25 @@ namespace EPManifest.App.Pages
 
             if (!result.Cancelled)
             {
-                //Prevents mid-method rerendering of the component to avoid overlapping threads
+                //Prevents mid-method rerendering of the component, which avoids overlapping threads
                 _mayRender = false;
                 try
                 {
                     await repo.DeleteManifest(manifest);
+                    manifests.Remove(manifest);
+                    Logger.LogInformation($"Manifest id:{manifest.Id} was deleted.");
+                    Snackbar.Add($"Deleted manifest id:{manifest.Id}", Severity.Success);
                 }
                 finally
                 {
-                    manifests.Remove(manifest);
                     _mayRender = true;
-                    Logger.LogInformation($"Manifest {manifest.Id} was deleted.");
-                    Snackbar.Add($"Deleted manifest #{manifest.Id}", Severity.Success);
                 }
             }
         }
 
         private void Edit(int manifestId)
         {
-            Logger.LogInformation($"Started editing Manifest {manifestId}");
+            Logger.LogInformation($"Started editing manifest id:{manifestId}");
             Navigation.NavigateTo("/manifests/edit/" + manifestId);
         }
 

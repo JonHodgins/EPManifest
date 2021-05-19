@@ -34,7 +34,7 @@ namespace EPManifest.App
             services.AddMudServices();
 #if DEBUG
             services.AddDbContextFactory<EPManifestDbContext>(options =>
-                options.UseSqlServer("Data Source = (localdb)\\MSSQLLocalDB; Initial Catalog = EPManifest")
+                options.UseSqlServer(Configuration.GetConnectionString("EPManifestContext"))
                        .EnableSensitiveDataLogging());
 #else
             services.AddDbContextFactory<EPManifestDbContext>(options =>
