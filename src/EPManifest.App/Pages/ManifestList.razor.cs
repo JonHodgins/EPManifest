@@ -76,7 +76,7 @@ namespace EPManifest.App.Pages
 
             var options = new DialogOptions() { CloseButton = true, MaxWidth = MaxWidth.ExtraSmall };
 
-            var dialog = DialogService.Show<DeleteManifestDialog>("Delete Manifest", parameters, options);
+            var dialog = DialogService.Show<ConfirmationDialog>("Delete Manifest", parameters, options);
             var result = await dialog.Result;
 
             if (!result.Cancelled)
@@ -85,7 +85,7 @@ namespace EPManifest.App.Pages
                 _mayRender = false;
                 try
                 {
-                    await repo.DeleteManifest(manifest);
+                    await repo.Delete(manifest);
                     manifests.Remove(manifest);
                     Logger.LogInformation($"Manifest id:{manifest.Id} was deleted.");
                     Snackbar.Add($"Deleted manifest id:{manifest.Id}", Severity.Success);

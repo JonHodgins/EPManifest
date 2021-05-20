@@ -19,7 +19,7 @@ else
                 <MudTh>Consignor</MudTh>
                 <MudTh>Consignee</MudTh>
                 <MudTh><MudTableSortLabel SortBy="new Func<EPManifest.Core.Manifest, object>(m => m.Carrier.Name)">Carrier</MudTableSortLabel></MudTh>
-                <MudTh><MudTableSortLabel SortBy="new Func<EPManifest.Core.Manifest, object>(m => m.DateShipped?.ToString())">Date Shipped</MudTableSortLabel></MudTh>
+                <MudTh><MudTableSortLabel SortBy="new Func<EPManifest.Core.Manifest, object>(m => m.DateShipped?.ToString())">Shipped</MudTableSortLabel></MudTh>
                 <MudTh>Scheduled Arrival</MudTh>
                 <MudTh># Items</MudTh>
                 <MudTh></MudTh>
@@ -29,13 +29,13 @@ else
                 <MudTd DataLabel="Consignors">@String.Join(", ", context.Consignors.Select(c => c.Name))</MudTd>
                 <MudTd DataLabel="Consignee">@context.Consignee.Name</MudTd>
                 <MudTd DataLabel="Carrier">@context.Carrier.Name</MudTd>
-                <MudTd DataLabel="Date Shipped">@context.DateShipped?.ToLongDateString()</MudTd>
+                <MudTd DataLabel="Shipped">@context.DateShipped?.ToLongDateString()</MudTd>
                 <MudTd DataLabel="Scheduled Arrival">@context.DateScheduledArrival?.ToLongDateString()</MudTd>
                 <MudTd DataLabel="# Items">@context.Items.Count</MudTd>
                 <MudTd>
                     <MudIconButton Icon="@Icons.Material.Filled.Info"></MudIconButton>
                     <MudIconButton Icon="@Icons.Material.Filled.Edit" Color="Color.Primary" OnClick="(() => Edit(context.Id))"></MudIconButton>
-                    <MudIconButton Icon="@Icons.Material.Filled.Delete" Color="Color.Error" @onclick="(() => Delete(context))"></MudIconButton>
+                    <MudIconButton Icon="@Icons.Material.Filled.Delete" Color="Color.Error" OnClick="(() => Delete(context))"></MudIconButton>
                 </MudTd>
             </RowTemplate>
             <PagerContent>

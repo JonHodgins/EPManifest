@@ -1,0 +1,13 @@
+﻿<h3>EditConsignor</h3>
+
+
+@if (_isLoaded == false)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <EditForm Model="@consignor" OnValidSubmit="Update">
+
+    </EditForm>
+}

@@ -37,38 +37,39 @@ namespace EPManifest.Data.Repositories
                 .Include(m => m.Carrier)
                 .Include(m => m.ConsignorAddress)
                 .Include(m => m.ConsigneeAddress)
+                .Include(m => m.Items)
                 .FirstOrDefaultAsync(m => m.Id == manifestId);
         }
 
-        public async Task<List<Carrier>> GetCarriers()
+        public async Task<List<Carrier>> GetAllCarriers()
         {
             return await _context.Carriers.OrderBy(c => c.Name).ToListAsync();
         }
 
-        public async Task<List<Consignee>> GetConsignees()
+        public async Task<List<Consignee>> GetAllConsignees()
         {
             return await _context.Consignees.OrderBy(c => c.Name).ToListAsync();
         }
 
-        public async Task<List<Consignor>> GetConsignors()
+        public async Task<List<Consignor>> GetAllConsignors()
         {
             return await _context.Consignors.OrderBy(c => c.Name).ToListAsync();
         }
 
-        public async Task<Manifest> AddManifest(Manifest manifest)
+        public async Task<Manifest> Create(Manifest manifest)
         {
             var newManifest = _context.Manifests.Add(manifest);
             await _context.SaveChangesAsync();
             return newManifest.Entity;
         }
 
-        public async Task UpdateManifest(Manifest manifest)
+        public async Task Update(Manifest manifest)
         {
             _context.Manifests.Update(manifest);
             await _context.SaveChangesAsync();
         }
 
-        public async Task DeleteManifest(Manifest manifest)
+        public async Task Delete(Manifest manifest)
         {
             _context.Manifests.Remove(manifest);
             await _context.SaveChangesAsync();

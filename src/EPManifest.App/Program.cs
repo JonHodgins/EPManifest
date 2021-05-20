@@ -4,6 +4,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Serilog;
 using Serilog.Events;
+using Serilog.Formatting.Compact;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -46,7 +47,8 @@ namespace EPManifest.App
                     .Enrich.FromLogContext()
                     //Configure Serilog to log EF Core transactions
                     .MinimumLevel.Override("Microsoft.EntityFrameworkCore", LogEventLevel.Information)
-                    .WriteTo.Console(restrictedToMinimumLevel: LogEventLevel.Verbose))
+                    .WriteTo.Console())
+                //.WriteTo.Console(new RenderedCompactJsonFormatter(), restrictedToMinimumLevel: LogEventLevel.Verbose))
                 .ConfigureWebHostDefaults(webBuilder => webBuilder.UseStartup<Startup>());
     }
 }

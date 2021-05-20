@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using Bogus;
 using EPManifest.Core;
 using Microsoft.EntityFrameworkCore;
@@ -17,6 +19,12 @@ namespace EPManifest.Data
         public DbSet<Consignee> Consignees { get; set; }
         public DbSet<Carrier> Carriers { get; set; }
         public DbSet<Address> Addresses { get; set; }
+
+        internal Task<List<Consignor>> FirstOrDefaultAsync(int manifestId)
+        {
+            throw new NotImplementedException();
+        }
+
         public DbSet<Item> Items { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

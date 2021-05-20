@@ -19,6 +19,8 @@ namespace EPManifest.App.Pages
         public IEnumerable<Consignee> Consignees { get; set; }
         public IEnumerable<Carrier> Carriers { get; set; }
 
+        public Provinces Provinces { get; }
+
         [Parameter]
         public int Id { get; set; }
 
@@ -40,9 +42,9 @@ namespace EPManifest.App.Pages
                 repo = new ManifestRepository(ContextFactory.CreateDbContext());
                 manifest = await repo.GetManifestById(Id);
                 PopulateSelectedConsignors();
-                Consignors = await repo.GetConsignors();
-                Consignees = await repo.GetConsignees();
-                Carriers = await repo.GetCarriers();
+                Consignors = await repo.GetAllConsignors();
+                Consignees = await repo.GetAllConsignees();
+                Carriers = await repo.GetAllCarriers();
             }
             finally
             {
@@ -72,7 +74,7 @@ namespace EPManifest.App.Pages
         private async Task Update()
         {
             AddSelectedConsignorsToManifest();
-            await repo.UpdateManifest(manifest);
+            await repo.Update(manifest);
             Logger.LogInformation($"Successfully updated manifest id:{manifest.Id}");
             Navigation.NavigateTo("/manifests");
         }
