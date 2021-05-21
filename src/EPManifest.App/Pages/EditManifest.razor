@@ -1,16 +1,13 @@
 ﻿@page "/manifests/edit/{id:int}"
 
-
-
 @if (_isLoaded == false)
 {
     <p><em>Loading...</em></p>
 }
 else
 {
-<div>
     <MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="mt-16">
-        <MudText Typo="Typo.h3" GutterBottom="true">Edit Manifest #@Id</MudText>
+        <MudText Typo="Typo.h3" GutterBottom="true">Editing: manifest #@Id</MudText>
         <EditForm Model="@manifest" OnValidSubmit="Update">
             <DataAnnotationsValidator />
             <MudCard>
@@ -118,10 +115,37 @@ else
                                         <MudTd DataLabel="Quantity">@item.Quantity</MudTd>
                                         <MudTd DataLabel="Unit">@item.Unit</MudTd>
                                         <MudTd>
-                                            <MudIconButton Icon="@Icons.Material.Filled.Edit" Color="Color.Primary"></MudIconButton>
                                             <MudIconButton Icon="@Icons.Material.Filled.Delete" Color="Color.Error"></MudIconButton>
                                         </MudTd>
                                     </RowTemplate>
+                                    <RowEditingTemplate Context="item">
+                                        <MudTd DataLabel="Id">@(manifest.Items.IndexOf(item) + 1)</MudTd>
+                                        <MudTd DataLabel="State">
+                                            <MudSelect @bind-Value="@item.State" Margin="Margin.Dense">
+                                                @foreach (Core.State state in Enum.GetValues(typeof(Core.State)))
+                                                    {
+                                                    <MudSelectItem Value="@state">@state</MudSelectItem>
+                                                    }
+                                            </MudSelect>
+                                        </MudTd>
+                                        <MudTd DataLabel="Description">
+                                            <MudTextField @bind-Value="@item.Description" Margin="Margin.Dense" />
+                                        </MudTd>
+                                        <MudTd DataLabel="Quantity">
+                                            <MudNumericField @bind-Value="@item.Quantity" Margin="Margin.Dense" />
+                                        </MudTd>
+                                        <MudTd DataLabel="Unit">
+                                            <MudSelect @bind-Value="@item.Unit" Margin="Margin.Dense">
+                                                @foreach (Core.Unit unit in Enum.GetValues(typeof(Core.Unit)))
+                                                    {
+                                                    <MudSelectItem Value="@unit">@unit</MudSelectItem>
+                                                    }
+                                            </MudSelect>
+                                        </MudTd>
+                                    </RowEditingTemplate>
+                                    <FooterContent>
+                                        <MudButton ButtonType="ButtonType.Button" Variant="Variant.Filled" Color="Color.Info" FullWidth="true">Add</MudButton>
+                                    </FooterContent>
                                 </MudTable>
                             </MudCardContent>
                         </MudCard>
@@ -137,5 +161,4 @@ else
             </MudCard>
         </EditForm>
     </MudContainer>
-</div>
 }
