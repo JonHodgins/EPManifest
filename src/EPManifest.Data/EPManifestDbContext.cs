@@ -79,23 +79,23 @@ namespace EPManifest.Data
 
             //modelBuilder.Entity<Carrier>().HasData(carriers.Generate(100));
 
-            modelBuilder.Entity<Consignor>().HasData(new Consignor { Id = 1, Code = "", Name = "Carmacks Health Clinic" });
-            modelBuilder.Entity<Consignor>().HasData(new Consignor { Id = 2, Code = "", Name = "Mayo Health Centre" });
-            modelBuilder.Entity<Consignor>().HasData(new Consignor { Id = 3, Code = "", Name = "Whitehorse General Hospital" });
-            modelBuilder.Entity<Consignor>().HasData(new Consignor { Id = 4, Code = "", Name = "Teslin Health Centre" });
-            modelBuilder.Entity<Consignor>().HasData(new Consignor { Id = 5, Code = "", Name = "Whistle Bend Place" });
+            modelBuilder.Entity<Consignor>().HasData(new Consignor { Id = 1, Code = "OXP-4", Name = "Carmacks Health Clinic" });
+            modelBuilder.Entity<Consignor>().HasData(new Consignor { Id = 2, Code = "A-000", Name = "Mayo Health Centre" });
+            modelBuilder.Entity<Consignor>().HasData(new Consignor { Id = 3, Code = "B-5010", Name = "Whitehorse General Hospital" });
+            modelBuilder.Entity<Consignor>().HasData(new Consignor { Id = 4, Code = "A1-102", Name = "Teslin Health Centre" });
+            modelBuilder.Entity<Consignor>().HasData(new Consignor { Id = 5, Code = "A840", Name = "Whistle Bend Place" });
 
-            modelBuilder.Entity<Consignee>().HasData(new Consignee { Id = 1, Code = "", Name = "Pete's Disposal" });
-            modelBuilder.Entity<Consignee>().HasData(new Consignee { Id = 2, Code = "", Name = "ATI Environmental" });
-            modelBuilder.Entity<Consignee>().HasData(new Consignee { Id = 3, Code = "", Name = "EQ Enviro" });
-            modelBuilder.Entity<Consignee>().HasData(new Consignee { Id = 4, Code = "", Name = "Whitehorse Landfill" });
-            modelBuilder.Entity<Consignee>().HasData(new Consignee { Id = 5, Code = "", Name = "YAE" });
+            modelBuilder.Entity<Consignee>().HasData(new Consignee { Id = 1, Code = "AB-120", Name = "Pete's Disposal" });
+            modelBuilder.Entity<Consignee>().HasData(new Consignee { Id = 2, Code = "AB-410", Name = "ATI Environmental" });
+            modelBuilder.Entity<Consignee>().HasData(new Consignee { Id = 3, Code = "AB-019", Name = "EQ Enviro" });
+            modelBuilder.Entity<Consignee>().HasData(new Consignee { Id = 4, Code = "AB-918", Name = "Whitehorse Landfill" });
+            modelBuilder.Entity<Consignee>().HasData(new Consignee { Id = 5, Code = "AB-412", Name = "YAE" });
 
-            modelBuilder.Entity<Carrier>().HasData(new Carrier { Id = 1, Code = "", Name = "A1 Delivery" });
-            modelBuilder.Entity<Carrier>().HasData(new Carrier { Id = 2, Code = "", Name = "Pacific Northwest Freight" });
-            modelBuilder.Entity<Carrier>().HasData(new Carrier { Id = 3, Code = "", Name = "AP Freight" });
-            modelBuilder.Entity<Carrier>().HasData(new Carrier { Id = 4, Code = "", Name = "NM Shipping Inc" });
-            modelBuilder.Entity<Carrier>().HasData(new Carrier { Id = 5, Code = "", Name = "Frank's Freight" });
+            modelBuilder.Entity<Carrier>().HasData(new Carrier { Id = 1, Code = "50101", Name = "A1 Delivery" });
+            modelBuilder.Entity<Carrier>().HasData(new Carrier { Id = 2, Code = "10-4010", Name = "Pacific Northwest Freight" });
+            modelBuilder.Entity<Carrier>().HasData(new Carrier { Id = 3, Code = "40-020", Name = "AP Freight" });
+            modelBuilder.Entity<Carrier>().HasData(new Carrier { Id = 4, Code = "60-10", Name = "NM Shipping Inc" });
+            modelBuilder.Entity<Carrier>().HasData(new Carrier { Id = 5, Code = "60-05", Name = "Frank's Freight" });
 
             //modelBuilder.Entity<Address>().HasData(new Address
             //{
@@ -108,6 +108,7 @@ namespace EPManifest.Data
             var manifestId = 1;
             var manifests = new Faker<Manifest>()
                 .RuleFor(m => m.Id, _ => manifestId++)
+                .RuleFor(m => m.Code, _ => "YT" + _.Random.Int(10000, 99999) + "-" + _.Random.Number(1))
                 .RuleFor(m => m.ConsigneeId, _ => _.Random.Number(1, 5))
                 .RuleFor(m => m.CarrierId, _ => _.Random.Number(1, 5))
                 .RuleFor(m => m.DateShipped, _ => _.Date.Between(new DateTime(2021, 05, 08), new DateTime(2021, 08, 31)))

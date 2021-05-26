@@ -69,7 +69,7 @@ namespace EPManifest.App.Components
             await base.OnInitializedAsync();
         }
 
-        private void Submit() => MudDialog.Close(DialogResult.Ok(true));
+        private void Submit() => MudDialog.Close(DialogResult.Ok(entity));
 
         private void Cancel() => MudDialog.Cancel();
 

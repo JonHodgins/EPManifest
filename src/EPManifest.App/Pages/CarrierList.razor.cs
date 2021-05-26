@@ -109,6 +109,8 @@ namespace EPManifest.App.Pages
                 _mayRender = false;
                 try
                 {
+                    carriers[carriers.IndexOf(carrier)].Code = ((Carrier)result.Data).Code;
+                    carriers[carriers.IndexOf(carrier)].Name = ((Carrier)result.Data).Name;
                     Snackbar.Add($"Updated carrier id:{carrier.Id}", Severity.Success);
                 }
                 finally
