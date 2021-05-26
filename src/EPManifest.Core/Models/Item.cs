@@ -4,27 +4,27 @@ namespace EPManifest.Core
 {
     public class Item
     {
-        public Item(State state, string description, int quantity, Unit unit)
-        {
-            State = state;
-            Description = description;
-            Quantity = quantity;
-            Unit = unit;
-        }
+        //public Item(State state, string description, int quantity, Unit unit)
+        //{
+        //    State = state;
+        //    Description = description;
+        //    Quantity = quantity;
+        //    Unit = unit;
+        //}
 
-        private Item()
-        {
-        }
+        //private Item()
+        //{
+        //}
 
         public int Id { get; set; }
 
         [Required]
         public State State { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Item description is required"), MinLength(1, ErrorMessage = "Item description is required")]
         public string Description { get; set; }
 
-        [Required]
+        [Required, Range(0.01, double.MaxValue, ErrorMessage = "Item quantity must be greater than zero")]
         public decimal Quantity { get; set; }
 
         [Required]

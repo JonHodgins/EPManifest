@@ -7,11 +7,24 @@
 else
 {
     <MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="mt-16">
-        <MudText Typo="Typo.h3" GutterBottom="true">Editing: manifest #@Id</MudText>
+        <MudText Typo="Typo.h3" GutterBottom="true">Edit manifest</MudText>
+        <MudText Typo="Typo.h4" GutterBottom="true">Manifest #@Id</MudText>
         <EditForm Model="@manifest" OnValidSubmit="Update">
-            <DataAnnotationsValidator />
+            <ObjectGraphDataAnnotationsValidator />
+            <MudText Color="Color.Error">
+                <ValidationSummary />
+            </MudText>
             <MudCard>
                 <MudGrid>
+                    <MudItem xs="12" md="4">
+                        <MudCard>
+                            <MudCardContent>
+                                <MudTextField Label="Code" @bind-Value="@manifest.Code" For="@(() => manifest.Code)"></MudTextField>
+                            </MudCardContent>
+                        </MudCard>
+                    </MudItem>
+                    <MudItem xs="0" md="8">
+                    </MudItem>
                     <MudItem xs="12" md="4">
                         <MudCard>
                             <MudCardContent>
@@ -95,11 +108,19 @@ else
                         </MudCard>
                     </MudItem>
 
-                    <MudItem xs="12" md="8">
+                    <MudItem xs="12">
                         <MudCard>
                             <MudCardContent>
                                 <MudText Typo="Typo.h6">Items</MudText>
                                 <MudTable Items="@manifest.Items" Dense="true" Hover="true" Striped="true">
+                                    <ColGroup>
+                                        <col style="width: 5%" />
+                                        <col style="width: 10%" />
+                                        <col style="width: 60%" />
+                                        <col style="width: 15%" />
+                                        <col style="width: 5%" />
+                                        <col style="width: 5%" />
+                                    </ColGroup>
                                     <HeaderContent>
                                         <MudTh>#</MudTh>
                                         <MudTh>State</MudTh>
@@ -115,7 +136,7 @@ else
                                         <MudTd DataLabel="Quantity">@item.Quantity</MudTd>
                                         <MudTd DataLabel="Unit">@item.Unit</MudTd>
                                         <MudTd>
-                                            <MudIconButton Icon="@Icons.Material.Filled.Delete" Color="Color.Error"></MudIconButton>
+                                            <MudIconButton Icon="@Icons.Material.Filled.Delete" Color="Color.Error" OnClick="(() => DeleteItem(item))"></MudIconButton>
                                         </MudTd>
                                     </RowTemplate>
                                     <RowEditingTemplate Context="item">
@@ -129,10 +150,10 @@ else
                                             </MudSelect>
                                         </MudTd>
                                         <MudTd DataLabel="Description">
-                                            <MudTextField @bind-Value="@item.Description" Margin="Margin.Dense" />
+                                            <MudTextField @bind-Value="@item.Description" Margin="Margin.Dense" For="@(() => item.Description)" />
                                         </MudTd>
                                         <MudTd DataLabel="Quantity">
-                                            <MudNumericField @bind-Value="@item.Quantity" Margin="Margin.Dense" />
+                                            <MudNumericField @bind-Value="@item.Quantity" Margin="Margin.Dense" For="@(() => item.Quantity)" />
                                         </MudTd>
                                         <MudTd DataLabel="Unit">
                                             <MudSelect @bind-Value="@item.Unit" Margin="Margin.Dense">
@@ -143,10 +164,10 @@ else
                                             </MudSelect>
                                         </MudTd>
                                     </RowEditingTemplate>
-                                    <FooterContent>
-                                        <MudButton ButtonType="ButtonType.Button" Variant="Variant.Filled" Color="Color.Info" FullWidth="true">Add</MudButton>
-                                    </FooterContent>
                                 </MudTable>
+                                <MudPaper Class="d-sm-flex justify-center">
+                                    <MudButton Color="Color.Success" OnClick="(() => CreateItemPlaceholder())">Add Item</MudButton>
+                                </MudPaper>
                             </MudCardContent>
                         </MudCard>
                     </MudItem>

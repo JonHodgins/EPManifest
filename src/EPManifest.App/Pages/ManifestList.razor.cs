@@ -15,9 +15,9 @@ namespace EPManifest.App.Pages
 {
     public partial class ManifestList : IDisposable
     {
-        private bool dense;
+        private bool dense = true;
         private bool hover = true;
-        private bool striped;
+        private bool striped = true;
         private bool bordered;
         private string searchString = "";
 

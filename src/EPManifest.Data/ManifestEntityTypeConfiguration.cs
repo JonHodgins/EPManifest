@@ -30,8 +30,7 @@ namespace EPManifest.Data
                     a.ToTable("ConsigneeAddresses");
                 });
 
-            //builder.HasOne("EPManifest.Core.Consignor", "Consignor")
-            //            .WithMany("Manifests");
+            builder.Property(m => m.Code).IsRequired(false).HasMaxLength(20);
 
             builder.HasOne("EPManifest.Core.Consignee", "Consignee")
                         .WithMany("Manifests")

@@ -10,6 +10,11 @@ namespace EPManifest.Data
 {
     public class EPManifestDbContext : DbContext
     {
+        //Required for EF Core Power Tools to generate a diagram
+        //public EPManifestDbContext()
+        //{
+        //}
+
         public EPManifestDbContext(DbContextOptions<EPManifestDbContext> options) : base(options)
         {
         }
@@ -19,24 +24,23 @@ namespace EPManifest.Data
         public DbSet<Consignee> Consignees { get; set; }
         public DbSet<Carrier> Carriers { get; set; }
         public DbSet<Address> Addresses { get; set; }
+        public DbSet<Item> Items { get; set; }
 
         internal Task<List<Consignor>> FirstOrDefaultAsync(int manifestId)
         {
             throw new NotImplementedException();
         }
 
-        public DbSet<Item> Items { get; set; }
-
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            //if (!optionsBuilder.IsConfigured)
-            //{
-            //    optionsBuilder
-            //        .UseSqlServer("Data Source= (localdb)\\MSSQLLocalDB; Initial Catalog=EPManifest")
-            //        .LogTo(Console.WriteLine, new[] {
-            //               DbLoggerCategory.Database.Command.Name }, LogLevel.Information)
-            //        .EnableSensitiveDataLogging();
-            //}
+            if (!optionsBuilder.IsConfigured)
+            {
+                optionsBuilder
+                    .UseSqlServer("Data Source= (localdb)\\MSSQLLocalDB; Initial Catalog=EPManifest")
+                    .LogTo(Console.WriteLine, new[] {
+                           DbLoggerCategory.Database.Command.Name }, LogLevel.Information)
+                    .EnableSensitiveDataLogging();
+            }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -44,8 +48,11 @@ namespace EPManifest.Data
             new ManifestEntityTypeConfiguration().Configure(modelBuilder.Entity<Manifest>());
             new ItemEntityTypeConfiguration().Configure(modelBuilder.Entity<Item>());
 
+            modelBuilder.Entity<Consignor>().Property(c => c.Code).IsRequired().HasMaxLength(20);
             modelBuilder.Entity<Consignor>().Property(c => c.Name).IsRequired().HasMaxLength(50);
+            modelBuilder.Entity<Consignee>().Property(c => c.Code).IsRequired().HasMaxLength(20);
             modelBuilder.Entity<Consignee>().Property(c => c.Name).IsRequired().HasMaxLength(50);
+            modelBuilder.Entity<Carrier>().Property(c => c.Code).IsRequired().HasMaxLength(20);
             modelBuilder.Entity<Carrier>().Property(c => c.Name).IsRequired().HasMaxLength(50);
 
             //var shipperRecieverList = new[] { "Whitehorse General Hospital", "Teslin Health Centre", "Frank's Disposal", "EQ Environmental", "Faro Nurse Station", };
@@ -72,23 +79,23 @@ namespace EPManifest.Data
 
             //modelBuilder.Entity<Carrier>().HasData(carriers.Generate(100));
 
-            modelBuilder.Entity<Consignor>().HasData(new Consignor { Id = 1, Name = "Carmacks Health Clinic" });
-            modelBuilder.Entity<Consignor>().HasData(new Consignor { Id = 2, Name = "Mayo Health Centre" });
-            modelBuilder.Entity<Consignor>().HasData(new Consignor { Id = 3, Name = "Whitehorse General Hospital" });
-            modelBuilder.Entity<Consignor>().HasData(new Consignor { Id = 4, Name = "Teslin Health Centre" });
-            modelBuilder.Entity<Consignor>().HasData(new Consignor { Id = 5, Name = "Whistle Bend Place" });
+            modelBuilder.Entity<Consignor>().HasData(new Consignor { Id = 1, Code = "", Name = "Carmacks Health Clinic" });
+            modelBuilder.Entity<Consignor>().HasData(new Consignor { Id = 2, Code = "", Name = "Mayo Health Centre" });
+            modelBuilder.Entity<Consignor>().HasData(new Consignor { Id = 3, Code = "", Name = "Whitehorse General Hospital" });
+            modelBuilder.Entity<Consignor>().HasData(new Consignor { Id = 4, Code = "", Name = "Teslin Health Centre" });
+            modelBuilder.Entity<Consignor>().HasData(new Consignor { Id = 5, Code = "", Name = "Whistle Bend Place" });
 
-            modelBuilder.Entity<Consignee>().HasData(new Consignee { Id = 1, Name = "Pete's Disposal" });
-            modelBuilder.Entity<Consignee>().HasData(new Consignee { Id = 2, Name = "ATI Environmental" });
-            modelBuilder.Entity<Consignee>().HasData(new Consignee { Id = 3, Name = "EQ Enviro" });
-            modelBuilder.Entity<Consignee>().HasData(new Consignee { Id = 4, Name = "Whitehorse Landfill" });
-            modelBuilder.Entity<Consignee>().HasData(new Consignee { Id = 5, Name = "YAE" });
+            modelBuilder.Entity<Consignee>().HasData(new Consignee { Id = 1, Code = "", Name = "Pete's Disposal" });
+            modelBuilder.Entity<Consignee>().HasData(new Consignee { Id = 2, Code = "", Name = "ATI Environmental" });
+            modelBuilder.Entity<Consignee>().HasData(new Consignee { Id = 3, Code = "", Name = "EQ Enviro" });
+            modelBuilder.Entity<Consignee>().HasData(new Consignee { Id = 4, Code = "", Name = "Whitehorse Landfill" });
+            modelBuilder.Entity<Consignee>().HasData(new Consignee { Id = 5, Code = "", Name = "YAE" });
 
-            modelBuilder.Entity<Carrier>().HasData(new Carrier { Id = 1, Name = "A1 Delivery" });
-            modelBuilder.Entity<Carrier>().HasData(new Carrier { Id = 2, Name = "Pacific Northwest Freight" });
-            modelBuilder.Entity<Carrier>().HasData(new Carrier { Id = 3, Name = "AP Freight" });
-            modelBuilder.Entity<Carrier>().HasData(new Carrier { Id = 4, Name = "NM Shipping Inc" });
-            modelBuilder.Entity<Carrier>().HasData(new Carrier { Id = 5, Name = "Frank's Freight" });
+            modelBuilder.Entity<Carrier>().HasData(new Carrier { Id = 1, Code = "", Name = "A1 Delivery" });
+            modelBuilder.Entity<Carrier>().HasData(new Carrier { Id = 2, Code = "", Name = "Pacific Northwest Freight" });
+            modelBuilder.Entity<Carrier>().HasData(new Carrier { Id = 3, Code = "", Name = "AP Freight" });
+            modelBuilder.Entity<Carrier>().HasData(new Carrier { Id = 4, Code = "", Name = "NM Shipping Inc" });
+            modelBuilder.Entity<Carrier>().HasData(new Carrier { Id = 5, Code = "", Name = "Frank's Freight" });
 
             //modelBuilder.Entity<Address>().HasData(new Address
             //{

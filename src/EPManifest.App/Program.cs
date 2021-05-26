@@ -48,7 +48,6 @@ namespace EPManifest.App
                     //Configure Serilog to log EF Core transactions
                     .MinimumLevel.Override("Microsoft.EntityFrameworkCore", LogEventLevel.Information)
                     .WriteTo.Console())
-                //.WriteTo.Console(new RenderedCompactJsonFormatter(), restrictedToMinimumLevel: LogEventLevel.Verbose))
                 .ConfigureWebHostDefaults(webBuilder => webBuilder.UseStartup<Startup>());
     }
 }

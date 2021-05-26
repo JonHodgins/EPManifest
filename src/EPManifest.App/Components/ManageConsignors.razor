@@ -1,0 +1,70 @@
+﻿@*<h3>Manage Consignors</h3>
+
+    @if (_isLoaded == false)
+    {
+        <p><em>Loading...</em></p>
+    }
+    else
+    {
+        <EditForm Model="@consignor" OnValidSubmit="Update">
+            <MudCard>
+                <MudCardContent>
+                    <MudText Typo="Typo.h6">Items</MudText>
+                    <MudTable Items="@consignor" Dense="true" Hover="true" Striped="true">
+                        <ColGroup>
+                            <col style="width: 15%" />
+                            <col style="width: 25%" />
+                            <col style="width: 60%" />
+                            <col style="width: 5%" />
+                        </ColGroup>
+                        <HeaderContent>
+                            <MudTh>Id</MudTh>
+                            <MudTh>Code</MudTh>
+                            <MudTh>Name</MudTh>
+                            <MudTh></MudTh>
+                        </HeaderContent>
+                        <RowTemplate>
+                            <MudTd DataLabel="Id">@</MudTd>
+                            <MudTd DataLabel="Code">@item.State</MudTd>
+                            <MudTd DataLabel="Name">@item.Description</MudTd>
+                            <MudTd>
+                                <MudIconButton Icon="@Icons.Material.Filled.Delete" Color="Color.Error" OnClick="(() => DeleteItem(item))"></MudIconButton>
+                            </MudTd>
+                        </RowTemplate>
+                        <RowEditingTemplate>
+                            <MudTd DataLabel="Id">@(manifest.Items.IndexOf(item) + 1)</MudTd>
+                            <MudTd DataLabel="State">
+                                <MudSelect @bind-Value="@item.State" Margin="Margin.Dense" Direction="Direction.Right">
+                                    @foreach (Core.State state in Enum.GetValues(typeof(Core.State)))
+                                        {
+                                        <MudSelectItem Value="@state">@state</MudSelectItem>
+                                        }
+                                </MudSelect>
+                            </MudTd>
+                            <MudTd DataLabel="Description">
+                                <MudTextField @bind-Value="@item.Description" Margin="Margin.Dense" For="@(() => item.Description)" />
+                            </MudTd>
+                            <MudTd DataLabel="Quantity">
+                                <MudNumericField @bind-Value="@item.Quantity" Margin="Margin.Dense" For="@(() => item.Quantity)" />
+                            </MudTd>
+                            <MudTd DataLabel="Unit">
+                                <MudSelect @bind-Value="@item.Unit" Margin="Margin.Dense" Direction="Direction.Left">
+                                    @foreach (Core.Unit unit in Enum.GetValues(typeof(Core.Unit)))
+                                        {
+                                        <MudSelectItem Value="@unit">@unit</MudSelectItem>
+                                        }
+                                </MudSelect>
+                            </MudTd>
+                        </RowEditingTemplate>
+                    </MudTable>
+                    <MudPaper Class="d-sm-flex justify-center">
+                        <MudIconButton Icon="@Icons.Material.Filled.Add" Color="Color.Success" OnClick="(() => CreatePlaceholder())"></MudIconButton>
+                    </MudPaper>
+                </MudCardContent>
+            </MudCard>
+        </EditForm>
+    }
+
+    @code {
+
+    }*@

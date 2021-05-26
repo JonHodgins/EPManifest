@@ -5,6 +5,7 @@ using EPManifest.Core;
 using EPManifest.Data;
 using EPManifest.Data.Repositories;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
@@ -71,12 +72,23 @@ namespace EPManifest.App.Pages
             }
         }
 
-        private async Task Update()
+        private async Task Update(EditContext context)
         {
             AddSelectedConsignorsToManifest();
             await repo.Update(manifest);
             Logger.LogInformation($"Successfully updated manifest id:{manifest.Id}");
             Navigation.NavigateTo("/manifests");
+        }
+
+        //The item methods modify the manifest field instead of the repository so that invalid changes are not persisted to the database.
+        private void CreateItemPlaceholder()
+        {
+            manifest.Items.Add(new Item() { Description = "", ManifestId = manifest.Id });
+        }
+
+        private void DeleteItem(Item item)
+        {
+            manifest.Items.Remove(item);
         }
 
         public void Dispose()
