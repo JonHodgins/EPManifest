@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EPManifest.Data.Repositories
 {
-    public class CarrierRepository : IDisposable
+    public class CarrierRepository : IDisposable, IEntityRepository<Carrier>
     {
         private readonly EPManifestDbContext _context;
 
@@ -19,7 +19,7 @@ namespace EPManifest.Data.Repositories
 
         public async Task<List<Carrier>> GetAllCarriers()
         {
-            return await _context.Carriers.OrderBy(c => c.Name).ToListAsync();
+            return await _context.Carriers.OrderBy(c => c.Name).Include(c => c.Manifests).ToListAsync();
         }
 
         public async Task<Carrier> Create(Carrier carrier)
@@ -44,6 +44,11 @@ namespace EPManifest.Data.Repositories
         public void Dispose()
         {
             _context.Dispose();
+        }
+
+        public Carrier GetById(int id)
+        {
+            return _context.Carriers.FirstOrDefault(c => c.Id == id);
         }
     }
 }

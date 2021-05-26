@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace EPManifest.Core
 {
-    public class Carrier
+    public class Carrier : ICompany
     {
         public int Id { get; set; }
 

@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace EPManifest.Core
 {
-    public class Consignor
+    public class Consignor : ICompany
     {
         public int Id { get; set; }
 

@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EPManifest.Data.Repositories
 {
-    public class ConsigneeRepository : IDisposable
+    public class ConsigneeRepository : IDisposable, IEntityRepository<Consignee>
     {
         private readonly EPManifestDbContext _context;
 
@@ -44,6 +44,11 @@ namespace EPManifest.Data.Repositories
         public void Dispose()
         {
             _context.Dispose();
+        }
+
+        public Consignee GetById(int id)
+        {
+            return _context.Consignees.FirstOrDefault(c => c.Id == id);
         }
     }
 }

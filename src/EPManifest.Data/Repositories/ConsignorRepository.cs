@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EPManifest.Data.Repositories
 {
-    public class ConsignorRepository : IDisposable
+    public class ConsignorRepository : IDisposable, IEntityRepository<Consignor>
     {
         private readonly EPManifestDbContext _context;
 
@@ -17,9 +17,9 @@ namespace EPManifest.Data.Repositories
             _context = context;
         }
 
-        public async Task<Consignor> GetById(int manifestId)
+        public Consignor GetById(int id)
         {
-            return await _context.Consignors.FirstOrDefaultAsync(c => c.Id == manifestId);
+            return _context.Consignors.FirstOrDefault(c => c.Id == id);
         }
 
         public async Task<Consignor> Create(Consignor consignor)
