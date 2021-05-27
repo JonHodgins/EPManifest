@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using MudBlazor;
 
-namespace EPManifest.App.Pages.Carriers
+namespace EPManifest.App.Pages.Consignees
 {
     public partial class Index : IDisposable
     {
@@ -33,15 +33,15 @@ namespace EPManifest.App.Pages.Carriers
         private bool _isLoaded;
         private bool _mayRender = true;
 
-        private CarrierRepository repo;
-        private List<Carrier> carriers;
+        private ConsigneeRepository repo;
+        private List<Consignee> consignees;
 
         protected override async Task OnInitializedAsync()
         {
             try
             {
-                repo = new CarrierRepository(ContextFactory.CreateDbContext());
-                carriers = await repo.GetAllCarriers();
+                repo = new ConsigneeRepository(ContextFactory.CreateDbContext());
+                consignees = await repo.GetAllConsignees();
             }
             finally
             {
@@ -51,18 +51,18 @@ namespace EPManifest.App.Pages.Carriers
             await base.OnInitializedAsync();
         }
 
-        private async Task Delete(Carrier carrier)
+        private async Task Delete(Consignee consignee)
         {
             var parameters = new DialogParameters
             {
-                { "ContentText", $"Are you sure that you want to delete carrier #{carrier.Id}? This action cannot be undone." },
+                { "ContentText", $"Are you sure that you want to delete consignee #{consignee.Id}? This action cannot be undone." },
                 { "ButtonText", "Delete" },
                 { "Color", Color.Error }
             };
 
             var options = new DialogOptions() { CloseButton = true, MaxWidth = MaxWidth.ExtraSmall };
 
-            var dialog = DialogService.Show<ConfirmationDialog>("Delete Carrier", parameters, options);
+            var dialog = DialogService.Show<ConfirmationDialog>("Delete consignee", parameters, options);
             var result = await dialog.Result;
 
             if (!result.Cancelled)
@@ -71,15 +71,15 @@ namespace EPManifest.App.Pages.Carriers
                 _mayRender = false;
                 try
                 {
-                    await repo.Delete(carrier);
-                    carriers.Remove(carrier);
-                    Logger.LogInformation($"Carrier: {carrier.Code} was deleted.");
-                    Snackbar.Add($"Deleted carrier id:{carrier.Id}", Severity.Success);
+                    await repo.Delete(consignee);
+                    consignees.Remove(consignee);
+                    Logger.LogInformation($"consignee: {consignee.Code} was deleted.");
+                    Snackbar.Add($"Deleted consignee id:{consignee.Id}", Severity.Success);
                 }
                 catch (DbUpdateException)
                 {
-                    Logger.LogInformation($"Failed to delete carrier id:{carrier.Id}.");
-                    Snackbar.Add($"Unable to delete carrier: {carrier.Code}, as it is associated with a manifest", Severity.Error);
+                    Logger.LogInformation($"Failed to delete consignee id:{consignee.Id}.");
+                    Snackbar.Add($"Unable to delete consignee: {consignee.Code}, as it is associated with a manifest", Severity.Error);
                 }
                 finally
                 {
@@ -88,17 +88,17 @@ namespace EPManifest.App.Pages.Carriers
             }
         }
 
-        private async Task Edit(Carrier carrier)
+        private async Task Edit(Consignee consignee)
         {
             var parameters = new DialogParameters
             {
                 { "ButtonText", "Update" },
                 { "Color", Color.Success },
-                { "Entity", carrier }
+                { "Entity", consignee }
             };
 
             var options = new DialogOptions() { CloseButton = true, MaxWidth = MaxWidth.ExtraSmall };
-            var dialog = DialogService.Show<EditDialog>("Edit Carrier", parameters, options);
+            var dialog = DialogService.Show<EditDialog>("Edit consignee", parameters, options);
             var result = await dialog.Result;
 
             if (!result.Cancelled)
@@ -107,9 +107,9 @@ namespace EPManifest.App.Pages.Carriers
                 _mayRender = false;
                 try
                 {
-                    carriers[carriers.IndexOf(carrier)].Code = ((Carrier)result.Data).Code;
-                    carriers[carriers.IndexOf(carrier)].Name = ((Carrier)result.Data).Name;
-                    Snackbar.Add($"Updated carrier id:{carrier.Id}", Severity.Success);
+                    consignees[consignees.IndexOf(consignee)].Code = ((Consignee)result.Data).Code;
+                    consignees[consignees.IndexOf(consignee)].Name = ((Consignee)result.Data).Name;
+                    Snackbar.Add($"Updated consignee id:{consignee.Id}", Severity.Success);
                 }
                 finally
                 {
@@ -124,11 +124,11 @@ namespace EPManifest.App.Pages.Carriers
             {
                 { "ButtonText", "Create" },
                 { "Color", Color.Success },
-                { "Entity", new Carrier() }
+                { "Entity", new Consignee() }
             };
 
             var options = new DialogOptions() { CloseButton = true, MaxWidth = MaxWidth.ExtraSmall };
-            var dialog = DialogService.Show<CreateDialog>("New Carrier", parameters, options);
+            var dialog = DialogService.Show<CreateDialog>("New consignee", parameters, options);
             var result = await dialog.Result;
 
             if (!result.Cancelled)
@@ -137,8 +137,8 @@ namespace EPManifest.App.Pages.Carriers
                 _mayRender = false;
                 try
                 {
-                    carriers.Add((Carrier)result.Data);
-                    Snackbar.Add($"Created carrier:{((Carrier)result.Data).Id}", Severity.Success);
+                    consignees.Add((Consignee)result.Data);
+                    Snackbar.Add($"Created consignee:{((Consignee)result.Data).Id}", Severity.Success);
                 }
                 finally
                 {

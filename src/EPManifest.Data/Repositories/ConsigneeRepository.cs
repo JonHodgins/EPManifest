@@ -19,7 +19,12 @@ namespace EPManifest.Data.Repositories
 
         public async Task<List<Consignee>> GetAllConsignees()
         {
-            return await _context.Consignees.OrderBy(c => c.Name).ToListAsync();
+            return await _context.Consignees.OrderBy(c => c.Name).Include(c => c.Manifests).ToListAsync();
+        }
+
+        public Consignee GetById(int id)
+        {
+            return _context.Consignees.FirstOrDefault(c => c.Id == id);
         }
 
         public async Task<Consignee> Create(Consignee consignee)
@@ -44,11 +49,6 @@ namespace EPManifest.Data.Repositories
         public void Dispose()
         {
             _context.Dispose();
-        }
-
-        public Consignee GetById(int id)
-        {
-            return _context.Consignees.FirstOrDefault(c => c.Id == id);
         }
     }
 }

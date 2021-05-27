@@ -17,6 +17,11 @@ namespace EPManifest.Data.Repositories
             _context = context;
         }
 
+        public async Task<List<Consignor>> GetAllConsignors()
+        {
+            return await _context.Consignors.OrderBy(c => c.Name).Include(c => c.Manifests).ToListAsync();
+        }
+
         public Consignor GetById(int id)
         {
             return _context.Consignors.FirstOrDefault(c => c.Id == id);

@@ -46,20 +46,6 @@ namespace EPManifest.Core
 
     public class Address
     {
-        //public Address(string addressLine1, string city, Provinces province, string postalCode, string addressLine2 = "", string phoneNumber = "")
-        //{
-        //    AddressLine1 = addressLine1;
-        //    AddressLine2 = addressLine2;
-        //    City = city;
-        //    Province = province;
-        //    PostalCode = postalCode;
-        //    PhoneNumber = phoneNumber;
-        //}
-
-        //private Address()
-        //{
-        //}
-
         [Required(ErrorMessage = "Address Line 1 is required"), MinLength(1)]
         public string AddressLine1 { get; set; }
 

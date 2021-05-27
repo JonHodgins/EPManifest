@@ -22,6 +22,11 @@ namespace EPManifest.Data.Repositories
             return await _context.Carriers.OrderBy(c => c.Name).Include(c => c.Manifests).ToListAsync();
         }
 
+        public Carrier GetById(int id)
+        {
+            return _context.Carriers.FirstOrDefault(c => c.Id == id);
+        }
+
         public async Task<Carrier> Create(Carrier carrier)
         {
             var newCarrier = _context.Carriers.Add(carrier);
@@ -44,11 +49,6 @@ namespace EPManifest.Data.Repositories
         public void Dispose()
         {
             _context.Dispose();
-        }
-
-        public Carrier GetById(int id)
-        {
-            return _context.Carriers.FirstOrDefault(c => c.Id == id);
         }
     }
 }
