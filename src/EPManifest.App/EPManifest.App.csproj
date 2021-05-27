@@ -19,4 +19,9 @@
     <ProjectReference Include="..\EPManifest.Data\EPManifest.Data.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Pages\Consignors\" />
+    <Folder Include="Pages\Consignees\" />
+  </ItemGroup>
+
 </Project>

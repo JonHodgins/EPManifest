@@ -11,9 +11,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using MudBlazor;
 
-namespace EPManifest.App.Pages
+namespace EPManifest.App.Pages.Manifests
 {
-    public partial class ManifestList : IDisposable
+    public partial class Index : IDisposable
     {
         private bool dense = true;
         private bool hover = true;
@@ -29,7 +29,7 @@ namespace EPManifest.App.Pages
         private bool _mayRender = true;
 
         [Inject]
-        public ILogger<ManifestList> Logger { get; set; }
+        public ILogger<Index> Logger { get; set; }
 
         [Inject]
         public IDbContextFactory<EPManifestDbContext> ContextFactory { get; set; }

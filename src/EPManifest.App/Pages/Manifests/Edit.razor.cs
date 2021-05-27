@@ -9,9 +9,9 @@ using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
-namespace EPManifest.App.Pages
+namespace EPManifest.App.Pages.Manifests
 {
-    public partial class EditManifest : IDisposable
+    public partial class Edit : IDisposable
     {
         private bool _isLoaded;
         private ManifestRepository repo;
@@ -26,7 +26,7 @@ namespace EPManifest.App.Pages
         public int Id { get; set; }
 
         [Inject]
-        public ILogger<EditManifest> Logger { get; set; }
+        public ILogger<Edit> Logger { get; set; }
 
         [Inject]
         public IDbContextFactory<EPManifestDbContext> ContextFactory { get; set; }

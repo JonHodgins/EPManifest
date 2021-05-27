@@ -11,12 +11,12 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using MudBlazor;
 
-namespace EPManifest.App.Pages
+namespace EPManifest.App.Pages.Carriers
 {
-    public partial class CarrierList : IDisposable
+    public partial class Index : IDisposable
     {
         [Inject]
-        public ILogger<CarrierList> Logger { get; set; }
+        public ILogger<Index> Logger { get; set; }
 
         [Inject]
         public IDbContextFactory<EPManifestDbContext> ContextFactory { get; set; }
@@ -102,7 +102,6 @@ namespace EPManifest.App.Pages
             var dialog = DialogService.Show<EditDialog>("Edit Carrier", parameters, options);
             var result = await dialog.Result;
 
-            //TODO: Changes are not visible on component re-render
             if (!result.Cancelled)
             {
                 //Prevents mid-method rerendering of the component, which avoids overlapping threads

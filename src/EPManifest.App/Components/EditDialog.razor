@@ -3,14 +3,15 @@
         <EditForm Model="@entity" OnValidSubmit="OnValidSubmit">
             <DataAnnotationsValidator />
             <ValidationSummary />
-            <MudItem>
-                <MudTextField Label="Code" @bind-Text="entity.Code" T="string"></MudTextField>
-            </MudItem>
+            <MudCard>
+                <MudItem>
+                    <MudTextField Label="Code" @bind-Text="entity.Code" T="string"></MudTextField>
+                </MudItem>
 
-            <MudItem>
-                <MudTextField Label="Name" @bind-Text="entity.Name" T="string"></MudTextField>
-            </MudItem>
-
+                <MudItem>
+                    <MudTextField Label="Name" @bind-Text="entity.Name" T="string"></MudTextField>
+                </MudItem>
+            </MudCard>
             <MudButton Color="Color.Secondary" OnClick="Cancel">Cancel</MudButton>
             <MudButton Color="@Color" ButtonType="ButtonType.Submit">@ButtonText</MudButton>
         </EditForm>
