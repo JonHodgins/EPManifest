@@ -117,12 +117,13 @@ namespace EPManifest.App.Pages.Manifests
 
         private bool FilterFunc(Manifest manifest)
         {
-            Logger.LogInformation("Executing FilterFunc");
             if (string.IsNullOrWhiteSpace(searchString))
                 return true;
             if (manifest.Consignors.Any(c => c.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase)))
                 return true;
             if (manifest.Consignee.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+                return true;
+            if (manifest.Carrier.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase))
                 return true;
             return false;
         }

@@ -8,22 +8,22 @@ else
 {
     <MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="mt-16">
 
-        <MudTable Items="@manifests" Dense="@dense" Hover="@hover" Bordered="@bordered" Striped="@striped" @bind-SelectedItem="selectedItem">
+        <MudTable Items="@manifests" Dense="@dense" Hover="@hover" Bordered="@bordered" Striped="@striped" @bind-SelectedItem="selectedItem" Filter="new Func<Core.Manifest,bool>(FilterFunc)">
             <ToolBarContent>
                 <MudText Typo="Typo.h6">Manifests</MudText>
                 <MudToolBarSpacer />
-                <MudTextField @bind-Value="searchString" Placeholder="Search by consignor or consignee" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+                <MudTextField @bind-Value="searchString" Placeholder="Search by consignor, consignee, or carrier" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
                 <MudToolBarSpacer />
                 <MudButton Color="Color.Success" Variant="Variant.Outlined" OnClick="(() => Create())">New Manifest</MudButton>
             </ToolBarContent>
             <ColGroup>
-                <col style=" width: 5%" />
-                <col style="width: 25%" />
-                <col style="width: 15%" />
-                <col style="width: 15%" />
-                <col style="width: 10%" />
-                <col style="width: 10%" />
                 <col style="width: 5%" />
+                <col style="width: 23%" />
+                <col style="width: 15%" />
+                <col style="width: 15%" />
+                <col style="width: 10%" />
+                <col style="width: 10%" />
+                <col style="width: 7%" />
                 <col style="width: 15%" />
             </ColGroup>
             <HeaderContent>
