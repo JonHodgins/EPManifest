@@ -7,7 +7,7 @@
 else
 {
     <MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="mt-16">
-        <MudText Typo="Typo.h3" GutterBottom="true">Edit manifest</MudText>
+        <MudText Typo="Typo.h3" GutterBottom="true">New manifest</MudText>
         <EditForm Model="@manifest" OnValidSubmit="CreateManifest">
             <ObjectGraphDataAnnotationsValidator />
             <MudText Color="Color.Error">
@@ -20,10 +20,10 @@ else
                             <MudTextField Label="Code" @bind-Value="@manifest.Code" For="@(() => manifest.Code)"></MudTextField>
                         </MudItem>
                         <MudItem xs="4">
-                            <MudDatePicker Label="Shipped On" @bind-Date="manifest.DateShipped" />
+                            <MudDatePicker Label="Shipped On" @bind-Date="manifest.DateShipped" Editable="true" />
                         </MudItem>
                         <MudItem xs="4">
-                            <MudDatePicker Label="Scheduled Arrival" @bind-Date="manifest.DateScheduledArrival" />
+                            <MudDatePicker Label="Scheduled Arrival" @bind-Date="manifest.DateScheduledArrival" Editable="true" />
                         </MudItem>
                     </MudGrid>
                 </MudItem>
@@ -59,7 +59,7 @@ else
                 <MudItem xs="12" sm="6" md="4">
                     <MudPaper Elevation="2" Class="pa-4">
                         <MudText Typo="Typo.h6">Consignee</MudText>
-                        <MudSelect T="int" Label="Consignee" @bind-Value="manifest.ConsigneeId">
+                        <MudSelect T="int" Label="Consignee" @bind-Value="manifest.ConsigneeId" Strict="true">
                             @foreach (var consignee in Consignees)
                             {
                                 <MudSelectItem Value="@consignee.Id">@consignee.Name</MudSelectItem>
@@ -89,7 +89,7 @@ else
                 <MudItem xs="12" sm="12" md="4">
                     <MudPaper Elevation="2" Class="pa-4">
                         <MudText Typo="Typo.h6">Carrier</MudText>
-                        <MudSelect T="int" Label="Carrier" @bind-Value="manifest.CarrierId">
+                        <MudSelect T="int" Label="Carrier" @bind-Value="manifest.CarrierId" Strict="true">
                             @foreach (var carrier in Carriers)
                             {
                                 <MudSelectItem Value="@carrier.Id">@carrier.Name</MudSelectItem>

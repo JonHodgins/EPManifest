@@ -42,7 +42,6 @@ namespace EPManifest.App.Pages.Manifests
             {
                 repo = new ManifestRepository(ContextFactory.CreateDbContext());
                 Consignors = await repo.GetAllConsignors();
-                PopulateSelectedConsignors();
                 Consignees = await repo.GetAllConsignees();
                 Carriers = await repo.GetAllCarriers();
                 manifest = new Manifest
@@ -60,11 +59,6 @@ namespace EPManifest.App.Pages.Manifests
             }
 
             await base.OnInitializedAsync();
-        }
-
-        private void PopulateSelectedConsignors()
-        {
-            SelectedConsignors.Add(Consignors[0]);
         }
 
         private void AddSelectedConsignorsToManifest()

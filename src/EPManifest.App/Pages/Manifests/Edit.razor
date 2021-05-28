@@ -20,16 +20,16 @@ else
                             <MudTextField Label="Code" @bind-Value="@manifest.Code" For="@(() => manifest.Code)"></MudTextField>
                         </MudItem>
                         <MudItem xs="4">
-                            <MudDatePicker Label="Shipped On" @bind-Date="manifest.DateShipped" />
+                            <MudDatePicker Label="Shipped On" @bind-Date="manifest.DateShipped" Editable="true" />
                         </MudItem>
                         <MudItem xs="4">
-                            <MudDatePicker Label="Scheduled Arrival" @bind-Date="manifest.DateScheduledArrival" />
+                            <MudDatePicker Label="Scheduled Arrival" @bind-Date="manifest.DateScheduledArrival" Editable="true" />
                         </MudItem>
                     </MudGrid>
                 </MudItem>
                 <MudItem xs="12" sm="6" md="4">
                     <MudPaper Elevation="2" Class="pa-4">
-                        <MudText Typo="Typo.h6">Consignor</MudText>
+                        <MudText Typo="Typo.h6">Consignor(s)</MudText>
                         <MudSelect T="@EPManifest.Core.Consignor" Label="Consignor(s)" @bind-SelectedValues="@SelectedConsignors" MultiSelection="true" ToStringFunc="c => c.Name">
                             @foreach (var consignor in Consignors)
                             {
