@@ -159,12 +159,9 @@ else
                         </MudPaper>
                     </MudPaper>
                 </MudItem>
-                <MudItem xs="12">
-                    @* TODO: Should not be using MudCardActions here, as there is no MudCard. Figure out how to align buttons without using this. *@
-                    <MudCardActions>
-                        <MudButton ButtonType="ButtonType.Button" Variant="Variant.Filled" Color="Color.Secondary" Link="/manifests">Cancel</MudButton>
-                        <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto">Update manifest</MudButton>
-                    </MudCardActions>
+                <MudItem xs="12" Class="d-flex justify-space-between py-2 px-3 mt-2">
+                    <MudButton ButtonType="ButtonType.Button" Variant="Variant.Filled" Color="Color.Secondary" Link="/manifests">Cancel</MudButton>
+                    <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto">Update manifest</MudButton>
                 </MudItem>
             </MudGrid>
         </EditForm>

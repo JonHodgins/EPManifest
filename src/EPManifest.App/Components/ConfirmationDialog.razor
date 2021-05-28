@@ -3,8 +3,10 @@
         <MudText>@ContentText</MudText>
     </DialogContent>
     <DialogActions>
-        <MudButton OnClick="Cancel">Cancel</MudButton>
-        <MudButton Color="@Color" Variant="Variant.Filled" OnClick="Submit">@ButtonText</MudButton>
+        <MudItem xs="12" Class="d-flex justify-space-between py-2 px-1 mt-2">
+            <MudButton OnClick="Cancel">Cancel</MudButton>
+            <MudButton Color="@Color" Variant="Variant.Filled" OnClick="Submit">@ButtonText</MudButton>
+        </MudItem>
     </DialogActions>
 </MudDialog>
 
