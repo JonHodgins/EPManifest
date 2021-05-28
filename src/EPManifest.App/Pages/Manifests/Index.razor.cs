@@ -103,8 +103,21 @@ namespace EPManifest.App.Pages.Manifests
             Navigation.NavigateTo("/manifests/edit/" + manifestId);
         }
 
+        private void Create()
+        {
+            Logger.LogInformation($"Started creating new manifest.");
+            Navigation.NavigateTo("/manifests/create/");
+        }
+
+        private void Details(int manifestId)
+        {
+            Logger.LogInformation($"Viewing manifest id:{manifestId}");
+            Navigation.NavigateTo("/manifests/details/" + manifestId);
+        }
+
         private bool FilterFunc(Manifest manifest)
         {
+            Logger.LogInformation("Executing FilterFunc");
             if (string.IsNullOrWhiteSpace(searchString))
                 return true;
             if (manifest.Consignors.Any(c => c.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase)))

@@ -9,7 +9,7 @@ namespace EPManifest.Core
 
         public string Code { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Consignor name required")]
         public string Name { get; set; }
 
         public List<Manifest> Manifests { get; set; } = new List<Manifest>();

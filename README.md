@@ -25,7 +25,7 @@ dotnet build
 
 ### Create and seed the database with test data
 
-Using the .NET CLI:
+.NET CLI:
 
 ```bash
 dotnet ef database update
@@ -39,7 +39,7 @@ Update-Database
 
 ### Run the app
 
-Using the .NET CLI:
+.NET CLI:
 
 ```bash
 dotnet run

@@ -1,0 +1,102 @@
+﻿@page "/manifests/details/{id:int}"
+
+@if (_isLoaded == false)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="mt-16">
+        <MudText Typo="Typo.h3" GutterBottom="true">Manifest details</MudText>
+        <MudGrid>
+            <MudItem xs="12">
+                <MudGrid>
+                    <MudItem xs="4">
+                        <MudField Label="Code">@manifest.Code</MudField>
+                    </MudItem>
+                    <MudItem xs="4">
+                        <MudField Label="Shipped On">@manifest.DateShipped?.Date.ToString("d")</MudField>
+                    </MudItem>
+                    <MudItem xs="4">
+                        <MudField Label="Scheduled Arrival">@manifest.DateScheduledArrival?.Date.ToString("d")</MudField>
+                    </MudItem>
+                </MudGrid>
+            </MudItem>
+            <MudItem xs="12" sm="6" md="4">
+                <MudPaper Elevation="2" Class="pa-4">
+                    <MudText Typo="Typo.h6">Consignor(s)</MudText>
+                    <MudField Label="Consignor(s)">@ConsignorsToString()</MudField>
+                    <MudField Label="Address Line 1">@manifest.ConsignorAddress.AddressLine1</MudField>
+                    <MudField Label="Address Line 2">@manifest.ConsignorAddress.AddressLine2</MudField>
+                    <MudField Label="City">@manifest.ConsignorAddress.City</MudField>
+                    <MudField Label="Province/Territory">@manifest.ConsignorAddress.Province</MudField>
+                    <MudField Label="Postal Code">@manifest.ConsignorAddress.PostalCode</MudField>
+                </MudPaper>
+            </MudItem>
+
+            <MudItem xs="12" sm="6" md="4">
+                <MudPaper Elevation="2" Class="pa-4">
+                    <MudText Typo="Typo.h6">Consignee</MudText>
+                    <MudField Label="Consignee">@manifest.Consignee.Name</MudField>
+                    <MudField Label="Address Line 1">
+                        @manifest.ConsigneeAddress.AddressLine1
+                    </MudField>
+                    <MudField Label="Address Line 2">
+                        @manifest.ConsigneeAddress.AddressLine2
+                    </MudField>
+                    <MudField Label="City">
+                        @manifest.ConsigneeAddress.City
+                    </MudField>
+                    <MudField Label="Province/Territory">
+                        @manifest.ConsigneeAddress.Province
+                    </MudField>
+                    <MudField Label="Postal Code">
+                        @manifest.ConsigneeAddress.PostalCode
+                    </MudField>
+                </MudPaper>
+            </MudItem>
+
+            <MudItem xs="12" sm="12" md="4">
+                <MudPaper Elevation="2" Class="pa-4">
+                    <MudText Typo="Typo.h6">Carrier</MudText>
+                    <MudField Label="Carrier">@manifest.Carrier.Name</MudField>
+                </MudPaper>
+            </MudItem>
+
+            <MudItem xs="12">
+                <MudPaper Elevation="2" Class="pa-4">
+                    <MudText Typo="Typo.h6">Items</MudText>
+                    <MudTable Items="@manifest.Items" Dense="true" Hover="true" Striped="true">
+                        <ColGroup>
+                            <col style="width: 5%" />
+                            <col style="width: 10%" />
+                            <col style="width: 60%" />
+                            <col style="width: 15%" />
+                            <col style="width: 5%" />
+                            <col style="width: 5%" />
+                        </ColGroup>
+                        <HeaderContent>
+                            <MudTh>#</MudTh>
+                            <MudTh>State</MudTh>
+                            <MudTh>Description</MudTh>
+                            <MudTh>Quantity</MudTh>
+                            <MudTh>Unit</MudTh>
+                            <MudTh></MudTh>
+                        </HeaderContent>
+                        <RowTemplate Context="item">
+                            <MudTd DataLabel="Id">@(manifest.Items.IndexOf(item) + 1)</MudTd>
+                            <MudTd DataLabel="State">@item.State</MudTd>
+                            <MudTd DataLabel="Description">@item.Description</MudTd>
+                            <MudTd DataLabel="Quantity">@item.Quantity</MudTd>
+                            <MudTd DataLabel="Unit">@item.Unit</MudTd>
+                        </RowTemplate>
+                    </MudTable>
+                </MudPaper>
+            </MudItem>
+            <MudItem xs="12" Class="d-flex justify-space-between py-2 px-3 mt-2">
+                <MudButton ButtonType="ButtonType.Button" Variant="Variant.Filled" Color="Color.Secondary" Link="/manifests">Back to manifests</MudButton>
+                <MudButton ButtonType="ButtonType.Button" Variant="Variant.Filled" Color="Color.Primary" EndIcon="@Icons.Material.Filled.Edit" OnClick="(() => Edit())">Edit</MudButton>
+            </MudItem>
+        </MudGrid>
+    </MudContainer>
+}
