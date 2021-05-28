@@ -20,9 +20,9 @@ else
                 <col style="width: 20%" />
             </ColGroup>
             <HeaderContent>
-                <MudTh>Code</MudTh>
-                <MudTh>Name</MudTh>
-                <MudTh># Manifests</MudTh>
+                <MudTh><MudTableSortLabel SortBy="new Func<Core.Consignor, object>(c => c.Code)">Code</MudTableSortLabel></MudTh>
+                <MudTh><MudTableSortLabel SortBy="new Func<Core.Consignor, object>(c => c.Name)">Name</MudTableSortLabel></MudTh>
+                <MudTh><MudTableSortLabel SortBy="new Func<Core.Consignor, object>(c => c.Manifests.Count)"># Manifests</MudTableSortLabel></MudTh>
                 <MudTh></MudTh>
             </HeaderContent>
             <RowTemplate>

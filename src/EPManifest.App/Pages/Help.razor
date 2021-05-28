@@ -1,40 +1,19 @@
 ﻿@page "/help"
 
-<MudContainer Class="mt-16 px-8" MaxWidth="MaxWidth.False">
+<MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="mt-16">
     <MudText Typo="Typo.h3" GutterBottom="true">Help</MudText>
-    <MudGrid>
-        <MudItem xs="12" sm="6" md="4">
-            <MudPaper Elevation="2" Class="pa-4" Style="height: 200px;"></MudPaper>
-        </MudItem>
-        <MudItem xs="12" sm="6" md="4">
-            <MudPaper Elevation="2" Class="pa-4" Style="height: 200px;"></MudPaper>
-        </MudItem>
-        <MudItem xs="12" sm="12" md="4">
-            <MudPaper Elevation="2" Class="pa-4" Style="height: 200px;"></MudPaper>
-        </MudItem>
-        <MudItem xs="12" sm="6">
-            <MudGrid>
-                <MudItem xs="12">
-                    <MudPaper Elevation="2" Class="pa-4" Style="height: 200px;"></MudPaper>
-                </MudItem>
-                <MudItem xs="12">
-                    <MudPaper Elevation="2" Class="pa-4" Style="height: 200px;"></MudPaper>
-                </MudItem>
-            </MudGrid>
-        </MudItem>
-        <MudItem xs="12" sm="6">
-            <MudPaper Elevation="2" Class="pa-4" Style="height: 100%"></MudPaper>
-        </MudItem>
-        <MudItem xs="12" sm="6" md="4">
-            <MudPaper Elevation="2" Class="pa-4" Style="height: 200px;"></MudPaper>
-        </MudItem>
-        <MudItem xs="12" sm="6" md="4">
-            <MudPaper Elevation="2" Class="pa-4" Style="height: 200px;"></MudPaper>
-        </MudItem>
-        <MudItem xs="12" sm="12" md="4">
-            <MudPaper Elevation="2" Class="pa-4" Style="height: 200px;"></MudPaper>
-        </MudItem>
-    </MudGrid>
+    <MudCard>
+        <MudSkeleton SkeletonType="SkeletonType.Rectangle" Height="200px" />
+        <MudCardContent>
+            <MudSkeleton Width="30%" Height="42px;" />
+            <MudSkeleton Width="80%" />
+            <MudSkeleton Width="100%" />
+        </MudCardContent>
+        <MudCardActions>
+            <MudSkeleton Width="64px" Height="40px" Class="ml-2" />
+            <MudSkeleton Width="105px" Height="40px" Class="ml-3" />
+        </MudCardActions>
+    </MudCard>
 </MudContainer>
 
 @code {

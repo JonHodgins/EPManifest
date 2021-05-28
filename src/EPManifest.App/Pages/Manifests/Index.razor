@@ -28,12 +28,12 @@ else
             </ColGroup>
             <HeaderContent>
                 <MudTh>Id</MudTh>
-                <MudTh>Consignor</MudTh>
-                <MudTh>Consignee</MudTh>
-                <MudTh><MudTableSortLabel SortBy="new Func<EPManifest.Core.Manifest, object>(m => m.Carrier.Name)">Carrier</MudTableSortLabel></MudTh>
-                <MudTh><MudTableSortLabel SortBy="new Func<EPManifest.Core.Manifest, object>(m => m.DateShipped?.ToString())">Shipped</MudTableSortLabel></MudTh>
-                <MudTh>Scheduled Arrival</MudTh>
-                <MudTh># Items</MudTh>
+                <MudTh>Consignor(s)</MudTh>
+                <MudTh><MudTableSortLabel SortBy="new Func<Core.Manifest, object>(m => m.Consignee.Name)">Consignee</MudTableSortLabel></MudTh>
+                <MudTh><MudTableSortLabel SortBy="new Func<Core.Manifest, object>(m => m.Carrier.Name)">Carrier</MudTableSortLabel></MudTh>
+                <MudTh><MudTableSortLabel SortBy="new Func<Core.Manifest, object>(m => m.DateShipped?.ToString())">Shipped On</MudTableSortLabel></MudTh>
+                <MudTh><MudTableSortLabel SortBy="new Func<Core.Manifest, object>(m => m.DateScheduledArrival?.ToString())">Scheduled Arrival</MudTableSortLabel></MudTh>
+                <MudTh><MudTableSortLabel SortBy="new Func<Core.Manifest, object>(m => m.Items.Count)"># Items</MudTableSortLabel></MudTh>
                 <MudTh></MudTh>
             </HeaderContent>
             <RowTemplate>
