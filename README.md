@@ -5,12 +5,13 @@
 * Web Framework: ASP.NET Core 5
 * UI Framework: Blazor Server
 * UI Component Library: MudBlazor
+* Data Access: Entity Framework Core
 * Data Store: SQL Server
 * Logging: Serilog
 
 ## How do I run this?
 
-See <https://docs.microsoft.com/en-us/ef/core/managing-schemas/migrations> if you are unfamiliar with Entity Framework Core.
+See <https://docs.microsoft.com/en-us/ef/core/managing-schemas/migrations> if you are new to Entity Framework Core.
 
 Ensure you have LocalDB installed, or open appsettings.json and modify the data source of the "EPManifestContext" connection string.
 
