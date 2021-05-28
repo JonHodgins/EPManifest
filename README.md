@@ -2,11 +2,11 @@
 
 ## Stack
 
-Web Framework: ASP.NET Core 5
-UI Framework: Blazor Server
-UI Component Library: MudBlazor
-Data Store: SQL Server
-Logging: Serilog
+* Web Framework: ASP.NET Core 5
+* UI Framework: Blazor Server
+* UI Component Library: MudBlazor
+* Data Store: SQL Server
+* Logging: Serilog
 
 ## How do I run this?
 
