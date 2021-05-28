@@ -8,178 +8,165 @@ else
 {
     <MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="mt-16">
         <MudText Typo="Typo.h3" GutterBottom="true">Edit manifest</MudText>
-        <MudText Typo="Typo.h4" GutterBottom="true">Manifest #@Id</MudText>
         <EditForm Model="@manifest" OnValidSubmit="Update">
             <ObjectGraphDataAnnotationsValidator />
             <MudText Color="Color.Error">
                 <ValidationSummary />
             </MudText>
-            <MudCard>
-                <MudGrid>
-                    <MudItem xs="12" md="4">
-                        <MudCard>
-                            <MudCardContent>
-                                <MudTextField Label="Code" @bind-Value="@manifest.Code" For="@(() => manifest.Code)"></MudTextField>
-                            </MudCardContent>
-                        </MudCard>
-                    </MudItem>
-                    <MudItem xs="0" md="8">
-                    </MudItem>
-                    <MudItem xs="12" md="4">
-                        <MudCard>
-                            <MudCardContent>
-                                <MudText Typo="Typo.h6">Consignor</MudText>
-                                <MudSelect T="@EPManifest.Core.Consignor" Label="Consignor(s)" @bind-SelectedValues="@SelectedConsignors" MultiSelection="true" ToStringFunc="c => c.Name">
-                                    @foreach (var consignor in Consignors)
-                                    {
-                                        <MudSelectItem Value="@consignor">@consignor.Name</MudSelectItem>
-                                    }
-                                </MudSelect>
-                                <MudTextField Label="Address Line 1" @bind-Value="@manifest.ConsignorAddress.AddressLine1"
-                                              For="@(() => manifest.ConsignorAddress.AddressLine1)">
-                                </MudTextField>
-                                <MudTextField Label="Address Line 2" @bind-Value="@manifest.ConsignorAddress.AddressLine2"
-                                              For="@(() => manifest.ConsignorAddress.AddressLine2)">
-                                </MudTextField>
-                                <MudTextField Label="City" @bind-Value="@manifest.ConsignorAddress.City"
-                                              For="@(() => manifest.ConsignorAddress.City)">
-                                </MudTextField>
-                                <MudSelect Label="Province/Territory" @bind-Value="@manifest.ConsignorAddress.Province">
-                                    @foreach (Core.Provinces province in Enum.GetValues(typeof(Core.Provinces)))
-                                        {
-                                        <MudSelectItem Value="@province">@province</MudSelectItem>
-                                        }
-                                </MudSelect>
-                                <MudTextField Label="Postal Code" @bind-Value="@manifest.ConsignorAddress.PostalCode"
-                                              For="@(() => manifest.ConsignorAddress.PostalCode)">
-                                </MudTextField>
-                            </MudCardContent>
-                        </MudCard>
-                    </MudItem>
-                    <MudItem xs="12" md="4">
-                        <MudCard>
-                            <MudCardContent>
-                                <MudText Typo="Typo.h6">Consignee</MudText>
-                                <MudSelect T="int" Label="Consignee" @bind-Value="manifest.ConsigneeId">
-                                    @foreach (var consignee in Consignees)
-                                    {
-                                        <MudSelectItem Value="@consignee.Id">@consignee.Name</MudSelectItem>
-                                    }
-                                </MudSelect>
-                                <MudTextField Label="Address Line 1" @bind-Value="@manifest.ConsigneeAddress.AddressLine1"
-                                              For="@(() => manifest.ConsigneeAddress.AddressLine1)">
-                                </MudTextField>
-                                <MudTextField Label="Address Line 2" @bind-Value="@manifest.ConsigneeAddress.AddressLine2"
-                                              For="@(() => manifest.ConsigneeAddress.AddressLine2)">
-                                </MudTextField>
-                                <MudTextField Label="City" @bind-Value="@manifest.ConsigneeAddress.City"
-                                              For="@(() => manifest.ConsigneeAddress.City)">
-                                </MudTextField>
-                                <MudSelect Label="Province/Territory" @bind-Value="@manifest.ConsigneeAddress.Province">
-                                    @foreach (Core.Provinces province in Enum.GetValues(typeof(Core.Provinces)))
-                                        {
-                                        <MudSelectItem Value="@province">@province</MudSelectItem>
-                                        }
-                                </MudSelect>
-                                <MudTextField Label="Postal Code" @bind-Value="@manifest.ConsigneeAddress.PostalCode"
-                                              For="@(() => manifest.ConsigneeAddress.PostalCode)">
-                                </MudTextField>
-                            </MudCardContent>
-                        </MudCard>
-                    </MudItem>
-                    <MudItem xs="12" md="4">
-                        <MudCard>
-                            <MudCardContent>
-                                <MudText Typo="Typo.h6">Carrier</MudText>
-                                <MudSelect T="int" Label="Carrier" @bind-Value="manifest.CarrierId">
-                                    @foreach (var carrier in Carriers)
-                                    {
-                                        <MudSelectItem Value="@carrier.Id">@carrier.Name</MudSelectItem>
-                                    }
-                                </MudSelect>
-                            </MudCardContent>
-                        </MudCard>
-                        <MudCard>
-                            <MudCardContent>
-                                <MudText Typo="Typo.h6">Shipping Dates</MudText>
-                                <MudDatePicker Label="Shipped On" @bind-Date="manifest.DateShipped" />
-                                <MudDatePicker Label="Scheduled Arrival" @bind-Date="manifest.DateScheduledArrival" />
-                            </MudCardContent>
-                        </MudCard>
-                    </MudItem>
+            <MudGrid>
+                <MudItem xs="12">
+                    <MudGrid>
+                        <MudItem xs="4">
+                            <MudTextField Label="Code" @bind-Value="@manifest.Code" For="@(() => manifest.Code)"></MudTextField>
+                        </MudItem>
+                        <MudItem xs="4">
+                            <MudDatePicker Label="Shipped On" @bind-Date="manifest.DateShipped" />
+                        </MudItem>
+                        <MudItem xs="4">
+                            <MudDatePicker Label="Scheduled Arrival" @bind-Date="manifest.DateScheduledArrival" />
+                        </MudItem>
+                    </MudGrid>
+                </MudItem>
+                <MudItem xs="12" sm="6" md="4">
+                    <MudPaper Elevation="2" Class="pa-4">
+                        <MudText Typo="Typo.h6">Consignor</MudText>
+                        <MudSelect T="@EPManifest.Core.Consignor" Label="Consignor(s)" @bind-SelectedValues="@SelectedConsignors" MultiSelection="true" ToStringFunc="c => c.Name">
+                            @foreach (var consignor in Consignors)
+                            {
+                                <MudSelectItem Value="@consignor">@consignor.Name</MudSelectItem>
+                            }
+                        </MudSelect>
+                        <MudTextField Label="Address Line 1" @bind-Value="@manifest.ConsignorAddress.AddressLine1"
+                                      For="@(() => manifest.ConsignorAddress.AddressLine1)">
+                        </MudTextField>
+                        <MudTextField Label="Address Line 2" @bind-Value="@manifest.ConsignorAddress.AddressLine2"
+                                      For="@(() => manifest.ConsignorAddress.AddressLine2)">
+                        </MudTextField>
+                        <MudTextField Label="City" @bind-Value="@manifest.ConsignorAddress.City"
+                                      For="@(() => manifest.ConsignorAddress.City)">
+                        </MudTextField>
+                        <MudSelect Label="Province/Territory" @bind-Value="@manifest.ConsignorAddress.Province">
+                            @foreach (Core.Provinces province in Enum.GetValues(typeof(Core.Provinces)))
+                                {
+                                <MudSelectItem Value="@province">@province</MudSelectItem>
+                                }
+                        </MudSelect>
+                        <MudTextField Label="Postal Code" @bind-Value="@manifest.ConsignorAddress.PostalCode"
+                                      For="@(() => manifest.ConsignorAddress.PostalCode)">
+                        </MudTextField>
+                    </MudPaper>
+                </MudItem>
+                <MudItem xs="12" sm="6" md="4">
+                    <MudPaper Elevation="2" Class="pa-4">
+                        <MudText Typo="Typo.h6">Consignee</MudText>
+                        <MudSelect T="int" Label="Consignee" @bind-Value="manifest.ConsigneeId">
+                            @foreach (var consignee in Consignees)
+                            {
+                                <MudSelectItem Value="@consignee.Id">@consignee.Name</MudSelectItem>
+                            }
+                        </MudSelect>
+                        <MudTextField Label="Address Line 1" @bind-Value="@manifest.ConsigneeAddress.AddressLine1"
+                                      For="@(() => manifest.ConsigneeAddress.AddressLine1)">
+                        </MudTextField>
+                        <MudTextField Label="Address Line 2" @bind-Value="@manifest.ConsigneeAddress.AddressLine2"
+                                      For="@(() => manifest.ConsigneeAddress.AddressLine2)">
+                        </MudTextField>
+                        <MudTextField Label="City" @bind-Value="@manifest.ConsigneeAddress.City"
+                                      For="@(() => manifest.ConsigneeAddress.City)">
+                        </MudTextField>
+                        <MudSelect Label="Province/Territory" @bind-Value="@manifest.ConsigneeAddress.Province">
+                            @foreach (Core.Provinces province in Enum.GetValues(typeof(Core.Provinces)))
+                                {
+                                <MudSelectItem Value="@province">@province</MudSelectItem>
+                                }
+                        </MudSelect>
+                        <MudTextField Label="Postal Code" @bind-Value="@manifest.ConsigneeAddress.PostalCode"
+                                      For="@(() => manifest.ConsigneeAddress.PostalCode)">
+                        </MudTextField>
+                    </MudPaper>
+                </MudItem>
 
-                    <MudItem xs="12">
-                        <MudCard>
-                            <MudCardContent>
-                                <MudText Typo="Typo.h6">Items</MudText>
-                                <MudTable Items="@manifest.Items" Dense="true" Hover="true" Striped="true">
-                                    <ColGroup>
-                                        <col style="width: 5%" />
-                                        <col style="width: 10%" />
-                                        <col style="width: 60%" />
-                                        <col style="width: 15%" />
-                                        <col style="width: 5%" />
-                                        <col style="width: 5%" />
-                                    </ColGroup>
-                                    <HeaderContent>
-                                        <MudTh>#</MudTh>
-                                        <MudTh>State</MudTh>
-                                        <MudTh>Description</MudTh>
-                                        <MudTh>Quantity</MudTh>
-                                        <MudTh>Unit</MudTh>
-                                        <MudTh></MudTh>
-                                    </HeaderContent>
-                                    <RowTemplate Context="item">
-                                        <MudTd DataLabel="Id">@(manifest.Items.IndexOf(item) + 1)</MudTd>
-                                        <MudTd DataLabel="State">@item.State</MudTd>
-                                        <MudTd DataLabel="Description">@item.Description</MudTd>
-                                        <MudTd DataLabel="Quantity">@item.Quantity</MudTd>
-                                        <MudTd DataLabel="Unit">@item.Unit</MudTd>
-                                        <MudTd>
-                                            <MudIconButton Icon="@Icons.Material.Filled.Delete" Color="Color.Error" OnClick="(() => DeleteItem(item))"></MudIconButton>
-                                        </MudTd>
-                                    </RowTemplate>
-                                    <RowEditingTemplate Context="item">
-                                        <MudTd DataLabel="Id">@(manifest.Items.IndexOf(item) + 1)</MudTd>
-                                        <MudTd DataLabel="State">
-                                            <MudSelect @bind-Value="@item.State" Margin="Margin.Dense">
-                                                @foreach (Core.State state in Enum.GetValues(typeof(Core.State)))
-                                                    {
-                                                    <MudSelectItem Value="@state">@state</MudSelectItem>
-                                                    }
-                                            </MudSelect>
-                                        </MudTd>
-                                        <MudTd DataLabel="Description">
-                                            <MudTextField @bind-Value="@item.Description" Margin="Margin.Dense" For="@(() => item.Description)" />
-                                        </MudTd>
-                                        <MudTd DataLabel="Quantity">
-                                            <MudNumericField @bind-Value="@item.Quantity" Margin="Margin.Dense" For="@(() => item.Quantity)" />
-                                        </MudTd>
-                                        <MudTd DataLabel="Unit">
-                                            <MudSelect @bind-Value="@item.Unit" Margin="Margin.Dense">
-                                                @foreach (Core.Unit unit in Enum.GetValues(typeof(Core.Unit)))
-                                                    {
-                                                    <MudSelectItem Value="@unit">@unit</MudSelectItem>
-                                                    }
-                                            </MudSelect>
-                                        </MudTd>
-                                    </RowEditingTemplate>
-                                </MudTable>
-                                <MudPaper Class="d-sm-flex justify-center">
-                                    <MudButton Color="Color.Success" OnClick="(() => CreateItemPlaceholder())">Add Item</MudButton>
-                                </MudPaper>
-                            </MudCardContent>
-                        </MudCard>
-                    </MudItem>
+                <MudItem xs="12" sm="12" md="4">
+                    <MudPaper Elevation="2" Class="pa-4">
+                        <MudText Typo="Typo.h6">Carrier</MudText>
+                        <MudSelect T="int" Label="Carrier" @bind-Value="manifest.CarrierId">
+                            @foreach (var carrier in Carriers)
+                            {
+                                <MudSelectItem Value="@carrier.Id">@carrier.Name</MudSelectItem>
+                            }
+                        </MudSelect>
+                    </MudPaper>
+                </MudItem>
 
-                    <MudItem xs="12">
-                        <MudCardActions>
-                            <MudButton ButtonType="ButtonType.Button" Variant="Variant.Filled" Color="Color.Secondary" Link="/manifests">Cancel</MudButton>
-                            <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto">Update manifest</MudButton>
-                        </MudCardActions>
-                    </MudItem>
-                </MudGrid>
-            </MudCard>
+                <MudItem xs="12">
+                    <MudPaper Elevation="2" Class="pa-4">
+                        <MudText Typo="Typo.h6">Items</MudText>
+                        <MudTable Items="@manifest.Items" Dense="true" Hover="true" Striped="true">
+                            <ColGroup>
+                                <col style="width: 5%" />
+                                <col style="width: 10%" />
+                                <col style="width: 60%" />
+                                <col style="width: 15%" />
+                                <col style="width: 5%" />
+                                <col style="width: 5%" />
+                            </ColGroup>
+                            <HeaderContent>
+                                <MudTh>#</MudTh>
+                                <MudTh>State</MudTh>
+                                <MudTh>Description</MudTh>
+                                <MudTh>Quantity</MudTh>
+                                <MudTh>Unit</MudTh>
+                                <MudTh></MudTh>
+                            </HeaderContent>
+                            <RowTemplate Context="item">
+                                <MudTd DataLabel="Id">@(manifest.Items.IndexOf(item) + 1)</MudTd>
+                                <MudTd DataLabel="State">@item.State</MudTd>
+                                <MudTd DataLabel="Description">@item.Description</MudTd>
+                                <MudTd DataLabel="Quantity">@item.Quantity</MudTd>
+                                <MudTd DataLabel="Unit">@item.Unit</MudTd>
+                                <MudTd>
+                                    <MudIconButton Icon="@Icons.Material.Filled.Delete" Color="Color.Error" OnClick="(() => DeleteItem(item))"></MudIconButton>
+                                </MudTd>
+                            </RowTemplate>
+                            <RowEditingTemplate Context="item">
+                                <MudTd DataLabel="Id">@(manifest.Items.IndexOf(item) + 1)</MudTd>
+                                <MudTd DataLabel="State">
+                                    <MudSelect @bind-Value="@item.State" Margin="Margin.Dense">
+                                        @foreach (Core.State state in Enum.GetValues(typeof(Core.State)))
+                                            {
+                                            <MudSelectItem Value="@state">@state</MudSelectItem>
+                                            }
+                                    </MudSelect>
+                                </MudTd>
+                                <MudTd DataLabel="Description">
+                                    <MudTextField @bind-Value="@item.Description" Margin="Margin.Dense" For="@(() => item.Description)" />
+                                </MudTd>
+                                <MudTd DataLabel="Quantity">
+                                    <MudNumericField @bind-Value="@item.Quantity" Margin="Margin.Dense" For="@(() => item.Quantity)" />
+                                </MudTd>
+                                <MudTd DataLabel="Unit">
+                                    <MudSelect @bind-Value="@item.Unit" Margin="Margin.Dense">
+                                        @foreach (Core.Unit unit in Enum.GetValues(typeof(Core.Unit)))
+                                            {
+                                            <MudSelectItem Value="@unit">@unit</MudSelectItem>
+                                            }
+                                    </MudSelect>
+                                </MudTd>
+                            </RowEditingTemplate>
+                        </MudTable>
+                        <MudPaper Class="d-sm-flex justify-center">
+                            <MudButton Color="Color.Success" OnClick="(() => CreateItemPlaceholder())">Add Item</MudButton>
+                        </MudPaper>
+                    </MudPaper>
+                </MudItem>
+                <MudItem xs="12">
+                    @* TODO: Should not be using MudCardActions here, as there is no MudCard. Figure out how to align buttons without using this. *@
+                    <MudCardActions>
+                        <MudButton ButtonType="ButtonType.Button" Variant="Variant.Filled" Color="Color.Secondary" Link="/manifests">Cancel</MudButton>
+                        <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto">Update manifest</MudButton>
+                    </MudCardActions>
+                </MudItem>
+            </MudGrid>
         </EditForm>
     </MudContainer>
 }
