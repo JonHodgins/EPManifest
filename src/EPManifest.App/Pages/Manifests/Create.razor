@@ -30,7 +30,8 @@ else
                 <MudItem xs="12" sm="6" md="4">
                     <MudPaper Elevation="2" Class="pa-4">
                         <MudText Typo="Typo.h6">Consignor</MudText>
-                        <MudSelect T="@EPManifest.Core.Consignor" Label="Consignor(s)" @bind-SelectedValues="@SelectedConsignors" MultiSelection="true" ToStringFunc="c => c.Name">
+                        <MudSelect T="@EPManifest.Core.Consignor" Label="Consignor(s)" @bind-SelectedValues="@SelectedConsignors" MultiSelection="true"
+                                   ToStringFunc="c => c.Name">
                             @foreach (var consignor in Consignors)
                             {
                                 <MudSelectItem Value="@consignor">@consignor.Name</MudSelectItem>
@@ -55,12 +56,6 @@ else
                 <MudItem xs="12" sm="6" md="4">
                     <MudPaper Elevation="2" Class="pa-4">
                         <MudText Typo="Typo.h6">Consignee</MudText>
-                        @*<MudSelect T="int?" Label="Consignee" @bind-Value="manifest.ConsigneeId">
-            @foreach (var consignee in Consignees)
-            {
-                <MudSelectItem Value="@consignee.Id">@consignee.Name</MudSelectItem>
-            }
-        </MudSelect>*@
                         <MudAutocomplete T="Core.Consignee" Label="Consignee" @bind-Value="manifest.Consignee" SearchFunc="repo.SearchConsignees"
                                          ToStringFunc="@(c => c == null?null : c.Name)"
                                          ResetValueOnEmptyText="true"

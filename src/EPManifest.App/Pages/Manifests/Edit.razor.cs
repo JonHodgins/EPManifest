@@ -35,7 +35,20 @@ namespace EPManifest.App.Pages.Manifests
         [Inject]
         public NavigationManager Navigation { get; set; }
 
-        private HashSet<Consignor> SelectedConsignors { get; set; } = new HashSet<Consignor>();
+        private HashSet<Consignor> selectedConsignors;
+        private HashSet<Consignor> SelectedConsignors
+        {
+            get => selectedConsignors;
+            set
+            {
+                selectedConsignors = value;
+                manifest.Consignors.RemoveAll(_ => true);
+                foreach (var consignor in selectedConsignors)
+                {
+                    manifest.Consignors.Add(consignor);
+                }
+            }
+        }
 
         protected override async Task OnInitializedAsync()
         {
@@ -69,18 +82,8 @@ namespace EPManifest.App.Pages.Manifests
             }
         }
 
-        private void AddSelectedConsignorsToManifest()
-        {
-            manifest.Consignors.RemoveAll(_ => true);
-            foreach (var consignor in SelectedConsignors)
-            {
-                manifest.Consignors.Add(consignor);
-            }
-        }
-
         private async Task Update(EditContext context)
         {
-            AddSelectedConsignorsToManifest();
             await repo.Update(manifest);
             Logger.LogInformation($"Successfully updated manifest id:{manifest.Id}");
             Navigation.NavigateTo("/manifests");

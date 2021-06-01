@@ -30,7 +30,8 @@ else
                 <MudItem xs="12" sm="6" md="4">
                     <MudPaper Elevation="2" Class="pa-4">
                         <MudText Typo="Typo.h6">Consignor(s)</MudText>
-                        <MudSelect T="@EPManifest.Core.Consignor" Label="Consignor(s)" @bind-SelectedValues="@SelectedConsignors" MultiSelection="true" ToStringFunc="c => c.Name">
+                        <MudSelect T="@EPManifest.Core.Consignor" Label="Consignor(s)" @bind-SelectedValues="@SelectedConsignors" MultiSelection="true"
+                                   ToStringFunc="c => c.Name">
                             @foreach (var consignor in Consignors)
                             {
                                 <MudSelectItem Value="@consignor">@consignor.Name</MudSelectItem>

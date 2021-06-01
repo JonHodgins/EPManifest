@@ -17,6 +17,7 @@ namespace EPManifest.App.Pages.Manifests
         private bool _isLoaded;
         private ManifestRepository repo;
         private Manifest manifest;
+
         public IList<Consignor> Consignors { get; set; }
 
         private readonly Provinces[] provinces = (Provinces[])Enum.GetValues(typeof(Provinces));
@@ -33,7 +34,21 @@ namespace EPManifest.App.Pages.Manifests
         [Inject]
         public NavigationManager Navigation { get; set; }
 
-        private HashSet<Consignor> SelectedConsignors { get; set; } = new HashSet<Consignor>();
+
+        private HashSet<Consignor> selectedConsignors;
+        private HashSet<Consignor> SelectedConsignors
+        {
+            get => selectedConsignors;
+            set
+            {
+                selectedConsignors = value;
+                manifest.Consignors.RemoveAll(_ => true);
+                foreach (var consignor in selectedConsignors)
+                {
+                    manifest.Consignors.Add(consignor);
+                }
+            }
+        }
 
         protected override async Task OnInitializedAsync()
         {
@@ -61,18 +76,8 @@ namespace EPManifest.App.Pages.Manifests
             return provinces.Where(p => p.ToString().StartsWith(value, StringComparison.InvariantCultureIgnoreCase));
         }
 
-        private void AddSelectedConsignorsToManifest()
-        {
-            manifest.Consignors.RemoveAll(_ => true);
-            foreach (var consignor in SelectedConsignors)
-            {
-                manifest.Consignors.Add(consignor);
-            }
-        }
-
         private async Task CreateManifest(EditContext context)
         {
-            AddSelectedConsignorsToManifest();
             await repo.Create(manifest);
             Logger.LogInformation($"Successfully created manifest id:{manifest.Id}");
             Navigation.NavigateTo("/manifests");

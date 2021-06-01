@@ -16,7 +16,7 @@ namespace EPManifest.Core
 
         public DateTime? DateScheduledArrival { get; set; }
 
-        [ValidateComplexType]
+        [ValidateComplexType, NotNullOrEmptyCollection(ErrorMessage = "Consignors is required")]
         public List<Consignor> Consignors { get; set; } = new List<Consignor>();
 
         [ValidateComplexType, Required(ErrorMessage = "Consignee is required")]
