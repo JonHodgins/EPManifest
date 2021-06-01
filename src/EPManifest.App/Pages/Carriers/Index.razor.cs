@@ -55,7 +55,7 @@ namespace EPManifest.App.Pages.Carriers
         {
             var parameters = new DialogParameters
             {
-                { "ContentText", $"Are you sure that you want to delete carrier #{carrier.Id}? This action cannot be undone." },
+                { "ContentText", $"Are you sure that you want to delete Carrier: {carrier.Name}? This action cannot be undone." },
                 { "ButtonText", "Delete" },
                 { "Color", Color.Error }
             };

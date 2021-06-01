@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Bogus;
+using CountryData.Bogus;
 using EPManifest.Core;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -69,7 +70,7 @@ namespace EPManifest.Data
             modelBuilder.Entity<Carrier>().HasData(new Carrier { Id = 5, Code = "60-05", Name = "Frank's Freight" });
 
             var manifestId = 1;
-            var manifests = new Faker<Manifest>()
+            var manifests = new Faker<Manifest>("en_CA")
                 .RuleFor(m => m.Id, _ => manifestId++)
                 .RuleFor(m => m.Code, _ => "YT" + _.Random.Int(10000, 99999) + "-" + _.Random.Number(1))
                 .RuleFor(m => m.ConsigneeId, _ => _.Random.Number(1, 5))
@@ -78,7 +79,7 @@ namespace EPManifest.Data
                 .RuleFor(m => m.DateScheduledArrival, _ => _.Date.Between(new DateTime(2021, 09, 01), new DateTime(2021, 12, 31)));
             modelBuilder.Entity<Manifest>().HasData(manifests.Generate(200));
 
-            var f = new Faker();
+            var f = new Faker("en_CA");
 
             manifestId = 1;
             var consigneeAddresses = Enumerable.Range(1, 200)
@@ -88,7 +89,7 @@ namespace EPManifest.Data
                                             AddressLine1 = f.Address.StreetAddress(),
                                             City = f.Address.City(),
                                             Province = f.PickRandom<Provinces>(),
-                                            PostalCode = f.Address.ZipCode("?#?#?#")
+                                            PostalCode = f.Address.ZipCode()
                                         }).ToList();
             modelBuilder.Entity<Manifest>().OwnsOne(m => m.ConsigneeAddress).HasData(consigneeAddresses);
 
@@ -100,7 +101,7 @@ namespace EPManifest.Data
                                             AddressLine1 = f.Address.StreetAddress(),
                                             City = f.Address.City(),
                                             Province = f.PickRandom<Provinces>(),
-                                            PostalCode = f.Address.ZipCode("?#?#?#")
+                                            PostalCode = f.Address.ZipCode()
                                         }).ToList();
             modelBuilder.Entity<Manifest>().OwnsOne(m => m.ConsignorAddress).HasData(consignorAddresses);
 
@@ -111,7 +112,7 @@ namespace EPManifest.Data
                 .RuleFor(i => i.Description, _ => _.Lorem.Sentence())
                 .RuleFor(i => i.Quantity, _ => _.Random.Number(1, 20000))
                 .RuleFor(i => i.Unit, _ => _.PickRandom<Unit>())
-                .RuleFor(i => i.ManifestId, _ => _.Random.Number(1, 100));
+                .RuleFor(i => i.ManifestId, _ => _.Random.Number(1, 200));
             modelBuilder.Entity<Item>().HasData(items.Generate(500));
         }
     }

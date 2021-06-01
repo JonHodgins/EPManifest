@@ -55,7 +55,7 @@ namespace EPManifest.App.Pages.Consignors
         {
             var parameters = new DialogParameters
             {
-                { "ContentText", $"Are you sure that you want to delete consignor #{consignor.Id}? This action cannot be undone." },
+                { "ContentText", $"Are you sure that you want to delete Consignor: {consignor.Name}? This action cannot be undone." },
                 { "ButtonText", "Delete" },
                 { "Color", Color.Error }
             };

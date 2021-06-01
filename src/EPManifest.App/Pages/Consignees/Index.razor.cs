@@ -55,7 +55,7 @@ namespace EPManifest.App.Pages.Consignees
         {
             var parameters = new DialogParameters
             {
-                { "ContentText", $"Are you sure that you want to delete consignee #{consignee.Id}? This action cannot be undone." },
+                { "ContentText", $"Are you sure that you want to delete Consignee: {consignee.Name}? This action cannot be undone." },
                 { "ButtonText", "Delete" },
                 { "Color", Color.Error }
             };
