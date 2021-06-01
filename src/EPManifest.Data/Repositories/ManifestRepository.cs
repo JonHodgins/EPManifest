@@ -45,9 +45,27 @@ namespace EPManifest.Data.Repositories
             return await _context.Carriers.OrderBy(c => c.Name).ToListAsync();
         }
 
+        public async Task<IEnumerable<Carrier>> SearchCarriers(string value)
+        {
+            if (value == null)
+            {
+                value = "";
+            }
+            return await _context.Carriers.Where(c => c.Name.StartsWith(value)).ToListAsync();
+        }
+
         public async Task<List<Consignee>> GetAllConsignees()
         {
             return await _context.Consignees.OrderBy(c => c.Name).ToListAsync();
+        }
+
+        public async Task<IEnumerable<Consignee>> SearchConsignees(string value)
+        {
+            if (value == null)
+            {
+                value = "";
+            }
+            return await _context.Consignees.Where(c => c.Name.StartsWith(value)).ToListAsync();
         }
 
         public async Task<List<Consignor>> GetAllConsignors()

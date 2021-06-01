@@ -4,6 +4,9 @@ namespace EPManifest.Core
 {
     public enum Provinces
     {
+        [Display(Name = "Yukon")]
+        YT,
+
         [Display(Name = "Alberta")]
         AB,
 
@@ -38,10 +41,7 @@ namespace EPManifest.Core
         QC,
 
         [Display(Name = "Saskatchewan")]
-        SK,
-
-        [Display(Name = "Yukon")]
-        YT
+        SK
     }
 
     public class Address
@@ -58,9 +58,11 @@ namespace EPManifest.Core
         public Provinces Province { get; set; }
 
         [Required(ErrorMessage = "Postal Code is required")]
-        [RegularExpression(@"^[ABCEGHJ-NPRSTVXY]\d[ABCEGHJ-NPRSTV-Z]\d[ABCEGHJ-NPRSTV-Z]\d$", ErrorMessage = "Postal Codes must be formatted as: X1X1X1")]
+        [RegularExpression(@"^[ABCEGHJ-NPRSTVXY]\d[ABCEGHJ-NPRSTV-Z]\d[ABCEGHJ-NPRSTV-Z]\d$", ErrorMessage = "Postal Codes must be valid, and formatted as: X1X1X1")]
         public string PostalCode { get; set; }
 
         public string PhoneNumber { get; set; }
+
+        public int ManifestId { get; set; }
     }
 }

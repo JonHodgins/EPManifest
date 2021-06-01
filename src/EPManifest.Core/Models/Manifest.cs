@@ -16,13 +16,13 @@ namespace EPManifest.Core
 
         public DateTime? DateScheduledArrival { get; set; }
 
-        [ValidateComplexType]
+        [ValidateComplexType, NotNullOrEmptyCollection(ErrorMessage = "Consignors is required")]
         public List<Consignor> Consignors { get; set; } = new List<Consignor>();
 
-        [ValidateComplexType]
+        [ValidateComplexType, Required(ErrorMessage = "Consignee is required")]
         public Consignee Consignee { get; set; }
 
-        [ValidateComplexType]
+        [ValidateComplexType, Required(ErrorMessage = "Carrier is required")]
         public Carrier Carrier { get; set; }
 
         [ValidateComplexType]

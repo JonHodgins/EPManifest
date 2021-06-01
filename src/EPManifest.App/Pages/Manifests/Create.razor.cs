@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using System.Linq;
 
 namespace EPManifest.App.Pages.Manifests
 {
@@ -16,12 +17,11 @@ namespace EPManifest.App.Pages.Manifests
         private bool _isLoaded;
         private ManifestRepository repo;
         private Manifest manifest;
+
         public IList<Consignor> Consignors { get; set; }
-        public IList<Consignee> Consignees { get; set; }
-        public IList<Carrier> Carriers { get; set; }
 
-        public Provinces Provinces { get; }
-
+        private readonly Provinces[] provinces = (Provinces[])Enum.GetValues(typeof(Provinces));
+        
         [Parameter]
         public int Id { get; set; }
 
@@ -34,7 +34,21 @@ namespace EPManifest.App.Pages.Manifests
         [Inject]
         public NavigationManager Navigation { get; set; }
 
-        private HashSet<Consignor> SelectedConsignors { get; set; } = new HashSet<Consignor>();
+
+        private HashSet<Consignor> selectedConsignors;
+        private HashSet<Consignor> SelectedConsignors
+        {
+            get => selectedConsignors;
+            set
+            {
+                selectedConsignors = value;
+                manifest.Consignors.RemoveAll(_ => true);
+                foreach (var consignor in selectedConsignors)
+                {
+                    manifest.Consignors.Add(consignor);
+                }
+            }
+        }
 
         protected override async Task OnInitializedAsync()
         {
@@ -42,13 +56,9 @@ namespace EPManifest.App.Pages.Manifests
             {
                 repo = new ManifestRepository(ContextFactory.CreateDbContext());
                 Consignors = await repo.GetAllConsignors();
-                Consignees = await repo.GetAllConsignees();
-                Carriers = await repo.GetAllCarriers();
                 manifest = new Manifest
                 {
                     Code = "",
-                    Carrier = Carriers[0],
-                    Consignee = Consignees[0],
                     ConsigneeAddress = new Address(),
                     ConsignorAddress = new Address()
                 };
@@ -61,18 +71,13 @@ namespace EPManifest.App.Pages.Manifests
             await base.OnInitializedAsync();
         }
 
-        private void AddSelectedConsignorsToManifest()
+        private async Task<IEnumerable<Provinces>> SearchProvinces(string value)
         {
-            manifest.Consignors.RemoveAll(_ => true);
-            foreach (var consignor in SelectedConsignors)
-            {
-                manifest.Consignors.Add(consignor);
-            }
+            return provinces.Where(p => p.ToString().StartsWith(value, StringComparison.InvariantCultureIgnoreCase));
         }
 
         private async Task CreateManifest(EditContext context)
         {
-            AddSelectedConsignorsToManifest();
             await repo.Create(manifest);
             Logger.LogInformation($"Successfully created manifest id:{manifest.Id}");
             Navigation.NavigateTo("/manifests");
