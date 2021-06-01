@@ -4,6 +4,9 @@ namespace EPManifest.Core
 {
     public enum Provinces
     {
+        [Display(Name = "Yukon")]
+        YT,
+
         [Display(Name = "Alberta")]
         AB,
 
@@ -38,10 +41,7 @@ namespace EPManifest.Core
         QC,
 
         [Display(Name = "Saskatchewan")]
-        SK,
-
-        [Display(Name = "Yukon")]
-        YT
+        SK
     }
 
     public class Address

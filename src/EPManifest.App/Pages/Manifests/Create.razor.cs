@@ -19,8 +19,8 @@ namespace EPManifest.App.Pages.Manifests
         private Manifest manifest;
         public IList<Consignor> Consignors { get; set; }
 
-        public Provinces Provinces { get; }
-
+        private readonly Provinces[] provinces = (Provinces[])Enum.GetValues(typeof(Provinces));
+        
         [Parameter]
         public int Id { get; set; }
 
@@ -54,6 +54,11 @@ namespace EPManifest.App.Pages.Manifests
             }
 
             await base.OnInitializedAsync();
+        }
+
+        private async Task<IEnumerable<Provinces>> SearchProvinces(string value)
+        {
+            return provinces.Where(p => p.ToString().StartsWith(value, StringComparison.InvariantCultureIgnoreCase));
         }
 
         private void AddSelectedConsignorsToManifest()

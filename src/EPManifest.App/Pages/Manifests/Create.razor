@@ -45,12 +45,8 @@ else
                         <MudTextField Label="City" @bind-Value="@manifest.ConsignorAddress.City"
                                       For="@(() => manifest.ConsignorAddress.City)">
                         </MudTextField>
-                        <MudSelect Label="Province/Territory" @bind-Value="@manifest.ConsignorAddress.Province">
-                            @foreach (Core.Provinces province in Enum.GetValues(typeof(Core.Provinces)))
-                                {
-                                <MudSelectItem Value="@province">@province</MudSelectItem>
-                                }
-                        </MudSelect>
+                        <MudAutocomplete T="Core.Provinces" Label="Province/Territory" @bind-Value="@manifest.ConsignorAddress.Province"
+                                         SearchFunc="SearchProvinces" CoerceText="true" />
                         <MudTextField Label="Postal Code" @bind-Value="@manifest.ConsignorAddress.PostalCode"
                                       For="@(() => manifest.ConsignorAddress.PostalCode)">
                         </MudTextField>
@@ -78,12 +74,14 @@ else
                         <MudTextField Label="City" @bind-Value="@manifest.ConsigneeAddress.City"
                                       For="@(() => manifest.ConsigneeAddress.City)">
                         </MudTextField>
-                        <MudSelect Label="Province/Territory" @bind-Value="@manifest.ConsigneeAddress.Province">
+                        <MudAutocomplete T="Core.Provinces" Label="Province/Territory" @bind-Value="@manifest.ConsigneeAddress.Province"
+                                         SearchFunc="SearchProvinces" CoerceText="true"/>
+                        @*<MudSelect Label="Province/Territory" @bind-Value="@manifest.ConsigneeAddress.Province">
                             @foreach (Core.Provinces province in Enum.GetValues(typeof(Core.Provinces)))
                                 {
                                 <MudSelectItem Value="@province">@province</MudSelectItem>
                                 }
-                        </MudSelect>
+                        </MudSelect>*@
                         <MudTextField Label="Postal Code" @bind-Value="@manifest.ConsigneeAddress.PostalCode"
                                       For="@(() => manifest.ConsigneeAddress.PostalCode)">
                         </MudTextField>
@@ -163,6 +161,7 @@ else
                 </MudItem>
                 <MudItem xs="12" Class="d-flex justify-space-between py-2 px-3 mt-2">
                     <MudButton ButtonType="ButtonType.Button" Variant="Variant.Filled" Color="Color.Secondary" Link="/manifests">Cancel</MudButton>
+                    <MudButton ButtonType="ButtonType.Submit" Disabled="true" />
                     <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto">Update manifest</MudButton>
                 </MudItem>
             </MudGrid>

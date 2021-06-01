@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using EPManifest.Core;
 using EPManifest.Data;
@@ -20,7 +21,7 @@ namespace EPManifest.App.Pages.Manifests
         public IEnumerable<Consignee> Consignees { get; set; }
         public IEnumerable<Carrier> Carriers { get; set; }
 
-        public Provinces Provinces { get; }
+        private readonly Provinces[] provinces = (Provinces[])Enum.GetValues(typeof(Provinces));
 
         [Parameter]
         public int Id { get; set; }
@@ -53,6 +54,11 @@ namespace EPManifest.App.Pages.Manifests
             }
 
             await base.OnInitializedAsync();
+        }
+
+        private async Task<IEnumerable<Provinces>> SearchProvinces(string value)
+        {
+            return provinces.Where(p => p.ToString().StartsWith(value, StringComparison.InvariantCultureIgnoreCase));
         }
 
         private void PopulateSelectedConsignors()
