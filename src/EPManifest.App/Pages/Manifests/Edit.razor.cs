@@ -35,7 +35,7 @@ namespace EPManifest.App.Pages.Manifests
         [Inject]
         public NavigationManager Navigation { get; set; }
 
-        private HashSet<Consignor> selectedConsignors;
+        private HashSet<Consignor> selectedConsignors = new();
         private HashSet<Consignor> SelectedConsignors
         {
             get => selectedConsignors;
