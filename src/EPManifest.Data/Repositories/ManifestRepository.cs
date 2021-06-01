@@ -50,6 +50,11 @@ namespace EPManifest.Data.Repositories
             return await _context.Consignees.OrderBy(c => c.Name).ToListAsync();
         }
 
+        public async Task<IEnumerable<Consignee>> SearchConsignees(string value)
+        {
+            return await _context.Consignees.Where(c => c.Name.StartsWith(value)).ToListAsync();
+        }
+
         public async Task<List<Consignor>> GetAllConsignors()
         {
             return await _context.Consignors.OrderBy(c => c.Name).ToListAsync();

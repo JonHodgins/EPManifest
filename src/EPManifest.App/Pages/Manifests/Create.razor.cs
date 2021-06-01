@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using System.Linq;
 
 namespace EPManifest.App.Pages.Manifests
 {
@@ -16,6 +17,7 @@ namespace EPManifest.App.Pages.Manifests
         private bool _isLoaded;
         private ManifestRepository repo;
         private Manifest manifest;
+        private Consignee consignee;
         public IList<Consignor> Consignors { get; set; }
         public IList<Consignee> Consignees { get; set; }
         public IList<Carrier> Carriers { get; set; }
@@ -48,7 +50,6 @@ namespace EPManifest.App.Pages.Manifests
                 {
                     Code = "",
                     Carrier = Carriers[0],
-                    Consignee = Consignees[0],
                     ConsigneeAddress = new Address(),
                     ConsignorAddress = new Address()
                 };
@@ -72,6 +73,7 @@ namespace EPManifest.App.Pages.Manifests
 
         private async Task CreateManifest(EditContext context)
         {
+            manifest.ConsigneeId = manifest.Consignee.Id;
             AddSelectedConsignorsToManifest();
             await repo.Create(manifest);
             Logger.LogInformation($"Successfully created manifest id:{manifest.Id}");
@@ -82,6 +84,11 @@ namespace EPManifest.App.Pages.Manifests
         private void CreateItemPlaceholder()
         {
             manifest.Items.Add(new Item() { Description = "", ManifestId = manifest.Id });
+        }
+
+        private Task<IEnumerable<Consignee>> SearchConsignees(string value)
+        {
+            return repo.SearchConsignees(value);
         }
 
         private void DeleteItem(Item item)
