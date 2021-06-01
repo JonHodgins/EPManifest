@@ -58,9 +58,11 @@ namespace EPManifest.Core
         public Provinces Province { get; set; }
 
         [Required(ErrorMessage = "Postal Code is required")]
-        [RegularExpression(@"^[ABCEGHJ-NPRSTVXY]\d[ABCEGHJ-NPRSTV-Z]\d[ABCEGHJ-NPRSTV-Z]\d$", ErrorMessage = "Postal Codes must be formatted as: X1X1X1")]
+        [RegularExpression(@"^[ABCEGHJ-NPRSTVXY]\d[ABCEGHJ-NPRSTV-Z]\d[ABCEGHJ-NPRSTV-Z]\d$", ErrorMessage = "Postal Codes must be valid, and formatted as: X1X1X1")]
         public string PostalCode { get; set; }
 
         public string PhoneNumber { get; set; }
+
+        public int ManifestId { get; set; }
     }
 }

@@ -18,8 +18,6 @@ namespace EPManifest.App.Pages.Manifests
         private ManifestRepository repo;
         private Manifest manifest;
         public IEnumerable<Consignor> Consignors { get; set; }
-        public IEnumerable<Consignee> Consignees { get; set; }
-        public IEnumerable<Carrier> Carriers { get; set; }
 
         private readonly Provinces[] provinces = (Provinces[])Enum.GetValues(typeof(Provinces));
 
@@ -58,8 +56,16 @@ namespace EPManifest.App.Pages.Manifests
                 manifest = await repo.GetManifestById(Id);
                 PopulateSelectedConsignors();
                 Consignors = await repo.GetAllConsignors();
-                Consignees = await repo.GetAllConsignees();
-                Carriers = await repo.GetAllCarriers();
+
+                if(manifest.ConsigneeAddress is null)
+                {
+                    manifest.ConsigneeAddress = new Address();
+                }
+
+                if(manifest.ConsignorAddress is null)
+                {
+                    manifest.ConsignorAddress = new Address();
+                }
             }
             finally
             {

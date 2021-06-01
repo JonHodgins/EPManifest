@@ -10,9 +10,6 @@ else
         <MudText Typo="Typo.h3" GutterBottom="true">Edit manifest</MudText>
         <EditForm Model="@manifest" OnValidSubmit="Update">
             <ObjectGraphDataAnnotationsValidator />
-            <MudText Color="Color.Error">
-                <ValidationSummary />
-            </MudText>
             <MudGrid>
                 <MudItem xs="12">
                     <MudGrid>
@@ -152,6 +149,11 @@ else
                     <MudButton ButtonType="ButtonType.Button" Variant="Variant.Filled" Color="Color.Secondary" Link="/manifests">Cancel</MudButton>
                     <MudButton ButtonType="ButtonType.Submit" Disabled="true" />
                     <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto">Update manifest</MudButton>
+                </MudItem>
+                <MudItem>
+                    <MudText Color="@Color.Error">
+                        <ValidationSummary />
+                    </MudText>
                 </MudItem>
             </MudGrid>
         </EditForm>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Bogus;
 using EPManifest.Core;
@@ -75,7 +76,43 @@ namespace EPManifest.Data
                 .RuleFor(m => m.CarrierId, _ => _.Random.Number(1, 5))
                 .RuleFor(m => m.DateShipped, _ => _.Date.Between(new DateTime(2021, 05, 08), new DateTime(2021, 08, 31)))
                 .RuleFor(m => m.DateScheduledArrival, _ => _.Date.Between(new DateTime(2021, 09, 01), new DateTime(2021, 12, 31)));
-            modelBuilder.Entity<Manifest>().HasData(manifests.Generate(100));
+            modelBuilder.Entity<Manifest>().HasData(manifests.Generate(200));
+
+            var f = new Faker();
+
+            manifestId = 1;
+            var consigneeAddresses = Enumerable.Range(1, 200)
+                                        .Select(i => new
+                                        {
+                                            ManifestId = manifestId++,
+                                            AddressLine1 = f.Address.StreetAddress(),
+                                            City = f.Address.City(),
+                                            Province = f.PickRandom<Provinces>(),
+                                            PostalCode = f.Address.ZipCode("?#?#?#")
+                                        }).ToList();
+            modelBuilder.Entity<Manifest>().OwnsOne(m => m.ConsigneeAddress).HasData(consigneeAddresses);
+
+            manifestId = 1;
+            var consignorAddresses = Enumerable.Range(1, 200)
+                                        .Select(i => new
+                                        {
+                                            ManifestId = manifestId++,
+                                            AddressLine1 = f.Address.StreetAddress(),
+                                            City = f.Address.City(),
+                                            Province = f.PickRandom<Provinces>(),
+                                            PostalCode = f.Address.ZipCode("?#?#?#")
+                                        }).ToList();
+            modelBuilder.Entity<Manifest>().OwnsOne(m => m.ConsignorAddress).HasData(consignorAddresses);
+
+            var itemId = 1;
+            var items = new Faker<Item>()
+                .RuleFor(i => i.Id, _ => itemId++)
+                .RuleFor(i => i.State, _ => _.PickRandom<State>())
+                .RuleFor(i => i.Description, _ => _.Lorem.Sentence())
+                .RuleFor(i => i.Quantity, _ => _.Random.Number(1, 20000))
+                .RuleFor(i => i.Unit, _ => _.PickRandom<Unit>())
+                .RuleFor(i => i.ManifestId, _ => _.Random.Number(1, 100));
+            modelBuilder.Entity<Item>().HasData(items.Generate(500));
         }
     }
 }

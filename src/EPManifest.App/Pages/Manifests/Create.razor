@@ -10,9 +10,6 @@ else
         <MudText Typo="Typo.h3" GutterBottom="true">New manifest</MudText>
         <EditForm Model="@manifest" OnValidSubmit="CreateManifest">
             <ObjectGraphDataAnnotationsValidator />
-            <MudText Color="Color.Error">
-                <ValidationSummary />
-            </MudText>
             <MudGrid>
                 <MudItem xs="12">
                     <MudGrid>
@@ -59,7 +56,7 @@ else
                         <MudAutocomplete T="Core.Consignee" Label="Consignee" @bind-Value="manifest.Consignee" SearchFunc="repo.SearchConsignees"
                                          ToStringFunc="@(c => c == null?null : c.Name)"
                                          ResetValueOnEmptyText="true"
-                                         CoerceText="true" CoerceValue="true" For="(() => manifest.Consignee)"/>
+                                         CoerceText="true" CoerceValue="true" For="(() => manifest.Consignee)" />
                         <MudTextField Label="Address Line 1" @bind-Value="@manifest.ConsigneeAddress.AddressLine1"
                                       For="@(() => manifest.ConsigneeAddress.AddressLine1)">
                         </MudTextField>
@@ -70,13 +67,13 @@ else
                                       For="@(() => manifest.ConsigneeAddress.City)">
                         </MudTextField>
                         <MudAutocomplete T="Core.Provinces" Label="Province/Territory" @bind-Value="@manifest.ConsigneeAddress.Province"
-                                         SearchFunc="SearchProvinces" CoerceText="true"/>
+                                         SearchFunc="SearchProvinces" CoerceText="true" />
                         @*<MudSelect Label="Province/Territory" @bind-Value="@manifest.ConsigneeAddress.Province">
-                            @foreach (Core.Provinces province in Enum.GetValues(typeof(Core.Provinces)))
-                                {
-                                <MudSelectItem Value="@province">@province</MudSelectItem>
-                                }
-                        </MudSelect>*@
+                    @foreach (Core.Provinces province in Enum.GetValues(typeof(Core.Provinces)))
+                        {
+                        <MudSelectItem Value="@province">@province</MudSelectItem>
+                        }
+                </MudSelect>*@
                         <MudTextField Label="Postal Code" @bind-Value="@manifest.ConsigneeAddress.PostalCode"
                                       For="@(() => manifest.ConsigneeAddress.PostalCode)">
                         </MudTextField>
@@ -158,6 +155,11 @@ else
                     <MudButton ButtonType="ButtonType.Button" Variant="Variant.Filled" Color="Color.Secondary" Link="/manifests">Cancel</MudButton>
                     <MudButton ButtonType="ButtonType.Submit" Disabled="true" />
                     <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto">Update manifest</MudButton>
+                </MudItem>
+                <MudItem>
+                    <MudText Color="@Color.Error">
+                        <ValidationSummary />
+                    </MudText>
                 </MudItem>
             </MudGrid>
         </EditForm>
