@@ -19,10 +19,10 @@ namespace EPManifest.Core
         [ValidateComplexType]
         public List<Consignor> Consignors { get; set; } = new List<Consignor>();
 
-        [ValidateComplexType]
+        [ValidateComplexType, Required(ErrorMessage = "Consignee is required")]
         public Consignee Consignee { get; set; }
 
-        [ValidateComplexType]
+        [ValidateComplexType, Required(ErrorMessage = "Carrier is required")]
         public Carrier Carrier { get; set; }
 
         [ValidateComplexType]

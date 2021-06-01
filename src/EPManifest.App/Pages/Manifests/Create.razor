@@ -65,10 +65,10 @@ else
                 <MudSelectItem Value="@consignee.Id">@consignee.Name</MudSelectItem>
             }
         </MudSelect>*@
-                        <MudAutocomplete T="Core.Consignee" Label="Consignee" @bind-Value="manifest.Consignee" SearchFunc="SearchConsignees"
+                        <MudAutocomplete T="Core.Consignee" Label="Consignee" @bind-Value="manifest.Consignee" SearchFunc="repo.SearchConsignees"
                                          ToStringFunc="@(c => c == null?null : c.Name)"
                                          ResetValueOnEmptyText="true"
-                                         CoerceText="false" CoerceValue="false" />
+                                         CoerceText="true" CoerceValue="true" For="(() => manifest.Consignee)"/>
                         <MudTextField Label="Address Line 1" @bind-Value="@manifest.ConsigneeAddress.AddressLine1"
                                       For="@(() => manifest.ConsigneeAddress.AddressLine1)">
                         </MudTextField>
@@ -93,12 +93,10 @@ else
                 <MudItem xs="12" sm="12" md="4">
                     <MudPaper Elevation="2" Class="pa-4">
                         <MudText Typo="Typo.h6">Carrier</MudText>
-                        <MudSelect T="int" Label="Carrier" @bind-Value="manifest.CarrierId" Strict="true">
-                            @foreach (var carrier in Carriers)
-                            {
-                                <MudSelectItem Value="@carrier.Id">@carrier.Name</MudSelectItem>
-                            }
-                        </MudSelect>
+                        <MudAutocomplete T="Core.Carrier" Label="Carrier" @bind-Value="manifest.Carrier" SearchFunc="repo.SearchCarriers"
+                                         ToStringFunc="@(c => c == null?null : c.Name)"
+                                         ResetValueOnEmptyText="true"
+                                         CoerceText="true" CoerceValue="true" For="(() => manifest.Carrier)" />
                     </MudPaper>
                 </MudItem>
 

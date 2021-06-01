@@ -17,10 +17,7 @@ namespace EPManifest.App.Pages.Manifests
         private bool _isLoaded;
         private ManifestRepository repo;
         private Manifest manifest;
-        private Consignee consignee;
         public IList<Consignor> Consignors { get; set; }
-        public IList<Consignee> Consignees { get; set; }
-        public IList<Carrier> Carriers { get; set; }
 
         public Provinces Provinces { get; }
 
@@ -44,12 +41,9 @@ namespace EPManifest.App.Pages.Manifests
             {
                 repo = new ManifestRepository(ContextFactory.CreateDbContext());
                 Consignors = await repo.GetAllConsignors();
-                Consignees = await repo.GetAllConsignees();
-                Carriers = await repo.GetAllCarriers();
                 manifest = new Manifest
                 {
                     Code = "",
-                    Carrier = Carriers[0],
                     ConsigneeAddress = new Address(),
                     ConsignorAddress = new Address()
                 };
@@ -73,7 +67,6 @@ namespace EPManifest.App.Pages.Manifests
 
         private async Task CreateManifest(EditContext context)
         {
-            manifest.ConsigneeId = manifest.Consignee.Id;
             AddSelectedConsignorsToManifest();
             await repo.Create(manifest);
             Logger.LogInformation($"Successfully created manifest id:{manifest.Id}");
@@ -84,11 +77,6 @@ namespace EPManifest.App.Pages.Manifests
         private void CreateItemPlaceholder()
         {
             manifest.Items.Add(new Item() { Description = "", ManifestId = manifest.Id });
-        }
-
-        private Task<IEnumerable<Consignee>> SearchConsignees(string value)
-        {
-            return repo.SearchConsignees(value);
         }
 
         private void DeleteItem(Item item)
