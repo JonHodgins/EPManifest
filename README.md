@@ -2,13 +2,13 @@
 
 ## Stack
 
-* Web Framework: ASP.NET Core 5
 * UI Framework: Blazor Server
 * UI Component Library: MudBlazor
+* * Web Framework: ASP.NET Core 5
 * Data Access: Entity Framework Core
 * Data Store: SQL Server
 * Logging: Serilog
-* Unit Testing: xUnit
+* Unit Testing: xUnit, bUnit
 
 ## How do I run this?
 
