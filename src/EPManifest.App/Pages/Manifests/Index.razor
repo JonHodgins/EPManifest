@@ -1,68 +1,79 @@
 ﻿@page "/manifests"
+<AuthorizeView Roles="Reader" Context="auth">
+    <Authorized>
+        @if (_isLoaded == false)
+        {
+            <MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="mt-16">
+                <MudText Typo="Typo.h6">Loading...</MudText>
+            </MudContainer>
+        }
+        else
+        {
+            <MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="mt-16">
 
-@if (_isLoaded == false)
-{
-    <MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="mt-16">
-        <MudText Typo="Typo.h6">Loading...</MudText>
-    </MudContainer>
-}
-else
-{
-    <MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="mt-16">
-
-        <MudTable Items="@manifests" Dense="@dense" Hover="@hover" Bordered="@bordered" Striped="@striped" @bind-SelectedItem="selectedItem" Filter="new Func<Core.Manifest,bool>(FilterFunc)">
-            <ToolBarContent>
-                <MudText Typo="Typo.h6">Manifests</MudText>
-                <MudToolBarSpacer />
-                <MudTextField @bind-Value="searchString" Placeholder="Search by consignor, consignee, or carrier" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
-                <MudToolBarSpacer />
-                <MudButton Color="Color.Success" Variant="Variant.Outlined" OnClick="(() => Create())">New Manifest</MudButton>
-            </ToolBarContent>
-            <ColGroup>
-                <col style="width: 5%" />
-                <col style="width: 23%" />
-                <col style="width: 15%" />
-                <col style="width: 15%" />
-                <col style="width: 10%" />
-                <col style="width: 10%" />
-                <col style="width: 7%" />
-                <col style="width: 15%" />
-            </ColGroup>
-            <HeaderContent>
-                <MudTh>Id</MudTh>
-                <MudTh>Consignor(s)</MudTh>
-                <MudTh><MudTableSortLabel SortBy="new Func<Core.Manifest, object>(m => m.Consignee.Name)">Consignee</MudTableSortLabel></MudTh>
-                <MudTh><MudTableSortLabel SortBy="new Func<Core.Manifest, object>(m => m.Carrier.Name)">Carrier</MudTableSortLabel></MudTh>
-                <MudTh><MudTableSortLabel SortBy="new Func<Core.Manifest, object>(m => m.DateShipped?.ToString())">Shipped On</MudTableSortLabel></MudTh>
-                <MudTh><MudTableSortLabel SortBy="new Func<Core.Manifest, object>(m => m.DateScheduledArrival?.ToString())">Scheduled Arrival</MudTableSortLabel></MudTh>
-                <MudTh><MudTableSortLabel SortBy="new Func<Core.Manifest, object>(m => m.Items.Count)"># Items</MudTableSortLabel></MudTh>
-                <MudTh></MudTh>
-            </HeaderContent>
-            <RowTemplate>
-                <MudTd DataLabel="Id">@context.Id</MudTd>
-                <MudTd DataLabel="Consignors">@String.Join(", ", context.Consignors.Select(c => c.Name))</MudTd>
-                <MudTd DataLabel="Consignee">@context.Consignee.Name</MudTd>
-                <MudTd DataLabel="Carrier">@context.Carrier.Name</MudTd>
-                <MudTd DataLabel="Shipped">@context.DateShipped?.ToLongDateString()</MudTd>
-                <MudTd DataLabel="Scheduled Arrival">@context.DateScheduledArrival?.ToLongDateString()</MudTd>
-                <MudTd DataLabel="# Items">@context.Items.Count</MudTd>
-                <MudTd>
-                    <MudIconButton Icon="@Icons.Material.Filled.Info" OnClick="(() => Details(context.Id))"></MudIconButton>
-                    <MudIconButton Icon="@Icons.Material.Filled.Edit" Color="Color.Primary" OnClick="(() => Edit(context.Id))"></MudIconButton>
-                    <MudIconButton Icon="@Icons.Material.Filled.Delete" Color="Color.Error" OnClick="(() => Delete(context))"></MudIconButton>
-                </MudTd>
-            </RowTemplate>
-            <PagerContent>
-                <MudTablePager />
-            </PagerContent>
-        </MudTable>
-        <div class="d-flex flex-wrap mt-4">
-            <MudSwitch @bind-Checked="@hover" Color="Color.Primary">Hover</MudSwitch>
-            <MudSwitch @bind-Checked="@dense" Color="Color.Secondary">Dense</MudSwitch>
-            <MudSwitch @bind-Checked="@striped" Color="Color.Tertiary">Striped</MudSwitch>
-            <MudSwitch @bind-Checked="@bordered" Color="Color.Warning">Bordered</MudSwitch>
-            <MudToolBarSpacer />
-            <MudText Inline="true" Class="align-self-center" Style="min-width:200px;">Selected: @selectedItem?.Id</MudText>
-        </div>
-    </MudContainer>
-}
+                <MudTable Items="@manifests" Dense="@dense" Hover="@hover" Bordered="@bordered" Striped="@striped" @bind-SelectedItem="selectedItem" Filter="new Func<Core.Manifest,bool>(FilterFunc)">
+                    <ToolBarContent>
+                        <MudText Typo="Typo.h6">Manifests</MudText>
+                        <MudToolBarSpacer />
+                        <MudTextField @bind-Value="searchString" Placeholder="Search by consignor, consignee, or carrier" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+                        <MudToolBarSpacer />
+                        <MudButton Color="Color.Success" Variant="Variant.Outlined" OnClick="(() => Create())">New Manifest</MudButton>
+                    </ToolBarContent>
+                    <ColGroup>
+                        <col style="width: 5%" />
+                        <col style="width: 23%" />
+                        <col style="width: 15%" />
+                        <col style="width: 15%" />
+                        <col style="width: 10%" />
+                        <col style="width: 10%" />
+                        <col style="width: 7%" />
+                        <col style="width: 15%" />
+                    </ColGroup>
+                    <HeaderContent>
+                        <MudTh>Id</MudTh>
+                        <MudTh>Consignor(s)</MudTh>
+                        <MudTh><MudTableSortLabel SortBy="new Func<Core.Manifest, object>(m => m.Consignee.Name)">Consignee</MudTableSortLabel></MudTh>
+                        <MudTh><MudTableSortLabel SortBy="new Func<Core.Manifest, object>(m => m.Carrier.Name)">Carrier</MudTableSortLabel></MudTh>
+                        <MudTh><MudTableSortLabel SortBy="new Func<Core.Manifest, object>(m => m.DateShipped?.ToString())">Shipped On</MudTableSortLabel></MudTh>
+                        <MudTh><MudTableSortLabel SortBy="new Func<Core.Manifest, object>(m => m.DateScheduledArrival?.ToString())">Scheduled Arrival</MudTableSortLabel></MudTh>
+                        <MudTh><MudTableSortLabel SortBy="new Func<Core.Manifest, object>(m => m.Items.Count)"># Items</MudTableSortLabel></MudTh>
+                        <MudTh></MudTh>
+                    </HeaderContent>
+                    <RowTemplate>
+                        <MudTd DataLabel="Id">@context.Id</MudTd>
+                        <MudTd DataLabel="Consignors">@String.Join(", ", context.Consignors.Select(c => c.Name))</MudTd>
+                        <MudTd DataLabel="Consignee">@context.Consignee.Name</MudTd>
+                        <MudTd DataLabel="Carrier">@context.Carrier.Name</MudTd>
+                        <MudTd DataLabel="Shipped">@context.DateShipped?.ToLongDateString()</MudTd>
+                        <MudTd DataLabel="Scheduled Arrival">@context.DateScheduledArrival?.ToLongDateString()</MudTd>
+                        <MudTd DataLabel="# Items">@context.Items.Count</MudTd>
+                        <MudTd>
+                            <MudIconButton Icon="@Icons.Material.Filled.Info" OnClick="(() => Details(context.Id))"></MudIconButton>
+                            <MudIconButton Icon="@Icons.Material.Filled.Edit" Color="Color.Primary" OnClick="(() => Edit(context.Id))"></MudIconButton>
+                            <AuthorizeView Roles="Writer" Context="nestedAuth">
+                                <MudIconButton Icon="@Icons.Material.Filled.Delete" Color="Color.Error" OnClick="(() => Delete(context))"></MudIconButton>
+                            </AuthorizeView>
+                        </MudTd>
+                    </RowTemplate>
+                    <PagerContent>
+                        <MudTablePager />
+                    </PagerContent>
+                </MudTable>
+                <div class="d-flex flex-wrap mt-4">
+                    <MudSwitch @bind-Checked="@hover" Color="Color.Primary">Hover</MudSwitch>
+                    <MudSwitch @bind-Checked="@dense" Color="Color.Secondary">Dense</MudSwitch>
+                    <MudSwitch @bind-Checked="@striped" Color="Color.Tertiary">Striped</MudSwitch>
+                    <MudSwitch @bind-Checked="@bordered" Color="Color.Warning">Bordered</MudSwitch>
+                    <MudToolBarSpacer />
+                    <MudText Inline="true" Class="align-self-center" Style="min-width:200px;">Selected: @selectedItem?.Id</MudText>
+                </div>
+            </MudContainer>
+        }
+    </Authorized>
+    <NotAuthorized>
+        <MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="mt-16">
+            <MudAlert Severity="Severity.Error"><MudText Typo="Typo.body1">You are not authorized to view this page.</MudText></MudAlert>
+            <MudText Class="ml-4 mt-4" Typo="Typo.body1">If you require access to this page, please contact: <MudLink Href="mailto:env.servicedesk@yukon.ca" Typo="Typo.body1" Color="Color.Inherit"><b>env.servicedesk@yukon.ca</b></MudLink></MudText>
+        </MudContainer>
+    </NotAuthorized>
+</AuthorizeView>
