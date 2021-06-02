@@ -8,6 +8,7 @@
 * Data Access: Entity Framework Core
 * Data Store: SQL Server
 * Logging: Serilog
+* Unit Testing: xUnit
 
 ## How do I run this?
 
