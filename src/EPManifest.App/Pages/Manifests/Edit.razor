@@ -17,7 +17,7 @@ else
                             <MudTextField Label="Code" @bind-Value="@manifest.Code" For="@(() => manifest.Code)"></MudTextField>
                         </MudItem>
                         <MudItem xs="4">
-                            <MudDatePicker Label="Shipped On" @bind-Date="manifest.DateShipped" Editable="true" />
+                            <MudDatePicker Label="Shipped On" @bind-Date="manifest.DateShipped" Editable="true" For="(() => manifest.DateShipped)" />
                         </MudItem>
                         <MudItem xs="4">
                             <MudDatePicker Label="Scheduled Arrival" @bind-Date="manifest.DateScheduledArrival" Editable="true" />
@@ -54,7 +54,7 @@ else
                     <MudPaper Elevation="2" Class="pa-4">
                         <MudText Typo="Typo.h6">Consignee</MudText>
                         <MudAutocomplete T="Core.Consignee" Label="Consignee" @bind-Value="manifest.Consignee" SearchFunc="repo.SearchConsignees"
-                                         ToStringFunc="@(c => c == null?null : c.Name)"
+                                         ToStringFunc="@(c => c == null? null : c.Name)"
                                          ResetValueOnEmptyText="true"
                                          CoerceText="true" CoerceValue="true" For="(() => manifest.Consignee)" />
                         <MudTextField Label="Address Line 1" @bind-Value="@manifest.ConsigneeAddress.AddressLine1"
@@ -78,7 +78,7 @@ else
                     <MudPaper Elevation="2" Class="pa-4">
                         <MudText Typo="Typo.h6">Carrier</MudText>
                         <MudAutocomplete T="Core.Carrier" Label="Carrier" @bind-Value="manifest.Carrier" SearchFunc="repo.SearchCarriers"
-                                         ToStringFunc="@(c => c == null?null : c.Name)"
+                                         ToStringFunc="@(c => c == null? null : c.Name)"
                                          ResetValueOnEmptyText="true"
                                          CoerceText="true" CoerceValue="true" For="(() => manifest.Carrier)" />
                     </MudPaper>

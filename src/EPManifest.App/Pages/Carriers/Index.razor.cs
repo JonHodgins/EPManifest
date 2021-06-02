@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using EPManifest.App.Components;
 using EPManifest.Core;
@@ -15,26 +14,33 @@ namespace EPManifest.App.Pages.Carriers
 {
     public partial class Index : IDisposable
     {
-        [Inject]
-        public ILogger<Index> Logger { get; set; }
+        private bool _isLoaded;
+
+        private bool _mayRender = true;
+
+        private List<Carrier> carriers;
+
+        private CarrierRepository repo;
 
         [Inject]
         public IDbContextFactory<EPManifestDbContext> ContextFactory { get; set; }
 
         [Inject]
-        public NavigationManager Navigation { get; set; }
+        public IDialogService DialogService { get; set; }
 
         [Inject]
-        public IDialogService DialogService { get; set; }
+        public ILogger<Index> Logger { get; set; }
+
+        [Inject]
+        public NavigationManager Navigation { get; set; }
 
         [Inject]
         public ISnackbar Snackbar { get; set; }
 
-        private bool _isLoaded;
-        private bool _mayRender = true;
-
-        private CarrierRepository repo;
-        private List<Carrier> carriers;
+        public void Dispose()
+        {
+            repo.Dispose();
+        }
 
         protected override async Task OnInitializedAsync()
         {
@@ -51,11 +57,40 @@ namespace EPManifest.App.Pages.Carriers
             await base.OnInitializedAsync();
         }
 
+        private async Task Create()
+        {
+            var parameters = new DialogParameters
+            {
+                { "ButtonText", "Create" },
+                { "Color", Color.Success },
+                { "Entity", new Carrier() }
+            };
+
+            var options = new DialogOptions() { CloseButton = true, MaxWidth = MaxWidth.ExtraSmall };
+            var dialog = DialogService.Show<CreateDialog>("New Carrier", parameters, options);
+            var result = await dialog.Result;
+
+            if (!result.Cancelled)
+            {
+                //Prevents mid-method rerendering of the component, which avoids overlapping threads
+                _mayRender = false;
+                try
+                {
+                    carriers.Add((Carrier)result.Data);
+                    Snackbar.Add($"Created carrier:{((Carrier)result.Data).Id}", Severity.Success);
+                }
+                finally
+                {
+                    _mayRender = true;
+                }
+            }
+        }
+
         private async Task Delete(Carrier carrier)
         {
             var parameters = new DialogParameters
             {
-                { "ContentText", $"Are you sure that you want to delete Carrier: {carrier.Name}? This action cannot be undone." },
+                { "ContentText", $"Are you sure that you want to delete {carrier.Name}? This action cannot be undone." },
                 { "ButtonText", "Delete" },
                 { "Color", Color.Error }
             };
@@ -73,8 +108,8 @@ namespace EPManifest.App.Pages.Carriers
                 {
                     await repo.Delete(carrier);
                     carriers.Remove(carrier);
-                    Logger.LogInformation($"Carrier: {carrier.Code} was deleted.");
-                    Snackbar.Add($"Deleted carrier id:{carrier.Id}", Severity.Success);
+                    Logger.LogInformation($"Carrier: {carrier.Id}, Code: {carrier.Code}, Name: {carrier.Name}, was deleted.");
+                    Snackbar.Add($"Deleted carrier {carrier.Code}: {carrier.Name}", Severity.Success);
                 }
                 catch (DbUpdateException)
                 {
@@ -116,40 +151,6 @@ namespace EPManifest.App.Pages.Carriers
                     _mayRender = true;
                 }
             }
-        }
-
-        private async Task Create()
-        {
-            var parameters = new DialogParameters
-            {
-                { "ButtonText", "Create" },
-                { "Color", Color.Success },
-                { "Entity", new Carrier() }
-            };
-
-            var options = new DialogOptions() { CloseButton = true, MaxWidth = MaxWidth.ExtraSmall };
-            var dialog = DialogService.Show<CreateDialog>("New Carrier", parameters, options);
-            var result = await dialog.Result;
-
-            if (!result.Cancelled)
-            {
-                //Prevents mid-method rerendering of the component, which avoids overlapping threads
-                _mayRender = false;
-                try
-                {
-                    carriers.Add((Carrier)result.Data);
-                    Snackbar.Add($"Created carrier:{((Carrier)result.Data).Id}", Severity.Success);
-                }
-                finally
-                {
-                    _mayRender = true;
-                }
-            }
-        }
-
-        public void Dispose()
-        {
-            repo.Dispose();
         }
     }
 }

@@ -14,12 +14,15 @@ namespace EPManifest.App.Pages.Manifests
 {
     public partial class Edit : IDisposable
     {
+        private readonly Provinces[] provinces = (Provinces[])Enum.GetValues(typeof(Provinces));
         private bool _isLoaded;
-        private ManifestRepository repo;
         private Manifest manifest;
+        private ManifestRepository repo;
+        private HashSet<Consignor> selectedConsignors = new();
         public IEnumerable<Consignor> Consignors { get; set; }
 
-        private readonly Provinces[] provinces = (Provinces[])Enum.GetValues(typeof(Provinces));
+        [Inject]
+        public IDbContextFactory<EPManifestDbContext> ContextFactory { get; set; }
 
         [Parameter]
         public int Id { get; set; }
@@ -28,12 +31,8 @@ namespace EPManifest.App.Pages.Manifests
         public ILogger<Edit> Logger { get; set; }
 
         [Inject]
-        public IDbContextFactory<EPManifestDbContext> ContextFactory { get; set; }
-
-        [Inject]
         public NavigationManager Navigation { get; set; }
 
-        private HashSet<Consignor> selectedConsignors = new();
         private HashSet<Consignor> SelectedConsignors
         {
             get => selectedConsignors;
@@ -48,6 +47,11 @@ namespace EPManifest.App.Pages.Manifests
             }
         }
 
+        public void Dispose()
+        {
+            repo.Dispose();
+        }
+
         protected override async Task OnInitializedAsync()
         {
             try
@@ -57,12 +61,12 @@ namespace EPManifest.App.Pages.Manifests
                 PopulateSelectedConsignors();
                 Consignors = await repo.GetAllConsignors();
 
-                if(manifest.ConsigneeAddress is null)
+                if (manifest.ConsigneeAddress is null)
                 {
                     manifest.ConsigneeAddress = new Address();
                 }
 
-                if(manifest.ConsignorAddress is null)
+                if (manifest.ConsignorAddress is null)
                 {
                     manifest.ConsignorAddress = new Address();
                 }
@@ -73,26 +77,6 @@ namespace EPManifest.App.Pages.Manifests
             }
 
             await base.OnInitializedAsync();
-        }
-
-        private async Task<IEnumerable<Provinces>> SearchProvinces(string value)
-        {
-            return provinces.Where(p => p.ToString().StartsWith(value, StringComparison.InvariantCultureIgnoreCase));
-        }
-
-        private void PopulateSelectedConsignors()
-        {
-            foreach (var consignor in manifest.Consignors)
-            {
-                SelectedConsignors.Add(consignor);
-            }
-        }
-
-        private async Task Update(EditContext context)
-        {
-            await repo.Update(manifest);
-            Logger.LogInformation($"Successfully updated manifest id:{manifest.Id}");
-            Navigation.NavigateTo("/manifests");
         }
 
         //The item methods modify the manifest field instead of the repository so that invalid changes are not persisted to the database.
@@ -106,9 +90,24 @@ namespace EPManifest.App.Pages.Manifests
             manifest.Items.Remove(item);
         }
 
-        public void Dispose()
+        private void PopulateSelectedConsignors()
         {
-            repo.Dispose();
+            foreach (var consignor in manifest.Consignors)
+            {
+                SelectedConsignors.Add(consignor);
+            }
+        }
+
+        private async Task<IEnumerable<Provinces>> SearchProvinces(string value)
+        {
+            return provinces.Where(p => p.ToString().StartsWith(value, StringComparison.InvariantCultureIgnoreCase));
+        }
+
+        private async Task Update(EditContext context)
+        {
+            await repo.Update(manifest);
+            Logger.LogInformation($"Successfully updated manifest id:{manifest.Id}");
+            Navigation.NavigateTo("/manifests");
         }
     }
 }

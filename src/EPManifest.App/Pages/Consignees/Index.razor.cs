@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using EPManifest.App.Components;
 using EPManifest.Core;
@@ -15,26 +14,33 @@ namespace EPManifest.App.Pages.Consignees
 {
     public partial class Index : IDisposable
     {
-        [Inject]
-        public ILogger<Index> Logger { get; set; }
+        private bool _isLoaded;
+
+        private bool _mayRender = true;
+
+        private List<Consignee> consignees;
+
+        private ConsigneeRepository repo;
 
         [Inject]
         public IDbContextFactory<EPManifestDbContext> ContextFactory { get; set; }
 
         [Inject]
-        public NavigationManager Navigation { get; set; }
+        public IDialogService DialogService { get; set; }
 
         [Inject]
-        public IDialogService DialogService { get; set; }
+        public ILogger<Index> Logger { get; set; }
+
+        [Inject]
+        public NavigationManager Navigation { get; set; }
 
         [Inject]
         public ISnackbar Snackbar { get; set; }
 
-        private bool _isLoaded;
-        private bool _mayRender = true;
-
-        private ConsigneeRepository repo;
-        private List<Consignee> consignees;
+        public void Dispose()
+        {
+            repo.Dispose();
+        }
 
         protected override async Task OnInitializedAsync()
         {
@@ -51,11 +57,40 @@ namespace EPManifest.App.Pages.Consignees
             await base.OnInitializedAsync();
         }
 
+        private async Task Create()
+        {
+            var parameters = new DialogParameters
+            {
+                { "ButtonText", "Create" },
+                { "Color", Color.Success },
+                { "Entity", new Consignee() }
+            };
+
+            var options = new DialogOptions() { CloseButton = true, MaxWidth = MaxWidth.ExtraSmall };
+            var dialog = DialogService.Show<CreateDialog>("New consignee", parameters, options);
+            var result = await dialog.Result;
+
+            if (!result.Cancelled)
+            {
+                //Prevents mid-method rerendering of the component, which avoids overlapping threads
+                _mayRender = false;
+                try
+                {
+                    consignees.Add((Consignee)result.Data);
+                    Snackbar.Add($"Created consignee:{((Consignee)result.Data).Id}", Severity.Success);
+                }
+                finally
+                {
+                    _mayRender = true;
+                }
+            }
+        }
+
         private async Task Delete(Consignee consignee)
         {
             var parameters = new DialogParameters
             {
-                { "ContentText", $"Are you sure that you want to delete Consignee: {consignee.Name}? This action cannot be undone." },
+                { "ContentText", $"Are you sure that you want to delete {consignee.Name}? This action cannot be undone." },
                 { "ButtonText", "Delete" },
                 { "Color", Color.Error }
             };
@@ -73,8 +108,8 @@ namespace EPManifest.App.Pages.Consignees
                 {
                     await repo.Delete(consignee);
                     consignees.Remove(consignee);
-                    Logger.LogInformation($"consignee: {consignee.Code} was deleted.");
-                    Snackbar.Add($"Deleted consignee id:{consignee.Id}", Severity.Success);
+                    Logger.LogInformation($"consignee: {consignee.Id}, Code: {consignee.Code}, Name: {consignee.Name}, was deleted.");
+                    Snackbar.Add($"Deleted consignee {consignee.Code}: {consignee.Name}", Severity.Success);
                 }
                 catch (DbUpdateException)
                 {
@@ -116,40 +151,6 @@ namespace EPManifest.App.Pages.Consignees
                     _mayRender = true;
                 }
             }
-        }
-
-        private async Task Create()
-        {
-            var parameters = new DialogParameters
-            {
-                { "ButtonText", "Create" },
-                { "Color", Color.Success },
-                { "Entity", new Consignee() }
-            };
-
-            var options = new DialogOptions() { CloseButton = true, MaxWidth = MaxWidth.ExtraSmall };
-            var dialog = DialogService.Show<CreateDialog>("New consignee", parameters, options);
-            var result = await dialog.Result;
-
-            if (!result.Cancelled)
-            {
-                //Prevents mid-method rerendering of the component, which avoids overlapping threads
-                _mayRender = false;
-                try
-                {
-                    consignees.Add((Consignee)result.Data);
-                    Snackbar.Add($"Created consignee:{((Consignee)result.Data).Id}", Severity.Success);
-                }
-                finally
-                {
-                    _mayRender = true;
-                }
-            }
-        }
-
-        public void Dispose()
-        {
-            repo.Dispose();
         }
     }
 }

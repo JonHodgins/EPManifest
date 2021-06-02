@@ -11,7 +11,7 @@ namespace EPManifest.Core
         [Required]
         public string Code { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Date Shipped is required")]
         public DateTime? DateShipped { get; set; }
 
         public DateTime? DateScheduledArrival { get; set; }
