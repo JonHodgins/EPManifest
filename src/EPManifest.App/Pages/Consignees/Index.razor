@@ -36,7 +36,9 @@ else
                         }
                         else
                         {
-                        <MudIconButton Icon="@Icons.Material.Filled.Delete" Color="Color.Transparent"></MudIconButton>
+                        <MudTooltip Text="Consignee must be removed from all associated manifests before deleting">
+                            <MudIconButton Icon="@Icons.Material.Filled.Delete" Color="Color.Transparent"></MudIconButton>
+                        </MudTooltip>
                         }
                 </MudTd>
             </RowTemplate>
