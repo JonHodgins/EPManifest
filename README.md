@@ -4,7 +4,7 @@
 
 * UI Framework: Blazor Server
 * UI Component Library: MudBlazor
-* * Web Framework: ASP.NET Core 5
+* Web Framework: ASP.NET Core 5
 * Data Access: Entity Framework Core
 * Data Store: SQL Server
 * Logging: Serilog
