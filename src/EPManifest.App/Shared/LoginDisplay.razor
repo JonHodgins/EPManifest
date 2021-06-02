@@ -1,0 +1,9 @@
+﻿<AuthorizeView>
+    <Authorized>
+        <MudText Class="mr-4">Hello, @context.User.Identity.Name!   </MudText>
+        <MudButton Class="mr-3" Variant="Variant.Text" Link="MicrosoftIdentity/Account/SignOut">Log out</MudButton>
+    </Authorized>
+    <NotAuthorized>
+        <MudButton Class="mr-3" Variant="Variant.Text" Link="MicrosoftIdentity/Account/SignIn">Log in</MudButton>
+    </NotAuthorized>
+</AuthorizeView>
