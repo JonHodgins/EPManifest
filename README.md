@@ -44,3 +44,15 @@ Update-Database
 ```bash
 dotnet run
 ```
+
+---
+
+## Physical Data Model
+
+<img src="./images/sql_server_diagram.png">
+
+---
+
+## DbContext Model
+
+<img src="images\efcore_dbcontext_diagram.png">
