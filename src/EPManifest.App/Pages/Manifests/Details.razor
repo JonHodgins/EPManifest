@@ -1,6 +1,6 @@
 ﻿@page "/manifests/details/{id:int}"
 
-<AuthorizeView Roles="Reader" Context="auth">
+<AuthorizeView Roles="Administrator, Reader, Writer" Context="auth">
     <Authorized>
         @if (_isLoaded == false)
         {

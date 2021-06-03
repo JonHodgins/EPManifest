@@ -25,6 +25,7 @@ namespace EPManifest.Data.Repositories
                 .Include(m => m.Consignee)
                 .Include(m => m.Carrier)
                 .Include(m => m.Items)
+                .AsNoTracking()
                 .ToListAsync();
         }
 

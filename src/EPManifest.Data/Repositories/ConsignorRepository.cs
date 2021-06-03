@@ -19,7 +19,7 @@ namespace EPManifest.Data.Repositories
 
         public async Task<List<Consignor>> GetAllConsignors()
         {
-            return await _context.Consignors.OrderBy(c => c.Name).Include(c => c.Manifests).ToListAsync();
+            return await _context.Consignors.OrderBy(c => c.Name).Include(c => c.Manifests).AsNoTracking().ToListAsync();
         }
 
         public Consignor GetById(int id)

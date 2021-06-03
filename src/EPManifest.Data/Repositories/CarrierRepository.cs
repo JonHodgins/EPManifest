@@ -19,7 +19,7 @@ namespace EPManifest.Data.Repositories
 
         public async Task<List<Carrier>> GetAllCarriers()
         {
-            return await _context.Carriers.OrderBy(c => c.Name).Include(c => c.Manifests).ToListAsync();
+            return await _context.Carriers.OrderBy(c => c.Name).Include(c => c.Manifests).AsNoTracking().ToListAsync();
         }
 
         public Carrier GetById(int id)

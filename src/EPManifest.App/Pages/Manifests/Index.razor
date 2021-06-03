@@ -1,5 +1,5 @@
 ﻿@page "/manifests"
-<AuthorizeView Roles="Reader" Context="auth">
+<AuthorizeView Roles="Administrator, Reader, Writer" Context="auth">
     <Authorized>
         @if (_isLoaded == false)
         {
@@ -50,7 +50,7 @@
                         <MudTd>
                             <MudIconButton Icon="@Icons.Material.Filled.Info" OnClick="(() => Details(context.Id))"></MudIconButton>
                             <MudIconButton Icon="@Icons.Material.Filled.Edit" Color="Color.Primary" OnClick="(() => Edit(context.Id))"></MudIconButton>
-                            <AuthorizeView Roles="Writer" Context="nestedAuth">
+                            <AuthorizeView Roles="Administrator" Context="nestedAuth">
                                 <MudIconButton Icon="@Icons.Material.Filled.Delete" Color="Color.Error" OnClick="(() => Delete(context))"></MudIconButton>
                             </AuthorizeView>
                         </MudTd>

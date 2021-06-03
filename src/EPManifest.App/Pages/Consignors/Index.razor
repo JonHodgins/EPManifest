@@ -1,6 +1,6 @@
 ﻿@page "/consignors"
 
-<AuthorizeView Roles="Writer" Context="auth">
+<AuthorizeView Roles="Administrator, Writer" Context="auth">
     <Authorized>
         @if (_isLoaded == false)
         {

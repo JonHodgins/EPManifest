@@ -19,7 +19,7 @@ namespace EPManifest.Data.Repositories
 
         public async Task<List<Consignee>> GetAllConsignees()
         {
-            return await _context.Consignees.OrderBy(c => c.Name).Include(c => c.Manifests).ToListAsync();
+            return await _context.Consignees.OrderBy(c => c.Name).Include(c => c.Manifests).AsNoTracking().ToListAsync();
         }
 
         public Consignee GetById(int id)
