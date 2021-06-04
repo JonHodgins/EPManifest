@@ -8,7 +8,7 @@ namespace EPManifest.Core
     {
         public int Id { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Code is required")]
         public string Code { get; set; }
 
         [Required(ErrorMessage = "Date Shipped is required")]

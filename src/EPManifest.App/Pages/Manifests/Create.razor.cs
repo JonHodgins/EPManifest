@@ -9,12 +9,14 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using MudBlazor;
 
 namespace EPManifest.App.Pages.Manifests
 {
     public partial class Create : IDisposable
     {
         private readonly Provinces[] provinces = (Provinces[])Enum.GetValues(typeof(Provinces));
+        private readonly string itemPlaceholderDescription = "CLICK ME";
         private bool _isLoaded;
         private Manifest manifest;
         private ManifestRepository repo;
@@ -32,6 +34,9 @@ namespace EPManifest.App.Pages.Manifests
 
         [Inject]
         public NavigationManager Navigation { get; set; }
+
+        [Inject]
+        public ISnackbar Snackbar { get; set; }
 
         private HashSet<Consignor> SelectedConsignors
         {
@@ -82,6 +87,7 @@ namespace EPManifest.App.Pages.Manifests
         private async Task CreateManifest()
         {
             await repo.Create(manifest);
+            Snackbar.Add($"Successfully created manifest:{manifest.Code}", Severity.Success);
             Logger.LogInformation($"Successfully created manifest id:{manifest.Id}");
             Navigation.NavigateTo("/manifests");
         }
