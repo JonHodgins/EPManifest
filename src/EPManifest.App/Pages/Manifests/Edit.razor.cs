@@ -16,7 +16,7 @@ namespace EPManifest.App.Pages.Manifests
     public partial class Edit : IDisposable
     {
         private readonly Provinces[] provinces = (Provinces[])Enum.GetValues(typeof(Provinces));
-        private readonly string itemPlaceholderDescription = "CLICK ME";
+        private readonly string itemPlaceholderDescription = "Click me";
         private bool _isLoaded;
         private Manifest manifest;
         private ManifestRepository repo;
