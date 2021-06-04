@@ -141,6 +141,7 @@
                                             </MudSelect>
                                         </MudTd>
                                     </RowEditingTemplate>
+                                    @* TODO: Redesign adding new items to the table and remove this footer. In the current design, the footer is used to prevent the user from having to scroll the table when opening the mudselects. *@
                                     <FooterContent>
                                         <MudTFootRow>
                                             <MudTd><MudCard Class="my-10"></MudCard></MudTd>
@@ -161,7 +162,7 @@
                                     </FooterContent>
                                 </MudTable>
                                 <MudPaper Class="d-sm-flex justify-center">
-                                    <MudButton Color="Color.Success" OnClick="(() => CreateItemPlaceholder())">Add Item</MudButton>
+                                    <MudButton StartIcon="@Icons.Material.Filled.PlaylistAdd" FullWidth="true" Color="Color.Success" OnClick="(() => CreateItemPlaceholder())">Add Item</MudButton>
                                 </MudPaper>
                             </MudPaper>
                         </MudItem>

@@ -103,9 +103,9 @@ namespace EPManifest.App.Pages.Manifests
             return provinces.Where(p => p.ToString().StartsWith(value, StringComparison.InvariantCultureIgnoreCase));
         }
 
-        private async Task Update(EditContext context)
+        private async Task Update()
         {
-            await repo.Update(manifest);
+            await repo.Update();
             Logger.LogInformation($"Successfully updated manifest id:{manifest.Id}");
             Navigation.NavigateTo("/manifests");
         }

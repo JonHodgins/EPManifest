@@ -61,7 +61,7 @@ namespace EPManifest.Data.Repositories
 
         public async Task<List<Consignor>> GetAllConsignors()
         {
-            return await _context.Consignors.OrderBy(c => c.Name).AsNoTracking().ToListAsync();
+            return await _context.Consignors.OrderBy(c => c.Name).ToListAsync();
         }
 
         public async Task<Manifest> Create(Manifest manifest)
@@ -71,9 +71,8 @@ namespace EPManifest.Data.Repositories
             return newManifest.Entity;
         }
 
-        public async Task Update(Manifest manifest)
+        public async Task Update()
         {
-            _context.Manifests.Update(manifest);
             await _context.SaveChangesAsync();
         }
 

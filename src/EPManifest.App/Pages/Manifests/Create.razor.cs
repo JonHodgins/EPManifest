@@ -79,7 +79,7 @@ namespace EPManifest.App.Pages.Manifests
             manifest.Items.Add(new Item() { Description = "", ManifestId = manifest.Id });
         }
 
-        private async Task CreateManifest(EditContext context)
+        private async Task CreateManifest()
         {
             await repo.Create(manifest);
             Logger.LogInformation($"Successfully created manifest id:{manifest.Id}");
