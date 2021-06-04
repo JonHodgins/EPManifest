@@ -89,12 +89,12 @@
                         <MudItem xs="12">
                             <MudPaper Elevation="2" Class="pa-4">
                                 <MudText Typo="Typo.h6">Items</MudText>
-                                <MudTable Items="@manifest.Items" Dense="true" Hover="true" Striped="true">
+                                <MudTable Items="@manifest.Items" Dense="true" Hover="true" Striped="true" CustomFooter="true">
                                     <ColGroup>
                                         <col style="width: 5%" />
-                                        <col style="width: 10%" />
-                                        <col style="width: 60%" />
-                                        <col style="width: 15%" />
+                                        <col style="width: 12%" />
+                                        <col style="width: 53%" />
+                                        <col style="width: 20%" />
                                         <col style="width: 5%" />
                                         <col style="width: 5%" />
                                     </ColGroup>
@@ -120,27 +120,45 @@
                                         <MudTd DataLabel="Id">@(manifest.Items.IndexOf(item) + 1)</MudTd>
                                         <MudTd DataLabel="State">
                                             <MudSelect @bind-Value="@item.State" Margin="Margin.Dense">
-                                                @foreach (Core.State state in Enum.GetValues(typeof(Core.State)))
+                                                @foreach (Core.State? state in Enum.GetValues(typeof(Core.State)))
                                                     {
                                                     <MudSelectItem Value="@state">@state</MudSelectItem>
                                                     }
                                             </MudSelect>
                                         </MudTd>
                                         <MudTd DataLabel="Description">
-                                            <MudTextField @bind-Value="@item.Description" Margin="Margin.Dense" For="@(() => item.Description)" />
+                                            <MudTextField @bind-Value="@item.Description" Margin="Margin.Dense" For="@(() => item.Description)" Placeholder="Description" />
                                         </MudTd>
                                         <MudTd DataLabel="Quantity">
-                                            <MudNumericField @bind-Value="@item.Quantity" Margin="Margin.Dense" For="@(() => item.Quantity)" />
+                                            <MudNumericField @bind-Value="@item.Quantity" Margin="Margin.Dense" For="@(() => item.Quantity)" Placeholder="Quantity" HideSpinButtons="true" />
                                         </MudTd>
                                         <MudTd DataLabel="Unit">
                                             <MudSelect @bind-Value="@item.Unit" Margin="Margin.Dense">
-                                                @foreach (Core.Unit unit in Enum.GetValues(typeof(Core.Unit)))
+                                                @foreach (Core.Unit? unit in Enum.GetValues(typeof(Core.Unit)))
                                                     {
                                                     <MudSelectItem Value="@unit">@unit</MudSelectItem>
                                                     }
                                             </MudSelect>
                                         </MudTd>
                                     </RowEditingTemplate>
+                                    <FooterContent>
+                                        <MudTFootRow>
+                                            <MudTd><MudCard Class="my-10"></MudCard></MudTd>
+                                            <MudTd><MudCard Class="my-10"></MudCard></MudTd>
+                                            <MudTd><MudCard Class="my-10"></MudCard></MudTd>
+                                            <MudTd><MudCard Class="my-10"></MudCard></MudTd>
+                                            <MudTd><MudCard Class="my-10"></MudCard></MudTd>
+                                            <MudTd><MudCard Class="my-10"></MudCard></MudTd>
+                                        </MudTFootRow>
+                                        <MudTFootRow>
+                                            <MudTd><MudCard Class="my-10"></MudCard></MudTd>
+                                            <MudTd><MudCard Class="my-10"></MudCard></MudTd>
+                                            <MudTd><MudCard Class="my-10"></MudCard></MudTd>
+                                            <MudTd><MudCard Class="my-10"></MudCard></MudTd>
+                                            <MudTd><MudCard Class="my-10"></MudCard></MudTd>
+                                            <MudTd><MudCard Class="my-10"></MudCard></MudTd>
+                                        </MudTFootRow>
+                                    </FooterContent>
                                 </MudTable>
                                 <MudPaper Class="d-sm-flex justify-center">
                                     <MudButton Color="Color.Success" OnClick="(() => CreateItemPlaceholder())">Add Item</MudButton>

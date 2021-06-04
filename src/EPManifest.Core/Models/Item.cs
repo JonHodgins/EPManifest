@@ -7,7 +7,7 @@ namespace EPManifest.Core
         public int Id { get; set; }
 
         [Required]
-        public State State { get; set; }
+        public State? State { get; set; }
 
         [Required(ErrorMessage = "Item description is required"), MinLength(1, ErrorMessage = "Item description is required")]
         public string Description { get; set; }
@@ -16,7 +16,7 @@ namespace EPManifest.Core
         public decimal Quantity { get; set; }
 
         [Required]
-        public Unit Unit { get; set; }
+        public Unit? Unit { get; set; }
 
         public Manifest Manifest { get; set; }
         public int ManifestId { get; set; }

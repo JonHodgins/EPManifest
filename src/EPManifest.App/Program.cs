@@ -39,8 +39,6 @@ namespace EPManifest.App
                     .ReadFrom.Configuration(context.Configuration)
                     .ReadFrom.Services(services)
                     .Enrich.FromLogContext()
-                    //Configure Serilog to log EF Core transactions
-                    .MinimumLevel.Override("Microsoft.EntityFrameworkCore", LogEventLevel.Debug)
                     .WriteTo.Console())
                 .ConfigureWebHostDefaults(webBuilder => webBuilder.UseStartup<Startup>());
     }

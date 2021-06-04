@@ -6,11 +6,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EPManifest.Data
 {
-    internal class BogusData
+    internal class BogusDataGenerator
     {
         private ModelBuilder modelBuilder;
 
-        public BogusData(ModelBuilder modelBuilder)
+        public BogusDataGenerator(ModelBuilder modelBuilder)
         {
             this.modelBuilder = modelBuilder;
         }
@@ -34,6 +34,9 @@ namespace EPManifest.Data
             modelBuilder.Entity<Carrier>().HasData(new Carrier { Id = 3, Code = "40-020", Name = "AP Freight" });
             modelBuilder.Entity<Carrier>().HasData(new Carrier { Id = 4, Code = "60-10", Name = "NM Shipping Inc" });
             modelBuilder.Entity<Carrier>().HasData(new Carrier { Id = 5, Code = "60-05", Name = "Frank's Freight" });
+
+            //Ensures faker data is deterministic
+            Randomizer.Seed = new Random(29034025);
 
             var consignorId = 6;
             var consignors = new Faker<Consignor>("en_CA")
