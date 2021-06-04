@@ -180,10 +180,14 @@
                             <MudButton ButtonType="ButtonType.Submit" Disabled="true" />
                             <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto">Update manifest</MudButton>
                         </MudItem>
-                        <MudItem>
-                            <MudText Color="@Color.Error">
-                                <ValidationSummary />
-                            </MudText>
+                        <MudItem xs="12" Class="justify-center mt-2">
+                            <MudExpansionPanels>
+                                <MudExpansionPanel Text="Show Validation Summary">
+                                    <MudText Color="@Color.Error">
+                                        <ValidationSummary />
+                                    </MudText>
+                                </MudExpansionPanel>
+                            </MudExpansionPanels>
                         </MudItem>
                     </MudGrid>
                 </EditForm>
