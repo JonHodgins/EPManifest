@@ -86,6 +86,9 @@ namespace EPManifest.App.Pages.Manifests
                 try
                 {
                     await repo.Delete(manifest);
+                    //Recreate DbContext after deleting to prevent change tracking errors on subsequent deletes
+                    Dispose();
+                    repo = new ManifestRepository(ContextFactory.CreateDbContext());
                     manifests.Remove(manifest);
                     Logger.LogInformation($"Manifest id:{manifest.Id} was deleted.");
                     Snackbar.Add($"Deleted manifest id:{manifest.Id}", Severity.Success);
