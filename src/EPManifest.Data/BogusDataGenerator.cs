@@ -82,14 +82,24 @@ namespace EPManifest.Data
             modelBuilder.Entity<Manifest>().OwnsOne(m => m.ConsignorAddress).HasData(consignorAddresses);
 
             var itemId = 1;
+            manifestId = 1;
             var items = new Faker<Item>("en_CA")
                 .RuleFor(i => i.Id, _ => itemId++)
                 .RuleFor(i => i.State, _ => _.PickRandom<State>())
                 .RuleFor(i => i.Description, _ => _.Lorem.Sentence())
                 .RuleFor(i => i.Quantity, _ => _.Random.Number(1, 20000))
                 .RuleFor(i => i.Unit, _ => _.PickRandom<Unit>())
+                .RuleFor(i => i.ManifestId, _ => manifestId++);
+            modelBuilder.Entity<Item>().HasData(items.Generate(200));
+
+            items = new Faker<Item>("en_CA")
+                .RuleFor(i => i.Id, _ => itemId++)
+                .RuleFor(i => i.State, _ => _.PickRandom<State>())
+                .RuleFor(i => i.Description, _ => _.Lorem.Sentence())
+                .RuleFor(i => i.Quantity, _ => _.Random.Number(1, 20000))
+                .RuleFor(i => i.Unit, _ => _.PickRandom<Unit>())
                 .RuleFor(i => i.ManifestId, _ => _.Random.Number(1, 200));
-            modelBuilder.Entity<Item>().HasData(items.Generate(500));
+            modelBuilder.Entity<Item>().HasData(items.Generate(400));
 
             var rnd = new Random();
             manifestId = 1;
