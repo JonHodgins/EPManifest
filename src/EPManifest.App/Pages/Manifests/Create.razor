@@ -16,7 +16,7 @@
                         <MudItem xs="12">
                             <MudGrid>
                                 <MudItem xs="4">
-                                    <MudTextField Label="Code" @bind-Value="@manifest.Code" For="@(() => manifest.Code)"></MudTextField>
+                                    <MudTextField Label="Code" @bind-Value="@manifest.Code" For="@(() => manifest.Code)" Converter="_toUpper"></MudTextField>
                                 </MudItem>
                                 <MudItem xs="4">
                                     <MudDatePicker Label="Shipped On" @bind-Date="manifest.DateShipped" Editable="true" For="(() => manifest.DateShipped)" />
@@ -43,12 +43,12 @@
                                               For="@(() => manifest.ConsignorAddress.AddressLine2)">
                                 </MudTextField>
                                 <MudTextField Label="City" @bind-Value="@manifest.ConsignorAddress.City"
-                                              For="@(() => manifest.ConsignorAddress.City)">
+                                              For="@(() => manifest.ConsignorAddress.City)" Converter="_toTitleCase">
                                 </MudTextField>
                                 <MudAutocomplete T="Core.Provinces" Label="Province/Territory" @bind-Value="@manifest.ConsignorAddress.Province"
                                                  SearchFunc="SearchProvinces" CoerceText="true" />
                                 <MudTextField Label="Postal Code" @bind-Value="@manifest.ConsignorAddress.PostalCode"
-                                              For="@(() => manifest.ConsignorAddress.PostalCode)">
+                                              For="@(() => manifest.ConsignorAddress.PostalCode)" Converter="_formatPostalCode">
                                 </MudTextField>
                             </MudPaper>
                         </MudItem>
@@ -66,12 +66,12 @@
                                               For="@(() => manifest.ConsigneeAddress.AddressLine2)">
                                 </MudTextField>
                                 <MudTextField Label="City" @bind-Value="@manifest.ConsigneeAddress.City"
-                                              For="@(() => manifest.ConsigneeAddress.City)">
+                                              For="@(() => manifest.ConsigneeAddress.City)" Converter="_toTitleCase">
                                 </MudTextField>
                                 <MudAutocomplete T="Core.Provinces" Label="Province/Territory" @bind-Value="@manifest.ConsigneeAddress.Province"
                                                  SearchFunc="SearchProvinces" CoerceText="true" />
                                 <MudTextField Label="Postal Code" @bind-Value="@manifest.ConsigneeAddress.PostalCode"
-                                              For="@(() => manifest.ConsigneeAddress.PostalCode)">
+                                              For="@(() => manifest.ConsigneeAddress.PostalCode)" Converter="_formatPostalCode">
                                 </MudTextField>
                             </MudPaper>
                         </MudItem>

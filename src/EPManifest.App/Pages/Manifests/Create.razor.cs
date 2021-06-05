@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using EPManifest.App.Extensions;
 using EPManifest.Core;
 using EPManifest.Data;
 using EPManifest.Data.Repositories;
 using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using MudBlazor;
@@ -15,12 +15,31 @@ namespace EPManifest.App.Pages.Manifests
 {
     public partial class Create : IDisposable
     {
-        private readonly Provinces[] provinces = (Provinces[])Enum.GetValues(typeof(Provinces));
+        private readonly Converter<string> _toTitleCase = new()
+        {
+            SetFunc = value => value?.ToTitleCase(),
+            GetFunc = text => text?.ToTitleCase(),
+        };
+
+        private readonly Converter<string> _toUpper = new()
+        {
+            SetFunc = value => value?.ToUpper(),
+            GetFunc = text => text?.ToUpper(),
+        };
+
+        private readonly Converter<string> _formatPostalCode = new()
+        {
+            SetFunc = value => value?.FormatPostalCode(),
+            GetFunc = text => text?.FormatPostalCode(),
+        };
+
         private readonly string itemPlaceholderDescription = "Click me";
+        private readonly Provinces[] provinces = (Provinces[])Enum.GetValues(typeof(Provinces));
         private bool _isLoaded;
         private Manifest manifest;
         private ManifestRepository repo;
         private HashSet<Consignor> selectedConsignors;
+
         public IList<Consignor> Consignors { get; set; }
 
         [Inject]

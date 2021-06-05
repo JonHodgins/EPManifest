@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using EPManifest.App.Extensions;
 using EPManifest.Core;
 using EPManifest.Data;
 using EPManifest.Data.Repositories;
@@ -15,6 +16,24 @@ namespace EPManifest.App.Pages.Manifests
 {
     public partial class Edit : IDisposable
     {
+        private readonly Converter<string> _toTitleCase = new()
+        {
+            SetFunc = value => value?.ToTitleCase(),
+            GetFunc = text => text?.ToTitleCase(),
+        };
+
+        private readonly Converter<string> _toUpper = new()
+        {
+            SetFunc = value => value?.ToUpper(),
+            GetFunc = text => text?.ToUpper(),
+        };
+
+        private readonly Converter<string> _formatPostalCode = new()
+        {
+            SetFunc = value => value?.FormatPostalCode(),
+            GetFunc = text => text?.FormatPostalCode(),
+        };
+
         private readonly Provinces[] provinces = (Provinces[])Enum.GetValues(typeof(Provinces));
         private readonly string itemPlaceholderDescription = "Click me";
         private bool _isLoaded;
