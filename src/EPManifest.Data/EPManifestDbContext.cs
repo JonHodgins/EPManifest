@@ -48,7 +48,7 @@ namespace EPManifest.Data
             modelBuilder.Entity<Carrier>().Property(c => c.Name).IsRequired().HasMaxLength(50);
 
             //Generate bogus data for testing
-            new BogusDataGenerator(modelBuilder).Init();
+            new BogusDataGenerator(modelBuilder, 800).Init();
         }
     }
 }

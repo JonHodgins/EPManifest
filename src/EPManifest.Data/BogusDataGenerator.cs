@@ -9,10 +9,12 @@ namespace EPManifest.Data
     internal class BogusDataGenerator
     {
         private ModelBuilder modelBuilder;
+        private readonly int numManifests;
 
-        public BogusDataGenerator(ModelBuilder modelBuilder)
+        public BogusDataGenerator(ModelBuilder modelBuilder, int numManifests)
         {
             this.modelBuilder = modelBuilder;
+            this.numManifests = numManifests;
         }
 
         public void Init()
@@ -53,12 +55,12 @@ namespace EPManifest.Data
                 .RuleFor(m => m.CarrierId, _ => _.Random.Number(1, 5))
                 .RuleFor(m => m.DateShipped, _ => _.Date.Between(new DateTime(2021, 05, 08), new DateTime(2021, 08, 31)))
                 .RuleFor(m => m.DateScheduledArrival, _ => _.Date.Between(new DateTime(2021, 09, 01), new DateTime(2021, 12, 31)));
-            modelBuilder.Entity<Manifest>().HasData(manifests.Generate(200));
+            modelBuilder.Entity<Manifest>().HasData(manifests.Generate(numManifests));
 
             var f = new Faker("en_CA");
 
             manifestId = 1;
-            var consigneeAddresses = Enumerable.Range(1, 200)
+            var consigneeAddresses = Enumerable.Range(1, numManifests)
                                         .Select(_ => new
                                         {
                                             ManifestId = manifestId++,
@@ -70,7 +72,7 @@ namespace EPManifest.Data
             modelBuilder.Entity<Manifest>().OwnsOne(m => m.ConsigneeAddress).HasData(consigneeAddresses);
 
             manifestId = 1;
-            var consignorAddresses = Enumerable.Range(1, 200)
+            var consignorAddresses = Enumerable.Range(1, numManifests)
                                         .Select(_ => new
                                         {
                                             ManifestId = manifestId++,
@@ -90,7 +92,7 @@ namespace EPManifest.Data
                 .RuleFor(i => i.Quantity, _ => _.Random.Number(1, 20000))
                 .RuleFor(i => i.Unit, _ => _.PickRandom<Unit>())
                 .RuleFor(i => i.ManifestId, _ => manifestId++);
-            modelBuilder.Entity<Item>().HasData(items.Generate(200));
+            modelBuilder.Entity<Item>().HasData(items.Generate(numManifests));
 
             items = new Faker<Item>("en_CA")
                 .RuleFor(i => i.Id, _ => itemId++)
@@ -98,12 +100,12 @@ namespace EPManifest.Data
                 .RuleFor(i => i.Description, _ => _.Lorem.Sentence())
                 .RuleFor(i => i.Quantity, _ => _.Random.Number(1, 20000))
                 .RuleFor(i => i.Unit, _ => _.PickRandom<Unit>())
-                .RuleFor(i => i.ManifestId, _ => _.Random.Number(1, 200));
-            modelBuilder.Entity<Item>().HasData(items.Generate(400));
+                .RuleFor(i => i.ManifestId, _ => _.Random.Number(1, numManifests));
+            modelBuilder.Entity<Item>().HasData(items.Generate(numManifests * 2));
 
             var rnd = new Random();
             manifestId = 1;
-            var consignorManifests = Enumerable.Range(1, 200)
+            var consignorManifests = Enumerable.Range(1, numManifests)
                 .Select(_ => new
                 {
                     ConsignorId = rnd.Next(1, 5),
@@ -112,7 +114,7 @@ namespace EPManifest.Data
             modelBuilder.Entity<ConsignorManifest>().HasData(consignorManifests);
 
             manifestId = 1;
-            consignorManifests = Enumerable.Range(1, 20)
+            consignorManifests = Enumerable.Range(1, numManifests / 10)
                 .Select(_ => new
                 {
                     ConsignorId = rnd.Next(6, 15),
