@@ -33,7 +33,7 @@ namespace EPManifest.App.Pages.Manifests
             GetFunc = text => text?.FormatPostalCode(),
         };
 
-        private readonly string itemPlaceholderDescription = "Click me";
+        private readonly string _itemPlaceholderDescription = "Click me";
         private readonly Provinces[] provinces = (Provinces[])Enum.GetValues(typeof(Provinces));
         private bool _isLoaded;
         private Manifest manifest;
@@ -106,7 +106,7 @@ namespace EPManifest.App.Pages.Manifests
         private async Task CreateManifest()
         {
             await repo.Create(manifest);
-            Snackbar.Add($"Successfully created manifest:{manifest.Code}", Severity.Success);
+            Snackbar.Add($"Successfully created manifest {manifest.Id}: {manifest.Code}", Severity.Success);
             Logger.LogInformation($"Successfully created manifest id:{manifest.Id}");
             Navigation.NavigateTo("/manifests");
         }

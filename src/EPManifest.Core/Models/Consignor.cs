@@ -13,5 +13,6 @@ namespace EPManifest.Core
         public string Name { get; set; }
 
         public List<Manifest> Manifests { get; set; } = new List<Manifest>();
+        public List<ConsignorManifest> ConsignorManifests { get; set; }
     }
 }

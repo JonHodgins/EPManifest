@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace EPManifest.App.Extensions
 {
-    public static class InputExtensions
+    public static class FormInputExtensions
     {
         private static readonly TextInfo s_textInfo = new CultureInfo("en-CA", false).TextInfo;
 

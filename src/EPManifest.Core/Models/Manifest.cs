@@ -19,6 +19,8 @@ namespace EPManifest.Core
         [ValidateComplexType, NotNullOrEmptyCollection(ErrorMessage = "Consignors is required")]
         public List<Consignor> Consignors { get; set; } = new List<Consignor>();
 
+        public List<ConsignorManifest> ConsignorManifests { get; set; }
+
         [ValidateComplexType, Required(ErrorMessage = "Consignee is required")]
         public Consignee Consignee { get; set; }
 

@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Bogus;
-using CountryData.Bogus;
 using EPManifest.Core;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -23,6 +18,7 @@ namespace EPManifest.Data
 
         public DbSet<Manifest> Manifests { get; set; }
         public DbSet<Consignor> Consignors { get; set; }
+        public DbSet<ConsignorManifest> ConsignorManifest { get; set; }
         public DbSet<Consignee> Consignees { get; set; }
         public DbSet<Carrier> Carriers { get; set; }
         public DbSet<Item> Items { get; set; }

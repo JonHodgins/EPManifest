@@ -41,6 +41,19 @@ namespace EPManifest.Data
                         .WithMany("Manifests")
                         .HasForeignKey("CarrierId")
                         .OnDelete(DeleteBehavior.Restrict);
+
+            builder.HasMany(m => m.Consignors)
+                .WithMany(c => c.Manifests)
+                .UsingEntity<ConsignorManifest>(
+                j => j
+                .HasOne(mc => mc.Consignor)
+                .WithMany(c => c.ConsignorManifests)
+                .HasForeignKey(mc => mc.ConsignorId),
+                j => j
+                .HasOne(mc => mc.Manifest)
+                .WithMany(c => c.ConsignorManifests)
+                .HasForeignKey(mc => mc.ManifestId),
+                j => j.HasKey(c => new { c.ManifestId, c.ConsignorId }));
         }
     }
 }

@@ -36,19 +36,19 @@ namespace EPManifest.Data
             modelBuilder.Entity<Carrier>().HasData(new Carrier { Id = 5, Code = "60-05", Name = "Frank's Freight" });
 
             //Ensures faker data is deterministic
-            Randomizer.Seed = new Random(29034025);
+            //Randomizer.Seed = new Random(29034025);
 
             var consignorId = 6;
             var consignors = new Faker<Consignor>("en_CA")
                 .RuleFor(c => c.Id, _ => consignorId++)
-                .RuleFor(c => c.Code, _ => _.Random.AlphaNumeric(2).ToUpperInvariant() + "-" + _.Random.AlphaNumeric(3).ToUpperInvariant())
+                .RuleFor(c => c.Code, _ => _.Random.Replace("**-***"))
                 .RuleFor(c => c.Name, _ => _.Company.CompanyName());
             modelBuilder.Entity<Consignor>().HasData(consignors.Generate(10));
 
             var manifestId = 1;
             var manifests = new Faker<Manifest>("en_CA")
                 .RuleFor(m => m.Id, _ => manifestId++)
-                .RuleFor(m => m.Code, _ => "YT" + _.Random.Int(10000, 99999) + "-" + _.Random.Number(1))
+                .RuleFor(m => m.Code, _ => _.Random.Replace("**-####"))
                 .RuleFor(m => m.ConsigneeId, _ => _.Random.Number(1, 5))
                 .RuleFor(m => m.CarrierId, _ => _.Random.Number(1, 5))
                 .RuleFor(m => m.DateShipped, _ => _.Date.Between(new DateTime(2021, 05, 08), new DateTime(2021, 08, 31)))
@@ -82,7 +82,7 @@ namespace EPManifest.Data
             modelBuilder.Entity<Manifest>().OwnsOne(m => m.ConsignorAddress).HasData(consignorAddresses);
 
             var itemId = 1;
-            var items = new Faker<Item>()
+            var items = new Faker<Item>("en_CA")
                 .RuleFor(i => i.Id, _ => itemId++)
                 .RuleFor(i => i.State, _ => _.PickRandom<State>())
                 .RuleFor(i => i.Description, _ => _.Lorem.Sentence())
@@ -90,6 +90,25 @@ namespace EPManifest.Data
                 .RuleFor(i => i.Unit, _ => _.PickRandom<Unit>())
                 .RuleFor(i => i.ManifestId, _ => _.Random.Number(1, 200));
             modelBuilder.Entity<Item>().HasData(items.Generate(500));
+
+            var rnd = new Random();
+            manifestId = 1;
+            var consignorManifests = Enumerable.Range(1, 200)
+                .Select(_ => new
+                {
+                    ConsignorId = rnd.Next(1, 5),
+                    ManifestId = manifestId++
+                }).ToList();
+            modelBuilder.Entity<ConsignorManifest>().HasData(consignorManifests);
+
+            manifestId = 1;
+            consignorManifests = Enumerable.Range(1, 20)
+                .Select(_ => new
+                {
+                    ConsignorId = rnd.Next(6, 15),
+                    ManifestId = manifestId += rnd.Next(3, 10)
+                }).ToList();
+            modelBuilder.Entity<ConsignorManifest>().HasData(consignorManifests);
         }
     }
 }

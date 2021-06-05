@@ -35,7 +35,7 @@ namespace EPManifest.App.Pages.Manifests
         };
 
         private readonly Provinces[] provinces = (Provinces[])Enum.GetValues(typeof(Provinces));
-        private readonly string itemPlaceholderDescription = "Click me";
+        private readonly string _itemPlaceholderDescription = "Click me";
         private bool _isLoaded;
         private Manifest manifest;
         private ManifestRepository repo;
@@ -131,7 +131,7 @@ namespace EPManifest.App.Pages.Manifests
         {
             await repo.Update();
             Logger.LogInformation($"Successfully updated manifest id:{manifest.Id}");
-            Snackbar.Add($"Successfully updated manifest:{manifest.Code}", Severity.Success);
+            Snackbar.Add($"Successfully updated manifest {manifest.Id}: {manifest.Code}", Severity.Success);
             Navigation.NavigateTo("/manifests");
         }
     }
