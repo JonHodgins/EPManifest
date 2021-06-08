@@ -46,14 +46,14 @@ namespace EPManifest.Data
                 .WithMany(c => c.Manifests)
                 .UsingEntity<ConsignorManifest>(
                 j => j
-                .HasOne(mc => mc.Consignor)
+                .HasOne(cm => cm.Consignor)
                 .WithMany(c => c.ConsignorManifests)
-                .HasForeignKey(mc => mc.ConsignorId),
+                .HasForeignKey(cm => cm.ConsignorId),
                 j => j
-                .HasOne(mc => mc.Manifest)
-                .WithMany(c => c.ConsignorManifests)
-                .HasForeignKey(mc => mc.ManifestId),
-                j => j.HasKey(c => new { c.ManifestId, c.ConsignorId }));
+                .HasOne(cm => cm.Manifest)
+                .WithMany(m => m.ConsignorManifests)
+                .HasForeignKey(cm => cm.ManifestId),
+                j => j.HasKey(cm => new { cm.ManifestId, cm.ConsignorId }));
         }
     }
 }

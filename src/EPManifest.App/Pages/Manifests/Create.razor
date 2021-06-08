@@ -33,7 +33,7 @@
                                            ToStringFunc="c => c.Name">
                                     @foreach (var consignor in Consignors)
                                     {
-                                        <MudSelectItem Value="@consignor">@consignor.Name</MudSelectItem>
+                                        <MudSelectItem Value="@consignor">@consignor.Name | @consignor.Code</MudSelectItem>
                                     }
                                 </MudSelect>
                                 <MudTextField Label="Address Line 1" @bind-Value="@manifest.ConsignorAddress.AddressLine1"

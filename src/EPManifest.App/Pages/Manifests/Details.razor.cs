@@ -54,9 +54,9 @@ namespace EPManifest.App.Pages.Manifests
             var temp = new List<string>();
             foreach (var consignor in manifest.Consignors)
             {
-                temp.Add(consignor.Name);
+                temp.Add(consignor.Name.Replace(",", ""));
             }
-            return string.Join(",", temp);
+            return string.Join(", ", temp);
         }
 
         private void Edit()
