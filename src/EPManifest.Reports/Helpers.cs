@@ -24,22 +24,16 @@ namespace EPManifest.Reports
 
         public static async Task<string> GetCoordinates(Address address)
         {
-            ArcGISRuntimeEnvironment.ApiKey = "";
-
-            var locatorTask = new LocatorTask(new Uri("https://geocode-api.arcgis.com/arcgis/rest/services/World/GeocodeServer"));
-            // Or set an APIKey on the Locator Task:
-            // locatorTask.ApiKey = "YOUR_API_KEY";
+            var locatorTask = new LocatorTask(new Uri("https://geocode-api.arcgis.com/arcgis/rest/services/World/GeocodeServer"))
+            {
+                ApiKey = ""
+            };
 
             var results = await locatorTask.GeocodeAsync($"{address.AddressLine1} {address.City} {address.Province} {address.PostalCode}");
 
-            if (results?.FirstOrDefault() is GeocodeResult firstResult)
-            {
-                return $"{firstResult.DisplayLocation.X}, {firstResult.DisplayLocation.Y}";
-            }
-            else
-            {
-                return "Location not found.";
-            }
+            return results?.FirstOrDefault() is GeocodeResult firstResult
+                ? $"{firstResult.DisplayLocation.X}, {firstResult.DisplayLocation.Y}"
+                : "Location not found";
         }
     }
 }
