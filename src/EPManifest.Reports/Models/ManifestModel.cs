@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using EPManifest.Core;
-using GoogleMaps.LocationServices;
 
 namespace EPManifest.Reports.Data
 {
@@ -29,9 +28,5 @@ namespace EPManifest.Reports.Data
         public Address ConsignorAddress { get; set; }
 
         public Address ConsigneeAddress { get; set; }
-
-        public AddressData ConsignorAddressData { get; set; }
-
-        public AddressData ConsigneeAddressData { get; set; }
     }
 }

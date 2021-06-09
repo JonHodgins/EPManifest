@@ -1,7 +1,11 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
+using EPManifest.Core;
 using EPManifest.Reports.Data;
-using GoogleMaps.LocationServices;
+using Esri.ArcGISRuntime;
+using Esri.ArcGISRuntime.Tasks.Geocoding;
 using SkiaSharp;
 
 namespace EPManifest.Reports
@@ -18,20 +22,23 @@ namespace EPManifest.Reports
             return SKImage.FromEncodedData(photoPath).EncodedData.ToArray();
         }
 
-        public static string GetCoordinates(AddressData addressData)
+        public static async Task<string> GetCoordinates(Address address)
         {
-            var gls = new GoogleLocationService(apikey: "");
+            ArcGISRuntimeEnvironment.ApiKey = "";
 
-            try
+            var locatorTask = new LocatorTask(new Uri("https://geocode-api.arcgis.com/arcgis/rest/services/World/GeocodeServer"));
+            // Or set an APIKey on the Locator Task:
+            // locatorTask.ApiKey = "YOUR_API_KEY";
+
+            var results = await locatorTask.GeocodeAsync($"{address.AddressLine1} {address.City} {address.Province} {address.PostalCode}");
+
+            if (results?.FirstOrDefault() is GeocodeResult firstResult)
             {
-                var latlong = gls.GetLatLongFromAddress(addressData);
-                var latitude = latlong.Latitude;
-                var longitude = latlong.Longitude;
-                return $"{latitude},{longitude}";
+                return $"{firstResult.DisplayLocation.X}, {firstResult.DisplayLocation.Y}";
             }
-            catch (System.Net.WebException ex)
+            else
             {
-                return $"Google Maps API Error: {ex.Message}";
+                return "Location not found.";
             }
         }
     }

@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using EPManifest.Core;
 using EPManifest.Data;
 using EPManifest.Data.Repositories;
-using GoogleMaps.LocationServices;
 using Microsoft.EntityFrameworkCore;
 
 namespace EPManifest.Reports.Data
@@ -72,23 +71,7 @@ namespace EPManifest.Reports.Data
                 Carrier = manifest.Carrier,
                 Items = manifest.Items,
                 ConsignorAddress = manifest.ConsignorAddress,
-                ConsigneeAddress = manifest.ConsigneeAddress,
-                ConsignorAddressData = new AddressData
-                {
-                    Address = manifest.ConsignorAddress.AddressLine1,
-                    City = manifest.ConsignorAddress.City,
-                    State = manifest.ConsignorAddress.Province.ToString(),
-                    Country = "Canada",
-                    Zip = manifest.ConsignorAddress.PostalCode
-                },
-                ConsigneeAddressData = new AddressData
-                {
-                    Address = manifest.ConsigneeAddress.AddressLine1,
-                    City = manifest.ConsigneeAddress.City,
-                    State = manifest.ConsigneeAddress.Province.ToString(),
-                    Country = "Canada",
-                    Zip = manifest.ConsigneeAddress.PostalCode
-                }
+                ConsigneeAddress = manifest.ConsigneeAddress
             };
         }
     }
