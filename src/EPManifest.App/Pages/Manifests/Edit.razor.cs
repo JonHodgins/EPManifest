@@ -130,9 +130,9 @@ namespace EPManifest.App.Pages.Manifests
         private async Task Update()
         {
             await repo.Update();
-            Logger.LogInformation($"Successfully updated manifest id:{manifest.Id}");
-            Snackbar.Add($"Successfully updated manifest {manifest.Id}: {manifest.Code}", Severity.Success);
-            Navigation.NavigateTo("/manifests");
+            Snackbar.Add($"Successfully updated manifest {manifest.Code} (Id: {manifest.Id})", Severity.Success);
+            Logger.LogInformation($"Successfully updated manifest {manifest.Code} (Id: {manifest.Id})");
+            Navigation.NavigateTo($"/manifests/details/{manifest.Id}");
         }
     }
 }

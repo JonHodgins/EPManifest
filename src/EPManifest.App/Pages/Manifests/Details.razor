@@ -61,7 +61,8 @@
                     <MudItem xs="12" sm="12" md="4">
                         <MudPaper Elevation="2" Class="pa-4">
                             <MudText Typo="Typo.h6">Carrier</MudText>
-                            <MudField Label="Carrier">@manifest.Carrier.Name</MudField>
+                            <MudField Label="Carrier" Class="pb-1">@manifest.Carrier.Name</MudField>
+                            <EPManifest.App.Components.EsriMap searchTerm="@manifest.ConsigneeAddress.ToString()" />
                         </MudPaper>
                     </MudItem>
 

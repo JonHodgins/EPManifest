@@ -106,9 +106,9 @@ namespace EPManifest.App.Pages.Manifests
         private async Task CreateManifest()
         {
             await repo.Create(manifest);
-            Snackbar.Add($"Successfully created manifest {manifest.Id}: {manifest.Code}", Severity.Success);
-            Logger.LogInformation($"Successfully created manifest id:{manifest.Id}");
-            Navigation.NavigateTo("/manifests");
+            Snackbar.Add($"Successfully created manifest {manifest.Code} (Id: {manifest.Id})", Severity.Success);
+            Logger.LogInformation($"Successfully created manifest {manifest.Code} (Id: {manifest.Id})");
+            Navigation.NavigateTo($"/manifests/details/{manifest.Id}");
         }
 
         private void DeleteItem(Item item)

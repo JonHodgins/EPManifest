@@ -24,5 +24,17 @@ namespace EPManifest.Core
         public string PhoneNumber { get; set; }
 
         public int ManifestId { get; set; }
+
+        public override string ToString()
+        {
+            if (string.IsNullOrWhiteSpace(AddressLine2))
+            {
+                return $"{AddressLine1}, {City}, {Province}, {PostalCode}";
+            }
+            else
+            {
+                return $"{AddressLine1}, {AddressLine2}, {City}, {Province}, {PostalCode}";
+            }
+        }
     }
 }
