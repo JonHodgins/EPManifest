@@ -1,8 +1,8 @@
 ﻿@using Microsoft.Extensions.Configuration
 @inject IConfiguration Configuration
 @inject IJSRuntime JS
-
-<div id="viewDiv"></div>
+@* TODO: Figure out why CSS isolation is not working for the viewDiv. *@
+<div id="viewDiv" style="padding: 0; margin: 0; height: 16.5rem; width: 100%;" />
 
 @code {
     [Parameter]
