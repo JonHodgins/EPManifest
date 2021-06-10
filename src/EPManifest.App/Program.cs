@@ -39,7 +39,8 @@ namespace EPManifest.App
                     .ReadFrom.Configuration(context.Configuration)
                     .ReadFrom.Services(services)
                     .Enrich.FromLogContext()
-                    .MinimumLevel.Override("Microsoft.EntityFrameworkCore", LogEventLevel.Debug)
+                    //.MinimumLevel.Override("Microsoft.EntityFrameworkCore", LogEventLevel.Debug)
+                    .WriteTo.Seq("http://localhost:5341")
                     .WriteTo.Console())
                 .ConfigureWebHostDefaults(webBuilder => webBuilder.UseStartup<Startup>());
     }
