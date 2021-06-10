@@ -29,7 +29,7 @@ namespace EPManifest.Reports
                 ApiKey = ""
             };
 
-            var results = await locatorTask.GeocodeAsync($"{address.AddressLine1} {address.City} {address.Province} {address.PostalCode}");
+            var results = await locatorTask.GeocodeAsync(address.ToString());
 
             return results?.FirstOrDefault() is GeocodeResult firstResult
                 ? $"{firstResult.DisplayLocation.X}, {firstResult.DisplayLocation.Y}"

@@ -48,7 +48,7 @@ namespace EPManifest.AccessDataImporter
                     };
                     id++;
                     manifestRecords.Add(record);
-                };
+                }
 
                 foreach (var record in manifestRecords)
                 {
