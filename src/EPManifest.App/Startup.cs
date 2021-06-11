@@ -54,7 +54,7 @@ namespace EPManifest.App
                        .EnableSensitiveDataLogging());
 #else
             services.AddDbContextFactory<EPManifestDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("EPManifestContext"));
+                options.UseSqlServer(Configuration.GetConnectionString("EPManifestContext")));
 #endif
         }
 
