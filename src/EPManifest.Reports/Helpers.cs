@@ -26,7 +26,7 @@ namespace EPManifest.Reports
         {
             var locatorTask = new LocatorTask(new Uri("https://geocode-api.arcgis.com/arcgis/rest/services/World/GeocodeServer"))
             {
-                ApiKey = ""
+                ApiKey = "AAPK17dc7d3fe72d4f709e26246268204f12v4vcVc-qXa829QR54exOmz_QhNa91bzIk49k_9Rp_0EbsPufxGJnkKVIwNcLHQGQ"
             };
 
             var results = await locatorTask.GeocodeAsync(address.ToString());

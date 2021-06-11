@@ -17,7 +17,7 @@ namespace EPManifest.Reports
         private static void Main(string[] args)
         {
             ManifestsDataSource myData = new ManifestsDataSource();
-            Console.WriteLine("Hi");
+            Console.WriteLine("Generating report...");
 
             var filePath = "invoice.pdf";
 
