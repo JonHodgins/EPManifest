@@ -6,6 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="BlazorDownloadFile" Version="2.1.6" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.7" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="5.0.7" />
     <PackageReference Include="Microsoft.AspNetCore.Components.DataAnnotations.Validation" Version="3.2.0-rc1.20223.4" />
@@ -24,6 +25,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\EPManifest.Data\EPManifest.Data.csproj" />
+    <ProjectReference Include="..\EPManifest.Reports\EPManifest.Reports.csproj" />
   </ItemGroup>
 
 </Project>

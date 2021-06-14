@@ -4,8 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using EPManifest.Core;
 using EPManifest.Reports.Data;
-using Esri.ArcGISRuntime;
-using Esri.ArcGISRuntime.Tasks.Geocoding;
 using SkiaSharp;
 
 namespace EPManifest.Reports
@@ -20,20 +18,6 @@ namespace EPManifest.Reports
         {
             var photoPath = GetTestItem(name);
             return SKImage.FromEncodedData(photoPath).EncodedData.ToArray();
-        }
-
-        public static async Task<string> GetCoordinates(Address address)
-        {
-            var locatorTask = new LocatorTask(new Uri("https://geocode-api.arcgis.com/arcgis/rest/services/World/GeocodeServer"))
-            {
-                ApiKey = "AAPK17dc7d3fe72d4f709e26246268204f12v4vcVc-qXa829QR54exOmz_QhNa91bzIk49k_9Rp_0EbsPufxGJnkKVIwNcLHQGQ"
-            };
-
-            var results = await locatorTask.GeocodeAsync(address.ToString());
-
-            return results?.FirstOrDefault() is GeocodeResult firstResult
-                ? $"{firstResult.DisplayLocation.X}, {firstResult.DisplayLocation.Y}"
-                : "Location not found";
         }
     }
 }

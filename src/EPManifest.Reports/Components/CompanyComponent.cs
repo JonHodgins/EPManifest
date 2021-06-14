@@ -41,7 +41,6 @@ namespace EPManifest.Reports.Components
                         stack.Item().Text(Model.ConsigneeAddress.AddressLine2);
                         stack.Item().Text($"{Model.ConsigneeAddress.City}, {Model.ConsigneeAddress.Province}");
                         stack.Item().Text(Model.ConsigneeAddress.PostalCode);
-                        stack.Item().Text(Helpers.GetCoordinates(Model.ConsigneeAddress).Result);
                         break;
 
                     case Type c when c == typeof(Consignor):
@@ -50,7 +49,6 @@ namespace EPManifest.Reports.Components
                         stack.Item().Text(Model.ConsignorAddress.AddressLine2);
                         stack.Item().Text($"{Model.ConsignorAddress.City}, {Model.ConsignorAddress.Province}");
                         stack.Item().Text(Model.ConsignorAddress.PostalCode);
-                        stack.Item().Text(Helpers.GetCoordinates(Model.ConsignorAddress).Result);
                         break;
                 }
             });

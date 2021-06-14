@@ -1,31 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using EPManifest.Reports.Data;
 using EPManifest.Reports.Templates;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Hosting;
 using QuestPDF.Fluent;
 
 namespace EPManifest.Reports
 {
-    public class Program
+    public static class Generator
     {
-        private static void Main(string[] args)
+        public static async Task GenerateManifestPDFAsync(int manifestId)
         {
             ManifestsDataSource myData = new ManifestsDataSource();
             Console.WriteLine("Generating report...");
 
-            var filePath = "invoice.pdf";
+            Directory.CreateDirectory("Reports");
+            var filePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), $"Reports/manifest{manifestId}.pdf");
 
-            var model = myData.GetManifestDetails(1);
+            var model = await myData.GetManifestDetailsAsync(manifestId);
             var document = new ManifestDocument(model);
             document.GeneratePdf(filePath);
-
-            Process.Start("explorer.exe", filePath);
         }
     }
 }

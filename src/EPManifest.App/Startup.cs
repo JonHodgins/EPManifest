@@ -1,4 +1,5 @@
-﻿using EPManifest.Data;
+﻿using BlazorDownloadFile;
+using EPManifest.Data;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
@@ -48,6 +49,7 @@ namespace EPManifest.App
             services.AddServerSideBlazor()
                 .AddMicrosoftIdentityConsentHandler();
             services.AddMudServices();
+            services.AddBlazorDownloadFile();
 #if DEBUG
             services.AddDbContextFactory<EPManifestDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("EPManifestContext"))

@@ -91,6 +91,7 @@ namespace EPManifest.Reports.Templates
                     row.ConstantColumn(50).Text("State");
                     row.RelativeColumn().AlignLeft().Text("Description");
                     row.RelativeColumn().AlignRight().Text("Quantity");
+                    row.ConstantColumn(20).AlignRight().Text("");
                 });
 
                 // content
@@ -105,7 +106,8 @@ namespace EPManifest.Reports.Templates
                                 row.ConstantColumn(25).Text(Model.Items.IndexOf(item) + 1);
                                 row.ConstantColumn(50).Text(item.State);
                                 row.RelativeColumn().AlignLeft().Text($"{item.Description}");
-                                row.RelativeColumn().AlignRight().Text($"{item.Quantity} {item.Unit}");
+                                row.RelativeColumn().AlignRight().Text($"{item.Quantity:0.##}");
+                                row.ConstantColumn(20).AlignRight().Text(item.Unit);
                             });
                         }
                     });
