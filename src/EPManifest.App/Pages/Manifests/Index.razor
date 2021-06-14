@@ -44,7 +44,7 @@
                         <MudTd DataLabel="Consignors">@String.Join(", ", context.Consignors.Select(c => c.Name))</MudTd>
                         <MudTd DataLabel="Consignee">@context.Consignee.Name</MudTd>
                         <MudTd DataLabel="Carrier">@context.Carrier.Name</MudTd>
-                        <MudTd DataLabel="Shipped">@context.DateShipped?.ToLongDateString()</MudTd>
+                        <MudTd DataLabel="Shipped">@context.DateShipped?.ToString("MMMM dd, yyyy")</MudTd>
                         <MudTd DataLabel="Scheduled Arrival">@context.DateScheduledArrival?.ToLongDateString()</MudTd>
                         <MudTd DataLabel="# Items">@context.Items.Count</MudTd>
                         <MudTd>

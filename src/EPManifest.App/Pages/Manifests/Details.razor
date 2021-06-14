@@ -75,23 +75,19 @@
                                     <col style="width: 10%" />
                                     <col style="width: 55%" />
                                     <col style="width: 20%" />
-                                    <col style="width: 5%" />
-                                    <col style="width: 5%" />
+                                    <col style="width: 10%" />
                                 </ColGroup>
                                 <HeaderContent>
                                     <MudTh>#</MudTh>
                                     <MudTh>State</MudTh>
                                     <MudTh>Description</MudTh>
                                     <MudTh>Quantity</MudTh>
-                                    <MudTh>Unit</MudTh>
-                                    <MudTh></MudTh>
                                 </HeaderContent>
                                 <RowTemplate Context="item">
                                     <MudTd DataLabel="Id">@(manifest.Items.IndexOf(item) + 1)</MudTd>
                                     <MudTd DataLabel="State">@item.State</MudTd>
                                     <MudTd DataLabel="Description">@item.Description</MudTd>
-                                    <MudTd DataLabel="Quantity">@item.Quantity</MudTd>
-                                    <MudTd DataLabel="Unit">@item.Unit</MudTd>
+                                    <MudTd DataLabel="Quantity">@item.Quantity.ToString("0.##") @item.Unit</MudTd>
                                 </RowTemplate>
                             </MudTable>
                         </MudPaper>
