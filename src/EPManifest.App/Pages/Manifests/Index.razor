@@ -45,7 +45,7 @@
                         <MudTd DataLabel="Consignee">@context.Consignee.Name</MudTd>
                         <MudTd DataLabel="Carrier">@context.Carrier.Name</MudTd>
                         <MudTd DataLabel="Shipped">@context.DateShipped?.ToString("MMMM dd, yyyy")</MudTd>
-                        <MudTd DataLabel="Scheduled Arrival">@context.DateScheduledArrival?.ToLongDateString()</MudTd>
+                        <MudTd DataLabel="Scheduled Arrival">@context.DateScheduledArrival?.ToString("MMMM dd, yyyy")</MudTd>
                         <MudTd DataLabel="# Items">@context.Items.Count</MudTd>
                         <MudTd>
                             <MudIconButton Icon="@Icons.Material.Filled.Info" OnClick="(() => Details(context.Id))"></MudIconButton>
