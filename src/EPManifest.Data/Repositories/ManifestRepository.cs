@@ -26,6 +26,7 @@ namespace EPManifest.Data.Repositories
                 .Include(m => m.Carrier)
                 .Include(m => m.Items)
                 .AsNoTracking()
+                .AsSingleQuery()
                 .ToListAsync();
         }
 
@@ -38,6 +39,7 @@ namespace EPManifest.Data.Repositories
                 .Include(m => m.ConsignorAddress)
                 .Include(m => m.ConsigneeAddress)
                 .Include(m => m.Items)
+                .AsSingleQuery()
                 .FirstOrDefaultAsync(m => m.Id == manifestId);
         }
 
