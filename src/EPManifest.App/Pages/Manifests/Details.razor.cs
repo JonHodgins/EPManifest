@@ -11,6 +11,7 @@ using EPManifest.Data;
 using EPManifest.Data.Repositories;
 using EPManifest.Reports;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
@@ -20,6 +21,7 @@ namespace EPManifest.App.Pages.Manifests
     {
         private bool _isLoaded;
         private Manifest manifest;
+        private AuthenticationState _principal;
         private ManifestRepository repo;
         private string _message = string.Empty;
 
@@ -38,9 +40,12 @@ namespace EPManifest.App.Pages.Manifests
         [Inject]
         public NavigationManager Navigation { get; set; }
 
+        [CascadingParameter]
+        private Task<AuthenticationState> AuthState { get; set; }
+
         public void Dispose()
         {
-            Logger.LogInformation($"Disposing details {manifest.Id}");
+            Logger.LogInformation($"Disposing manifest {manifest.Id} details");
             repo.Dispose();
         }
 
@@ -48,6 +53,7 @@ namespace EPManifest.App.Pages.Manifests
         {
             try
             {
+                _principal = AuthState.Result;
                 repo = new ManifestRepository(ContextFactory.CreateDbContext());
                 manifest = await repo.GetManifestById(Id);
             }
@@ -71,13 +77,15 @@ namespace EPManifest.App.Pages.Manifests
 
         private void Edit()
         {
-            Logger.LogInformation($"Started editing manifest id:{manifest.Id}");
+            Logger.LogInformation($"{_principal.User.FindFirst("name").Value} started editing manifest {manifest.Id} : {manifest.Code}");
             Navigation.NavigateTo("/manifests/edit/" + manifest.Id);
         }
 
         private async Task GeneratePDFAsync()
         {
+            Logger.LogInformation($"Generating report PDF for manifest {manifest.Id}");
             await Generator.GenerateManifestPDFAsync(manifest.Id);
+            Logger.LogInformation($"Generated report PDF for manifest {manifest.Id}");
             await DownloadPDF();
         }
 
@@ -89,10 +97,12 @@ namespace EPManifest.App.Pages.Manifests
             if (task.Succeeded)
             {
                 _message = "Successful download!";
+                Logger.LogInformation($"{_principal.User.FindFirst("name").Value} successfully downloaded report PDF for manifest {manifest.Id} : {manifest.Code}");
             }
             else
             {
                 _message = task.ErrorMessage;
+                Logger.LogInformation($"There was an error downloading the PDF: {_message}");
             }
         }
     }

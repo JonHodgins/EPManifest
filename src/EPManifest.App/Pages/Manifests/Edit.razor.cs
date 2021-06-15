@@ -7,6 +7,7 @@ using EPManifest.Core;
 using EPManifest.Data;
 using EPManifest.Data.Repositories;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -38,6 +39,7 @@ namespace EPManifest.App.Pages.Manifests
         private readonly string _itemPlaceholderDescription = "Click me";
         private bool _isLoaded;
         private Manifest manifest;
+        private AuthenticationState _principal;
         private ManifestRepository repo;
         private HashSet<Consignor> selectedConsignors = new();
         public IEnumerable<Consignor> Consignors { get; set; }
@@ -56,6 +58,9 @@ namespace EPManifest.App.Pages.Manifests
 
         [Inject]
         public ISnackbar Snackbar { get; set; }
+
+        [CascadingParameter]
+        private Task<AuthenticationState> AuthState { get; set; }
 
         private HashSet<Consignor> SelectedConsignors
         {
@@ -80,6 +85,7 @@ namespace EPManifest.App.Pages.Manifests
         {
             try
             {
+                _principal = AuthState.Result;
                 repo = new ManifestRepository(ContextFactory.CreateDbContext());
                 manifest = await repo.GetManifestById(Id);
                 PopulateSelectedConsignors();
@@ -131,7 +137,7 @@ namespace EPManifest.App.Pages.Manifests
         {
             await repo.Update();
             Snackbar.Add($"Successfully updated manifest {manifest.Code} (Id: {manifest.Id})", Severity.Success);
-            Logger.LogInformation($"Successfully updated manifest {manifest.Code} (Id: {manifest.Id})");
+            Logger.LogInformation($"{_principal.User.FindFirst("name").Value} updated manifest {manifest.Code} (Id: {manifest.Id})");
             Navigation.NavigateTo($"/manifests/details/{manifest.Id}");
         }
     }

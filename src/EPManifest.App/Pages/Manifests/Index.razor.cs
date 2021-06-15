@@ -7,6 +7,7 @@ using EPManifest.Core;
 using EPManifest.Data;
 using EPManifest.Data.Repositories;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using MudBlazor;
@@ -21,6 +22,7 @@ namespace EPManifest.App.Pages.Manifests
         private bool bordered;
         private string searchString = "";
 
+        private AuthenticationState _principal;
         private ManifestRepository repo;
         private Manifest selectedItem;
         private List<Manifest> manifests;
@@ -43,6 +45,9 @@ namespace EPManifest.App.Pages.Manifests
         [Inject]
         public ISnackbar Snackbar { get; set; }
 
+        [CascadingParameter]
+        private Task<AuthenticationState> AuthState { get; set; }
+
         public void Dispose()
         {
             repo.Dispose();
@@ -54,6 +59,7 @@ namespace EPManifest.App.Pages.Manifests
         {
             try
             {
+                _principal = AuthState.Result;
                 repo = new ManifestRepository(ContextFactory.CreateDbContext());
                 manifests = await repo.GetAllManifests();
             }
@@ -90,7 +96,7 @@ namespace EPManifest.App.Pages.Manifests
                     Dispose();
                     repo = new ManifestRepository(ContextFactory.CreateDbContext());
                     manifests.Remove(manifest);
-                    Logger.LogInformation($"Manifest id:{manifest.Id} was deleted.");
+                    Logger.LogInformation($"{_principal.User.FindFirst("name").Value} deleted manifest {manifest.Id} : {manifest.Code}");
                     Snackbar.Add($"Deleted manifest id:{manifest.Id}", Severity.Success);
                 }
                 finally
@@ -102,19 +108,19 @@ namespace EPManifest.App.Pages.Manifests
 
         private void Edit(int manifestId)
         {
-            Logger.LogInformation($"Started editing manifest id:{manifestId}");
+            Logger.LogInformation($"{_principal.User.FindFirst("name").Value} started editing manifest {manifestId}");
             Navigation.NavigateTo("/manifests/edit/" + manifestId);
         }
 
         private void Create()
         {
-            Logger.LogInformation($"Started creating new manifest.");
+            Logger.LogInformation($"{_principal.User.FindFirst("name").Value} started creating a new manifest");
             Navigation.NavigateTo("/manifests/create/");
         }
 
         private void Details(int manifestId)
         {
-            Logger.LogInformation($"Viewing manifest id:{manifestId}");
+            Logger.LogInformation($"{_principal.User.FindFirst("name").Value} is viewing manifest {manifestId}");
             Navigation.NavigateTo("/manifests/details/" + manifestId);
         }
 
