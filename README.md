@@ -14,7 +14,7 @@
 
 See <https://docs.microsoft.com/en-us/ef/core/managing-schemas/migrations> if you are new to Entity Framework Core.
 
-Ensure you have LocalDB installed, or open appsettings.json and modify the data source of the "EPManifestContext" connection string.
+Ensure that you have LocalDB installed, or open appsettings.json and replace the "EPManifestContext" connection string with your data source.
 
 ### Build the project and restore packages
 
