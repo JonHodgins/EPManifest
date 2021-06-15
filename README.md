@@ -2,13 +2,13 @@
 
 ## Stack
 
-* UI Framework: Blazor Server
-* UI Component Library: MudBlazor
-* Web Framework: ASP.NET Core 5
-* Data Access: Entity Framework Core
+* UI Framework: [Blazor Server](https://github.com/dotnet/aspnetcore)
+* UI Component Library: [MudBlazor](https://github.com/Garderoben/MudBlazor)
+* Web Framework: [ASP.NET Core 5](https://github.com/dotnet/aspnetcore)
+* Data Access: [Entity Framework Core](https://github.com/dotnet/efcore)
 * Data Store: SQL Server
-* Logging: Serilog
-* Unit Testing: xUnit, bUnit
+* Logging: [Serilog](https://github.com/serilog/serilog)
+* Unit Testing: [xUnit](https://github.com/xunit/xunit), [bUnit](https://github.com/bUnit-dev/bUnit)
 
 ## How do I run this?
 
