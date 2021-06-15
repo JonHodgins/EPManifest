@@ -1,4 +1,4 @@
-# EP Manifest Proof-of-Concept
+# EP Manifest Proof of Concept
 
 ## Stack
 
