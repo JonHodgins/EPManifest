@@ -17,7 +17,6 @@ namespace EPManifest.Reports
         public static async Task GenerateManifestPDFAsync(int manifestId)
         {
             ManifestsDataSource myData = new ManifestsDataSource();
-            Console.WriteLine("Generating report...");
 
             Directory.CreateDirectory("Reports");
             var filePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), $"Reports/manifest{manifestId}.pdf");
