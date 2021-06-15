@@ -48,10 +48,16 @@
                         <MudTd DataLabel="Scheduled Arrival">@context.DateScheduledArrival?.ToString("MMMM dd, yyyy")</MudTd>
                         <MudTd DataLabel="# Items">@context.Items.Count</MudTd>
                         <MudTd>
-                            <MudIconButton Icon="@Icons.Material.Filled.Info" OnClick="(() => Details(context.Id))"></MudIconButton>
-                            <MudIconButton Icon="@Icons.Material.Filled.Edit" Color="Color.Primary" OnClick="(() => Edit(context.Id))"></MudIconButton>
+                            <MudTooltip Text="Details">
+                                <MudIconButton Icon="@Icons.Material.Filled.Info" OnClick="(() => Details(context.Id))"></MudIconButton>
+                            </MudTooltip>
+                            <MudTooltip Text="Edit">
+                                <MudIconButton Icon="@Icons.Material.Filled.Edit" Color="Color.Primary" OnClick="(() => Edit(context.Id))"></MudIconButton>
+                            </MudTooltip>
                             <AuthorizeView Roles="Administrator" Context="nestedAuth">
-                                <MudIconButton Icon="@Icons.Material.Filled.Delete" Color="Color.Error" OnClick="(() => Delete(context))"></MudIconButton>
+                                <MudTooltip Text="Delete">
+                                    <MudIconButton Icon="@Icons.Material.Filled.Delete" Color="Color.Error" OnClick="(() => Delete(context))"></MudIconButton>
+                                </MudTooltip>
                             </AuthorizeView>
                         </MudTd>
                     </RowTemplate>

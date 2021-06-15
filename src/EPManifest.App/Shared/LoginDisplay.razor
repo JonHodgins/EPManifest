@@ -1,7 +1,9 @@
 ﻿<AuthorizeView>
     <Authorized>
         <MudText Class="mr-4">Hello, @context.User.FindFirst("name").Value!</MudText>
-        <MudButton Class="mr-3" Variant="Variant.Text" Link="MicrosoftIdentity/Account/SignOut" Color="Color.Info">Log out</MudButton>
+        <MudTooltip Text="Sign out">
+            <MudIconButton Class="mr-3" Link="MicrosoftIdentity/Account/SignOut" Icon="@Icons.Material.Filled.Logout" Color="Color.Inherit">Log out</MudIconButton>
+        </MudTooltip>
     </Authorized>
     <NotAuthorized>
         <MudButton Class="mr-3" Variant="Variant.Text" Link="MicrosoftIdentity/Account/SignIn">Log in</MudButton>
