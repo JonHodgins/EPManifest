@@ -13,6 +13,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Identity.Web;
 using Microsoft.Identity.Web.UI;
 using MudBlazor.Services;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -76,6 +77,8 @@ namespace EPManifest.App
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+
+            app.UseSerilogRequestLogging();
 
             app.UseRouting();
 
