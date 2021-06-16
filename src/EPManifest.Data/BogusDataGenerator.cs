@@ -85,6 +85,7 @@ namespace EPManifest.Data
 
             var itemId = 1;
             manifestId = 1;
+            //Guarantee each manifest has at least 1 item
             var items = new Faker<Item>("en_CA")
                 .RuleFor(i => i.Id, _ => itemId++)
                 .RuleFor(i => i.State, _ => _.PickRandom<State>())
@@ -94,6 +95,7 @@ namespace EPManifest.Data
                 .RuleFor(i => i.ManifestId, _ => manifestId++);
             modelBuilder.Entity<Item>().HasData(items.Generate(numManifests));
 
+            //Generate additional items on random manifests
             items = new Faker<Item>("en_CA")
                 .RuleFor(i => i.Id, _ => itemId++)
                 .RuleFor(i => i.State, _ => _.PickRandom<State>())
@@ -105,6 +107,7 @@ namespace EPManifest.Data
 
             var rnd = new Random();
             manifestId = 1;
+            //Guarantee each manifest has at least 1 consignor
             var consignorManifests = Enumerable.Range(1, numManifests)
                 .Select(_ => new
                 {
@@ -114,6 +117,7 @@ namespace EPManifest.Data
             modelBuilder.Entity<ConsignorManifest>().HasData(consignorManifests);
 
             manifestId = 1;
+            //Generate additional consignors on random manifests
             consignorManifests = Enumerable.Range(1, numManifests / 10)
                 .Select(_ => new
                 {
