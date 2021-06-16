@@ -2,20 +2,19 @@
 
 This is a proof of concept web application that demonstrates the use of web technologies to modernize internal apps at Environment. The Environmental Protection and Assessment branch’s Waste Manifest app is used for this example. This app is used to track [Special Waste Manifests](https://yukon.ca/en/get-special-waste-permit).
 
-“Waste Manifests, sometimes referred to as Movement Documents, are official documents that accompany shipments of special/hazardous waste in Yukon and other Canadian jurisdictions from their origin to their destination. They document information on: 
-* the waste generator (consignor)
-* the waste carrier (transporter)
-* the waste receiver (consignee) 
-* the waste being shipped
-
-All special/hazardous wastes transported in Yukon must be accompanied by a manifest.”
+>Waste Manifests, sometimes referred to as Movement Documents, are official documents that accompany shipments of special/hazardous waste in Yukon and other Canadian jurisdictions from their origin to their destination. They document information on: 
+>* the waste generator (consignor)
+>* the waste carrier (transporter)
+>* the waste receiver (consignee) 
+>* the waste being shipped
+>
+>All special/hazardous wastes transported in Yukon must be accompanied by a manifest.
 
 
 ## Stack
 
-* UI Framework: [Blazor Server](https://github.com/dotnet/aspnetcore)
 * UI Component Library: [MudBlazor](https://github.com/Garderoben/MudBlazor)
-* Web Framework: [ASP.NET Core 5](https://github.com/dotnet/aspnetcore)
+* Web Framework: [ASP.NET Core 5](https://github.com/dotnet/aspnetcore) and [Blazor Server](https://dotnet.microsoft.com/apps/aspnet/web-apps/blazor)
 * Data Access: [Entity Framework Core](https://github.com/dotnet/efcore)
 * Data Store: SQL Server
 * Logging: [Serilog](https://github.com/serilog/serilog)
