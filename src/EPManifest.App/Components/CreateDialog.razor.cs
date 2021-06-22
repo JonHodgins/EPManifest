@@ -46,15 +46,15 @@ namespace EPManifest.App.Components
             switch (Entity)
             {
                 case Consignor:
-                    await _consignorRepo.Create((Consignor)_entity).ConfigureAwait(false);
+                    await _consignorRepo.Create((Consignor)_entity);
                     break;
 
                 case Consignee:
-                    await _consigneeRepo.Create((Consignee)_entity).ConfigureAwait(false);
+                    await _consigneeRepo.Create((Consignee)_entity);
                     break;
 
                 case Carrier:
-                    await _carrierRepo.Create((Carrier)_entity).ConfigureAwait(false);
+                    await _carrierRepo.Create((Carrier)_entity);
                     break;
             }
             Submit();
@@ -87,7 +87,7 @@ namespace EPManifest.App.Components
                 _isLoaded = true;
             }
 
-            await base.OnInitializedAsync().ConfigureAwait(false);
+            await base.OnInitializedAsync();
         }
 
         private void Cancel() => MudDialog.Cancel();

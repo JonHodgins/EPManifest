@@ -39,14 +39,14 @@ namespace EPManifest.App.Pages.Consignors
             try
             {
                 _repo = new ConsignorRepository(ContextFactory.CreateDbContext());
-                _consignors = await _repo.GetAllConsignors().ConfigureAwait(false);
+                _consignors = await _repo.GetAllConsignors();
             }
             finally
             {
                 _isLoaded = true;
             }
 
-            await base.OnInitializedAsync().ConfigureAwait(false);
+            await base.OnInitializedAsync();
         }
 
         protected override bool ShouldRender() => _mayRender;
@@ -62,7 +62,7 @@ namespace EPManifest.App.Pages.Consignors
 
             var options = new DialogOptions() { CloseButton = true, MaxWidth = MaxWidth.ExtraSmall };
             var dialog = DialogService.Show<CreateDialog>("New consignor", parameters, options);
-            var result = await dialog.Result.ConfigureAwait(false);
+            var result = await dialog.Result;
 
             if (!result.Cancelled)
             {
@@ -92,7 +92,7 @@ namespace EPManifest.App.Pages.Consignors
             var options = new DialogOptions() { CloseButton = true, MaxWidth = MaxWidth.ExtraSmall };
 
             var dialog = DialogService.Show<ConfirmationDialog>("Delete consignor", parameters, options);
-            var result = await dialog.Result.ConfigureAwait(false);
+            var result = await dialog.Result;
 
             if (!result.Cancelled)
             {
@@ -100,7 +100,7 @@ namespace EPManifest.App.Pages.Consignors
                 _mayRender = false;
                 try
                 {
-                    await _repo.Delete(consignor).ConfigureAwait(false);
+                    await _repo.Delete(consignor);
                     _consignors.Remove(consignor);
                     Logger.LogInformation($"consignor: {consignor.Id}, Code: {consignor.Code}, Name: {consignor.Name}, was deleted.");
                     Snackbar.Add($"Deleted consignor {consignor.Code}: {consignor.Name}", Severity.Success);
@@ -128,7 +128,7 @@ namespace EPManifest.App.Pages.Consignors
 
             var options = new DialogOptions() { CloseButton = true, MaxWidth = MaxWidth.ExtraSmall };
             var dialog = DialogService.Show<EditDialog>("Edit consignor", parameters, options);
-            var result = await dialog.Result.ConfigureAwait(false);
+            var result = await dialog.Result;
 
             if (!result.Cancelled)
             {

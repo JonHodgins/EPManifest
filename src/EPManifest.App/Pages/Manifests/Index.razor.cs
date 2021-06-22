@@ -52,14 +52,14 @@ namespace EPManifest.App.Pages.Manifests
             {
                 _principal = AuthState.Result;
                 _repo = new ManifestRepository(ContextFactory.CreateDbContext());
-                _manifests = await _repo.GetAllManifests().ConfigureAwait(false);
+                _manifests = await _repo.GetAllManifests();
             }
             finally
             {
                 _isLoaded = true;
             }
 
-            await base.OnInitializedAsync().ConfigureAwait(false);
+            await base.OnInitializedAsync();
         }
 
         protected override bool ShouldRender() => _mayRender;
@@ -82,7 +82,7 @@ namespace EPManifest.App.Pages.Manifests
             var options = new DialogOptions() { CloseButton = true, MaxWidth = MaxWidth.ExtraSmall };
 
             var dialog = DialogService.Show<ConfirmationDialog>("Delete Manifest", parameters, options);
-            var result = await dialog.Result.ConfigureAwait(false);
+            var result = await dialog.Result;
 
             if (!result.Cancelled)
             {
@@ -90,7 +90,7 @@ namespace EPManifest.App.Pages.Manifests
                 _mayRender = false;
                 try
                 {
-                    await _repo.Delete(manifest).ConfigureAwait(false);
+                    await _repo.Delete(manifest);
                     //Recreate DbContext after deleting to prevent change tracking errors on subsequent deletes
                     Dispose();
                     _repo = new ManifestRepository(ContextFactory.CreateDbContext());

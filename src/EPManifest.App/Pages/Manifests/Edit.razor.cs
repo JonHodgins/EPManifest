@@ -83,9 +83,9 @@ namespace EPManifest.App.Pages.Manifests
             {
                 _principal = AuthState.Result;
                 _repo = new ManifestRepository(ContextFactory.CreateDbContext());
-                _manifest = await _repo.GetManifestById(Id).ConfigureAwait(false);
+                _manifest = await _repo.GetManifestById(Id);
                 PopulateSelectedConsignors();
-                Consignors = await _repo.GetAllConsignors().ConfigureAwait(false);
+                Consignors = await _repo.GetAllConsignors();
 
                 if (_manifest.ConsigneeAddress is null)
                 {
@@ -102,7 +102,7 @@ namespace EPManifest.App.Pages.Manifests
                 _isLoaded = true;
             }
 
-            await base.OnInitializedAsync().ConfigureAwait(false);
+            await base.OnInitializedAsync();
         }
 
         //The item methods modify the manifest field instead of the repository so that invalid changes are not persisted to the database.
@@ -131,7 +131,7 @@ namespace EPManifest.App.Pages.Manifests
 
         private async Task Update()
         {
-            await _repo.Update().ConfigureAwait(false);
+            await _repo.Update();
             Snackbar.Add($"Successfully updated manifest {_manifest.Code} (Id: {_manifest.Id})", Severity.Success);
             Logger.LogInformation($"{_principal.User.FindFirst("name").Value} updated manifest {_manifest.Code} (Id: {_manifest.Id})");
             Navigation.NavigateTo($"/manifests/details/{_manifest.Id}");
