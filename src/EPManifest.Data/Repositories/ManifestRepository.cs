@@ -27,7 +27,8 @@ namespace EPManifest.Data.Repositories
                 .Include(m => m.Items)
                 .AsNoTracking()
                 .AsSingleQuery()
-                .ToListAsync();
+                .ToListAsync()
+                .ConfigureAwait(false);
         }
 
         public async Task<Manifest> GetManifestById(int manifestId)
@@ -40,7 +41,8 @@ namespace EPManifest.Data.Repositories
                 .Include(m => m.ConsigneeAddress)
                 .Include(m => m.Items)
                 .AsSingleQuery()
-                .FirstOrDefaultAsync(m => m.Id == manifestId);
+                .FirstOrDefaultAsync(m => m.Id == manifestId)
+                .ConfigureAwait(false);
         }
 
         public async Task<IEnumerable<Carrier>> SearchCarriers(string value)
@@ -49,7 +51,7 @@ namespace EPManifest.Data.Repositories
             {
                 value = "";
             }
-            return await _context.Carriers.Where(c => c.Name.StartsWith(value)).ToListAsync();
+            return await _context.Carriers.Where(c => c.Name.StartsWith(value)).ToListAsync().ConfigureAwait(false);
         }
 
         public async Task<IEnumerable<Consignee>> SearchConsignees(string value)
@@ -58,30 +60,30 @@ namespace EPManifest.Data.Repositories
             {
                 value = "";
             }
-            return await _context.Consignees.Where(c => c.Name.StartsWith(value)).ToListAsync();
+            return await _context.Consignees.Where(c => c.Name.StartsWith(value)).ToListAsync().ConfigureAwait(false);
         }
 
         public async Task<List<Consignor>> GetAllConsignors()
         {
-            return await _context.Consignors.OrderBy(c => c.Name).ToListAsync();
+            return await _context.Consignors.OrderBy(c => c.Name).ToListAsync().ConfigureAwait(false);
         }
 
         public async Task<Manifest> Create(Manifest manifest)
         {
             var newManifest = _context.Manifests.Add(manifest);
-            await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync().ConfigureAwait(false);
             return newManifest.Entity;
         }
 
         public async Task Update()
         {
-            await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync().ConfigureAwait(false);
         }
 
         public async Task Delete(Manifest manifest)
         {
             _context.Manifests.Remove(manifest);
-            await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync().ConfigureAwait(false);
         }
 
         public void Dispose()

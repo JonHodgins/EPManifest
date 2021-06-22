@@ -47,7 +47,7 @@ namespace EPManifest.App.Pages.Manifests
         {
             var path = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), $"Reports/manifest{_manifest.Id}.pdf");
             var bytes = File.ReadAllBytes(path);
-            var task = await BlazorDownloadFileService.DownloadFile($"manifest{_manifest.Id}.pdf", bytes.ToList(), CancellationToken.None, "application/octet-stream");
+            var task = await BlazorDownloadFileService.DownloadFile($"manifest{_manifest.Id}.pdf", bytes.ToList(), CancellationToken.None, "application/octet-stream").ConfigureAwait(false);
             if (task.Succeeded)
             {
                 _message = "Successful download!";
@@ -66,14 +66,14 @@ namespace EPManifest.App.Pages.Manifests
             {
                 _principal = AuthState.Result;
                 _repo = new ManifestRepository(ContextFactory.CreateDbContext());
-                _manifest = await _repo.GetManifestById(Id);
+                _manifest = await _repo.GetManifestById(Id).ConfigureAwait(false);
             }
             finally
             {
                 _isLoaded = true;
             }
 
-            await base.OnInitializedAsync();
+            await base.OnInitializedAsync().ConfigureAwait(false);
         }
 
         private string ConsignorsToString()
@@ -95,9 +95,9 @@ namespace EPManifest.App.Pages.Manifests
         private async Task GeneratePDFAsync()
         {
             Logger.LogInformation($"Generating report PDF for manifest {_manifest.Id}");
-            await Generator.GenerateManifestPDFAsync(_manifest.Id);
+            await Generator.GenerateManifestPDFAsync(_manifest.Id).ConfigureAwait(false);
             Logger.LogInformation($"Generated report PDF for manifest {_manifest.Id}");
-            await DownloadPDF();
+            await DownloadPDF().ConfigureAwait(false);
         }
 
         public void Dispose()

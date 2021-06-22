@@ -78,7 +78,7 @@ namespace EPManifest.App.Pages.Manifests
             try
             {
                 _repo = new ManifestRepository(ContextFactory.CreateDbContext());
-                Consignors = await _repo.GetAllConsignors();
+                Consignors = await _repo.GetAllConsignors().ConfigureAwait(false);
                 _manifest = new Manifest
                 {
                     Code = "",
@@ -91,7 +91,7 @@ namespace EPManifest.App.Pages.Manifests
                 _isLoaded = true;
             }
 
-            await base.OnInitializedAsync();
+            await base.OnInitializedAsync().ConfigureAwait(false);
         }
 
         //The item methods modify the manifest field instead of the repository so that invalid changes are not persisted to the database.
@@ -102,7 +102,7 @@ namespace EPManifest.App.Pages.Manifests
 
         private async Task CreateManifest()
         {
-            await _repo.Create(_manifest);
+            await _repo.Create(_manifest).ConfigureAwait(false);
             Snackbar.Add($"Successfully created manifest {_manifest.Code} (Id: {_manifest.Id})", Severity.Success);
             Logger.LogInformation($"Successfully created manifest {_manifest.Code} (Id: {_manifest.Id})");
             Navigation.NavigateTo($"/manifests/details/{_manifest.Id}");

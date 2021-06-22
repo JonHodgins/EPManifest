@@ -39,14 +39,14 @@ namespace EPManifest.App.Pages.Consignees
             try
             {
                 _repo = new ConsigneeRepository(ContextFactory.CreateDbContext());
-                _consignees = await _repo.GetAllConsignees();
+                _consignees = await _repo.GetAllConsignees().ConfigureAwait(false);
             }
             finally
             {
                 _isLoaded = true;
             }
 
-            await base.OnInitializedAsync();
+            await base.OnInitializedAsync().ConfigureAwait(false);
         }
 
         protected override bool ShouldRender() => _mayRender;
@@ -62,7 +62,7 @@ namespace EPManifest.App.Pages.Consignees
 
             var options = new DialogOptions() { CloseButton = true, MaxWidth = MaxWidth.ExtraSmall };
             var dialog = DialogService.Show<CreateDialog>("New consignee", parameters, options);
-            var result = await dialog.Result;
+            var result = await dialog.Result.ConfigureAwait(false);
 
             if (!result.Cancelled)
             {
@@ -92,7 +92,7 @@ namespace EPManifest.App.Pages.Consignees
             var options = new DialogOptions() { CloseButton = true, MaxWidth = MaxWidth.ExtraSmall };
 
             var dialog = DialogService.Show<ConfirmationDialog>("Delete consignee", parameters, options);
-            var result = await dialog.Result;
+            var result = await dialog.Result.ConfigureAwait(false);
 
             if (!result.Cancelled)
             {
@@ -100,7 +100,7 @@ namespace EPManifest.App.Pages.Consignees
                 _mayRender = false;
                 try
                 {
-                    await _repo.Delete(consignee);
+                    await _repo.Delete(consignee).ConfigureAwait(false);
                     _consignees.Remove(consignee);
                     Logger.LogInformation($"consignee: {consignee.Id}, Code: {consignee.Code}, Name: {consignee.Name}, was deleted.");
                     Snackbar.Add($"Deleted consignee {consignee.Code}: {consignee.Name}", Severity.Success);
@@ -128,7 +128,7 @@ namespace EPManifest.App.Pages.Consignees
 
             var options = new DialogOptions() { CloseButton = true, MaxWidth = MaxWidth.ExtraSmall };
             var dialog = DialogService.Show<EditDialog>("Edit consignee", parameters, options);
-            var result = await dialog.Result;
+            var result = await dialog.Result.ConfigureAwait(false);
 
             if (!result.Cancelled)
             {

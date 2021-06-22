@@ -39,14 +39,14 @@ namespace EPManifest.App.Pages.Carriers
             try
             {
                 _repo = new CarrierRepository(ContextFactory.CreateDbContext());
-                _carriers = await _repo.GetAllCarriers();
+                _carriers = await _repo.GetAllCarriers().ConfigureAwait(false);
             }
             finally
             {
                 _isLoaded = true;
             }
 
-            await base.OnInitializedAsync();
+            await base.OnInitializedAsync().ConfigureAwait(false);
         }
 
         protected override bool ShouldRender() => _mayRender;
@@ -62,7 +62,7 @@ namespace EPManifest.App.Pages.Carriers
 
             var options = new DialogOptions() { CloseButton = true, MaxWidth = MaxWidth.ExtraSmall };
             var dialog = DialogService.Show<CreateDialog>("New Carrier", parameters, options);
-            var result = await dialog.Result;
+            var result = await dialog.Result.ConfigureAwait(false);
 
             if (!result.Cancelled)
             {
@@ -92,7 +92,7 @@ namespace EPManifest.App.Pages.Carriers
             var options = new DialogOptions() { CloseButton = true, MaxWidth = MaxWidth.ExtraSmall };
 
             var dialog = DialogService.Show<ConfirmationDialog>("Delete Carrier", parameters, options);
-            var result = await dialog.Result;
+            var result = await dialog.Result.ConfigureAwait(false);
 
             if (!result.Cancelled)
             {
@@ -100,7 +100,7 @@ namespace EPManifest.App.Pages.Carriers
                 _mayRender = false;
                 try
                 {
-                    await _repo.Delete(carrier);
+                    await _repo.Delete(carrier).ConfigureAwait(false);
                     _carriers.Remove(carrier);
                     Logger.LogInformation($"Carrier: {carrier.Id}, Code: {carrier.Code}, Name: {carrier.Name}, was deleted.");
                     Snackbar.Add($"Deleted carrier {carrier.Code}: {carrier.Name}", Severity.Success);
@@ -128,7 +128,7 @@ namespace EPManifest.App.Pages.Carriers
 
             var options = new DialogOptions() { CloseButton = true, MaxWidth = MaxWidth.ExtraSmall };
             var dialog = DialogService.Show<EditDialog>("Edit Carrier", parameters, options);
-            var result = await dialog.Result;
+            var result = await dialog.Result.ConfigureAwait(false);
 
             if (!result.Cancelled)
             {
