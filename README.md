@@ -60,8 +60,13 @@ dotnet run
 
 ## Screenshots
 
+### Table view
 <img src="./images/manifests_table.png">
+
+### Detail view
 <img src="./images/manifest_details.png">
+
+---
 
 ## Physical Data Model
 
