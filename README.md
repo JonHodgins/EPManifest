@@ -58,6 +58,11 @@ dotnet run
 
 ---
 
+## Screenshots
+
+<img src="./images/manifests_table.png">
+<img src="./images/manifest_details.png">
+
 ## Physical Data Model
 
 <img src="./images/sql_server_diagram.png">
