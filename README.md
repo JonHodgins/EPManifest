@@ -10,6 +10,15 @@ This is a proof of concept web application that demonstrates the use of web tech
 >
 >All special/hazardous wastes transported in Yukon must be accompanied by a manifest.
 
+## Features
+
+* Supports ~5000 concurrent users
+* Responsive UI (usable on phones and tablets)
+* Address geocoding using the ArcGIS JS API
+* Generate PDF reports
+* Integrated PowerBI dashboard (planned)
+* In-app user documentation
+* Light/dark mode
 
 ## Stack
 
