@@ -15,12 +15,9 @@ namespace EPManifest.App.Pages.Consignees
     public partial class Index : IDisposable
     {
         private bool _isLoaded;
-
         private bool _mayRender = true;
-
-        private List<Consignee> consignees;
-
-        private ConsigneeRepository repo;
+        private List<Consignee> _consignees;
+        private ConsigneeRepository _repo;
 
         [Inject]
         public IDbContextFactory<EPManifestDbContext> ContextFactory { get; set; }
@@ -37,17 +34,12 @@ namespace EPManifest.App.Pages.Consignees
         [Inject]
         public ISnackbar Snackbar { get; set; }
 
-        public void Dispose()
-        {
-            repo.Dispose();
-        }
-
         protected override async Task OnInitializedAsync()
         {
             try
             {
-                repo = new ConsigneeRepository(ContextFactory.CreateDbContext());
-                consignees = await repo.GetAllConsignees();
+                _repo = new ConsigneeRepository(ContextFactory.CreateDbContext());
+                _consignees = await _repo.GetAllConsignees();
             }
             finally
             {
@@ -56,6 +48,8 @@ namespace EPManifest.App.Pages.Consignees
 
             await base.OnInitializedAsync();
         }
+
+        protected override bool ShouldRender() => _mayRender;
 
         private async Task Create()
         {
@@ -76,7 +70,7 @@ namespace EPManifest.App.Pages.Consignees
                 _mayRender = false;
                 try
                 {
-                    consignees.Add((Consignee)result.Data);
+                    _consignees.Add((Consignee)result.Data);
                     Snackbar.Add($"Created consignee:{((Consignee)result.Data).Id}", Severity.Success);
                 }
                 finally
@@ -106,8 +100,8 @@ namespace EPManifest.App.Pages.Consignees
                 _mayRender = false;
                 try
                 {
-                    await repo.Delete(consignee);
-                    consignees.Remove(consignee);
+                    await _repo.Delete(consignee);
+                    _consignees.Remove(consignee);
                     Logger.LogInformation($"consignee: {consignee.Id}, Code: {consignee.Code}, Name: {consignee.Name}, was deleted.");
                     Snackbar.Add($"Deleted consignee {consignee.Code}: {consignee.Name}", Severity.Success);
                 }
@@ -142,8 +136,8 @@ namespace EPManifest.App.Pages.Consignees
                 _mayRender = false;
                 try
                 {
-                    consignees[consignees.IndexOf(consignee)].Code = ((Consignee)result.Data).Code;
-                    consignees[consignees.IndexOf(consignee)].Name = ((Consignee)result.Data).Name;
+                    _consignees[_consignees.IndexOf(consignee)].Code = ((Consignee)result.Data).Code;
+                    _consignees[_consignees.IndexOf(consignee)].Name = ((Consignee)result.Data).Name;
                     Snackbar.Add($"Updated consignee id:{consignee.Id}", Severity.Success);
                 }
                 finally
@@ -151,6 +145,11 @@ namespace EPManifest.App.Pages.Consignees
                     _mayRender = true;
                 }
             }
+        }
+
+        public void Dispose()
+        {
+            _repo.Dispose();
         }
     }
 }

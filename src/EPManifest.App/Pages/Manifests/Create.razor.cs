@@ -15,6 +15,16 @@ namespace EPManifest.App.Pages.Manifests
 {
     public partial class Create : IDisposable
     {
+        private readonly Converter<string> _formatPostalCode = new()
+        {
+            SetFunc = value => value?.FormatPostalCode(),
+            GetFunc = text => text?.FormatPostalCode(),
+        };
+
+        private readonly string _itemPlaceholderDescription = "Click me";
+
+        private readonly Provinces[] _provinces = (Provinces[])Enum.GetValues(typeof(Provinces));
+
         private readonly Converter<string> _toTitleCase = new()
         {
             SetFunc = value => value?.ToTitleCase(),
@@ -27,18 +37,10 @@ namespace EPManifest.App.Pages.Manifests
             GetFunc = text => text?.ToUpper(),
         };
 
-        private readonly Converter<string> _formatPostalCode = new()
-        {
-            SetFunc = value => value?.FormatPostalCode(),
-            GetFunc = text => text?.FormatPostalCode(),
-        };
-
-        private readonly string _itemPlaceholderDescription = "Click me";
-        private readonly Provinces[] provinces = (Provinces[])Enum.GetValues(typeof(Provinces));
         private bool _isLoaded;
-        private Manifest manifest;
-        private ManifestRepository repo;
-        private HashSet<Consignor> selectedConsignors;
+        private Manifest _manifest;
+        private ManifestRepository _repo;
+        private HashSet<Consignor> _selectedConsignors;
 
         public IList<Consignor> Consignors { get; set; }
 
@@ -59,30 +61,25 @@ namespace EPManifest.App.Pages.Manifests
 
         private HashSet<Consignor> SelectedConsignors
         {
-            get => selectedConsignors;
+            get => _selectedConsignors;
             set
             {
-                selectedConsignors = value;
-                manifest.Consignors.RemoveAll(_ => true);
-                foreach (var consignor in selectedConsignors)
+                _selectedConsignors = value;
+                _manifest.Consignors.RemoveAll(_ => true);
+                foreach (var consignor in _selectedConsignors)
                 {
-                    manifest.Consignors.Add(consignor);
+                    _manifest.Consignors.Add(consignor);
                 }
             }
-        }
-
-        public void Dispose()
-        {
-            repo.Dispose();
         }
 
         protected override async Task OnInitializedAsync()
         {
             try
             {
-                repo = new ManifestRepository(ContextFactory.CreateDbContext());
-                Consignors = await repo.GetAllConsignors();
-                manifest = new Manifest
+                _repo = new ManifestRepository(ContextFactory.CreateDbContext());
+                Consignors = await _repo.GetAllConsignors();
+                _manifest = new Manifest
                 {
                     Code = "",
                     ConsigneeAddress = new Address(),
@@ -100,25 +97,30 @@ namespace EPManifest.App.Pages.Manifests
         //The item methods modify the manifest field instead of the repository so that invalid changes are not persisted to the database.
         private void CreateItemPlaceholder()
         {
-            manifest.Items.Add(new Item() { Description = "", ManifestId = manifest.Id });
+            _manifest.Items.Add(new Item() { Description = "", ManifestId = _manifest.Id });
         }
 
         private async Task CreateManifest()
         {
-            await repo.Create(manifest);
-            Snackbar.Add($"Successfully created manifest {manifest.Code} (Id: {manifest.Id})", Severity.Success);
-            Logger.LogInformation($"Successfully created manifest {manifest.Code} (Id: {manifest.Id})");
-            Navigation.NavigateTo($"/manifests/details/{manifest.Id}");
+            await _repo.Create(_manifest);
+            Snackbar.Add($"Successfully created manifest {_manifest.Code} (Id: {_manifest.Id})", Severity.Success);
+            Logger.LogInformation($"Successfully created manifest {_manifest.Code} (Id: {_manifest.Id})");
+            Navigation.NavigateTo($"/manifests/details/{_manifest.Id}");
         }
 
         private void DeleteItem(Item item)
         {
-            manifest.Items.Remove(item);
+            _manifest.Items.Remove(item);
         }
 
         private async Task<IEnumerable<Provinces>> SearchProvinces(string value)
         {
-            return provinces.Where(p => p.ToString().StartsWith(value, StringComparison.InvariantCultureIgnoreCase));
+            return _provinces.Where(p => p.ToString().StartsWith(value, StringComparison.InvariantCultureIgnoreCase));
+        }
+
+        public void Dispose()
+        {
+            _repo.Dispose();
         }
     }
 }

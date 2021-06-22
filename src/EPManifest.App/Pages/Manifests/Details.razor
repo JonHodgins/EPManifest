@@ -17,13 +17,13 @@
                     <MudItem xs="12">
                         <MudGrid>
                             <MudItem xs="4">
-                                <MudField Label="Code">@manifest.Code</MudField>
+                                <MudField Label="Code">@_manifest.Code</MudField>
                             </MudItem>
                             <MudItem xs="4">
-                                <MudField Label="Shipped On">@manifest.DateShipped?.Date.ToString("d")</MudField>
+                                <MudField Label="Shipped On">@_manifest.DateShipped?.Date.ToString("d")</MudField>
                             </MudItem>
                             <MudItem xs="4">
-                                <MudField Label="Scheduled Arrival">@manifest.DateScheduledArrival?.Date.ToString("d")</MudField>
+                                <MudField Label="Scheduled Arrival">@_manifest.DateScheduledArrival?.Date.ToString("d")</MudField>
                             </MudItem>
                         </MudGrid>
                     </MudItem>
@@ -31,32 +31,32 @@
                         <MudPaper Elevation="2" Class="pa-4">
                             <MudText Typo="Typo.h6">Consignor(s)</MudText>
                             <MudField Label="Consignor(s)">@ConsignorsToString()</MudField>
-                            <MudField Label="Address Line 1">@manifest.ConsignorAddress.AddressLine1</MudField>
-                            <MudField Label="Address Line 2">@manifest.ConsignorAddress.AddressLine2</MudField>
-                            <MudField Label="City">@manifest.ConsignorAddress.City</MudField>
-                            <MudField Label="Province/Territory">@manifest.ConsignorAddress.Province</MudField>
-                            <MudField Label="Postal Code">@manifest.ConsignorAddress.PostalCode</MudField>
+                            <MudField Label="Address Line 1">@_manifest.ConsignorAddress.AddressLine1</MudField>
+                            <MudField Label="Address Line 2">@_manifest.ConsignorAddress.AddressLine2</MudField>
+                            <MudField Label="City">@_manifest.ConsignorAddress.City</MudField>
+                            <MudField Label="Province/Territory">@_manifest.ConsignorAddress.Province</MudField>
+                            <MudField Label="Postal Code">@_manifest.ConsignorAddress.PostalCode</MudField>
                         </MudPaper>
                     </MudItem>
 
                     <MudItem xs="12" sm="6" md="4">
                         <MudPaper Elevation="2" Class="pa-4">
                             <MudText Typo="Typo.h6">Consignee</MudText>
-                            <MudField Label="Consignee">@manifest.Consignee.Name</MudField>
+                            <MudField Label="Consignee">@_manifest.Consignee.Name</MudField>
                             <MudField Label="Address Line 1">
-                                @manifest.ConsigneeAddress.AddressLine1
+                                @_manifest.ConsigneeAddress.AddressLine1
                             </MudField>
                             <MudField Label="Address Line 2">
-                                @manifest.ConsigneeAddress.AddressLine2
+                                @_manifest.ConsigneeAddress.AddressLine2
                             </MudField>
                             <MudField Label="City">
-                                @manifest.ConsigneeAddress.City
+                                @_manifest.ConsigneeAddress.City
                             </MudField>
                             <MudField Label="Province/Territory">
-                                @manifest.ConsigneeAddress.Province
+                                @_manifest.ConsigneeAddress.Province
                             </MudField>
                             <MudField Label="Postal Code">
-                                @manifest.ConsigneeAddress.PostalCode
+                                @_manifest.ConsigneeAddress.PostalCode
                             </MudField>
                         </MudPaper>
                     </MudItem>
@@ -64,15 +64,15 @@
                     <MudItem xs="12" sm="12" md="4">
                         <MudPaper Elevation="2" Class="pa-4">
                             <MudText Typo="Typo.h6">Carrier</MudText>
-                            <MudField Label="Carrier" Class="pb-1">@manifest.Carrier.Name</MudField>
-                            <EPManifest.App.Components.EsriMap searchTerm="@manifest.ConsigneeAddress.ToString()" />
+                            <MudField Label="Carrier" Class="pb-1">@_manifest.Carrier.Name</MudField>
+                            <EPManifest.App.Components.EsriMap searchTerm="@_manifest.ConsigneeAddress.ToString()" />
                         </MudPaper>
                     </MudItem>
 
                     <MudItem xs="12">
                         <MudPaper Elevation="2" Class="pa-4">
                             <MudText Typo="Typo.h6">Items</MudText>
-                            <MudTable Items="@manifest.Items" Dense="true" Hover="true" Striped="true">
+                            <MudTable Items="@_manifest.Items" Dense="true" Hover="true" Striped="true">
                                 <ColGroup>
                                     <col style="width: 5%" />
                                     <col style="width: 10%" />
@@ -87,7 +87,7 @@
                                     <MudTh Style="padding-left: 16px">Quantity</MudTh>
                                 </HeaderContent>
                                 <RowTemplate Context="item">
-                                    <MudTd DataLabel="Id">@(manifest.Items.IndexOf(item) + 1)</MudTd>
+                                    <MudTd DataLabel="Id">@(_manifest.Items.IndexOf(item) + 1)</MudTd>
                                     <MudTd DataLabel="State">@item.State</MudTd>
                                     <MudTd DataLabel="Description">@item.Description</MudTd>
                                     <MudTd DataLabel="Quantity" Style="padding-left: 16px">@item.Quantity.ToString("###,###,###,###.##") @item.Unit</MudTd>

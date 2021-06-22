@@ -10,19 +10,19 @@
         {
             <MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="mt-16">
                 <MudText Typo="Typo.h3" GutterBottom="true">Edit manifest</MudText>
-                <EditForm Model="@manifest" OnValidSubmit="Update">
+                <EditForm Model="@_manifest" OnValidSubmit="Update">
                     <ObjectGraphDataAnnotationsValidator />
                     <MudGrid>
                         <MudItem xs="12">
                             <MudGrid>
                                 <MudItem xs="4">
-                                    <MudTextField Label="Code" @bind-Value="@manifest.Code" For="@(() => manifest.Code)" Converter="_toUpper"></MudTextField>
+                                    <MudTextField Label="Code" @bind-Value="@_manifest.Code" For="@(() => _manifest.Code)" Converter="_toUpper"></MudTextField>
                                 </MudItem>
                                 <MudItem xs="4">
-                                    <MudDatePicker Label="Shipped On" @bind-Date="manifest.DateShipped" Editable="true" For="(() => manifest.DateShipped)" />
+                                    <MudDatePicker Label="Shipped On" @bind-Date="_manifest.DateShipped" Editable="true" For="(() => _manifest.DateShipped)" />
                                 </MudItem>
                                 <MudItem xs="4">
-                                    <MudDatePicker Label="Scheduled Arrival" @bind-Date="manifest.DateScheduledArrival" Editable="true" />
+                                    <MudDatePicker Label="Scheduled Arrival" @bind-Date="_manifest.DateScheduledArrival" Editable="true" />
                                 </MudItem>
                             </MudGrid>
                         </MudItem>
@@ -36,42 +36,42 @@
                                         <MudSelectItem Value="@consignor">@consignor.Name | @consignor.Code</MudSelectItem>
                                     }
                                 </MudSelect>
-                                <MudTextField Label="Address Line 1" @bind-Value="@manifest.ConsignorAddress.AddressLine1"
-                                              For="@(() => manifest.ConsignorAddress.AddressLine1)">
+                                <MudTextField Label="Address Line 1" @bind-Value="@_manifest.ConsignorAddress.AddressLine1"
+                                              For="@(() => _manifest.ConsignorAddress.AddressLine1)">
                                 </MudTextField>
-                                <MudTextField Label="Address Line 2" @bind-Value="@manifest.ConsignorAddress.AddressLine2"
-                                              For="@(() => manifest.ConsignorAddress.AddressLine2)">
+                                <MudTextField Label="Address Line 2" @bind-Value="@_manifest.ConsignorAddress.AddressLine2"
+                                              For="@(() => _manifest.ConsignorAddress.AddressLine2)">
                                 </MudTextField>
-                                <MudTextField Label="City" @bind-Value="@manifest.ConsignorAddress.City"
-                                              For="@(() => manifest.ConsignorAddress.City)" Converter="_toTitleCase">
+                                <MudTextField Label="City" @bind-Value="@_manifest.ConsignorAddress.City"
+                                              For="@(() => _manifest.ConsignorAddress.City)" Converter="_toTitleCase">
                                 </MudTextField>
-                                <MudAutocomplete T="Core.Provinces" Label="Province/Territory" @bind-Value="@manifest.ConsignorAddress.Province"
+                                <MudAutocomplete T="Core.Provinces" Label="Province/Territory" @bind-Value="@_manifest.ConsignorAddress.Province"
                                                  SearchFunc="SearchProvinces" CoerceText="true" />
-                                <MudTextField Label="Postal Code" @bind-Value="@manifest.ConsignorAddress.PostalCode"
-                                              For="@(() => manifest.ConsignorAddress.PostalCode)" Converter="_formatPostalCode">
+                                <MudTextField Label="Postal Code" @bind-Value="@_manifest.ConsignorAddress.PostalCode"
+                                              For="@(() => _manifest.ConsignorAddress.PostalCode)" Converter="_formatPostalCode">
                                 </MudTextField>
                             </MudPaper>
                         </MudItem>
                         <MudItem xs="12" sm="6" md="4">
                             <MudPaper Elevation="2" Class="pa-4">
                                 <MudText Typo="Typo.h6">Consignee</MudText>
-                                <MudAutocomplete T="Core.Consignee" Label="Consignee" @bind-Value="manifest.Consignee" SearchFunc="repo.SearchConsignees"
+                                <MudAutocomplete T="Core.Consignee" Label="Consignee" @bind-Value="_manifest.Consignee" SearchFunc="_repo.SearchConsignees"
                                                  ToStringFunc="@(c => c == null? null : c.Name)"
                                                  ResetValueOnEmptyText="true"
-                                                 CoerceText="true" CoerceValue="true" For="(() => manifest.Consignee)" />
-                                <MudTextField Label="Address Line 1" @bind-Value="@manifest.ConsigneeAddress.AddressLine1"
-                                              For="@(() => manifest.ConsigneeAddress.AddressLine1)">
+                                                 CoerceText="true" CoerceValue="true" For="(() => _manifest.Consignee)" />
+                                <MudTextField Label="Address Line 1" @bind-Value="@_manifest.ConsigneeAddress.AddressLine1"
+                                              For="@(() => _manifest.ConsigneeAddress.AddressLine1)">
                                 </MudTextField>
-                                <MudTextField Label="Address Line 2" @bind-Value="@manifest.ConsigneeAddress.AddressLine2"
-                                              For="@(() => manifest.ConsigneeAddress.AddressLine2)">
+                                <MudTextField Label="Address Line 2" @bind-Value="@_manifest.ConsigneeAddress.AddressLine2"
+                                              For="@(() => _manifest.ConsigneeAddress.AddressLine2)">
                                 </MudTextField>
-                                <MudTextField Label="City" @bind-Value="@manifest.ConsigneeAddress.City"
-                                              For="@(() => manifest.ConsigneeAddress.City)" Converter="_toTitleCase">
+                                <MudTextField Label="City" @bind-Value="@_manifest.ConsigneeAddress.City"
+                                              For="@(() => _manifest.ConsigneeAddress.City)" Converter="_toTitleCase">
                                 </MudTextField>
-                                <MudAutocomplete T="Core.Provinces" Label="Province/Territory" @bind-Value="@manifest.ConsigneeAddress.Province"
+                                <MudAutocomplete T="Core.Provinces" Label="Province/Territory" @bind-Value="@_manifest.ConsigneeAddress.Province"
                                                  SearchFunc="SearchProvinces" CoerceText="true" />
-                                <MudTextField Label="Postal Code" @bind-Value="@manifest.ConsigneeAddress.PostalCode"
-                                              For="@(() => manifest.ConsigneeAddress.PostalCode)" Converter="_formatPostalCode">
+                                <MudTextField Label="Postal Code" @bind-Value="@_manifest.ConsigneeAddress.PostalCode"
+                                              For="@(() => _manifest.ConsigneeAddress.PostalCode)" Converter="_formatPostalCode">
                                 </MudTextField>
                             </MudPaper>
                         </MudItem>
@@ -79,17 +79,17 @@
                         <MudItem xs="12" sm="12" md="4">
                             <MudPaper Elevation="2" Class="pa-4">
                                 <MudText Typo="Typo.h6">Carrier</MudText>
-                                <MudAutocomplete T="Core.Carrier" Label="Carrier" @bind-Value="manifest.Carrier" SearchFunc="repo.SearchCarriers"
+                                <MudAutocomplete T="Core.Carrier" Label="Carrier" @bind-Value="_manifest.Carrier" SearchFunc="_repo.SearchCarriers"
                                                  ToStringFunc="@(c => c == null? null : c.Name)"
                                                  ResetValueOnEmptyText="true"
-                                                 CoerceText="true" CoerceValue="true" For="(() => manifest.Carrier)" />
+                                                 CoerceText="true" CoerceValue="true" For="(() => _manifest.Carrier)" />
                             </MudPaper>
                         </MudItem>
 
                         <MudItem xs="12">
                             <MudPaper Elevation="2" Class="pa-4">
                                 <MudText Typo="Typo.h6">Items</MudText>
-                                <MudTable Items="@manifest.Items" Dense="true" Hover="true" Striped="true" CustomFooter="true">
+                                <MudTable Items="@_manifest.Items" Dense="true" Hover="true" Striped="true" CustomFooter="true">
                                     <ColGroup>
                                         <col style="width: 5%" />
                                         <col style="width: 12%" />
@@ -107,7 +107,7 @@
                                         <MudTh></MudTh>
                                     </HeaderContent>
                                     <RowTemplate Context="item">
-                                        <MudTd DataLabel="Id">@(manifest.Items.IndexOf(item) + 1)</MudTd>
+                                        <MudTd DataLabel="Id">@(_manifest.Items.IndexOf(item) + 1)</MudTd>
                                         <MudTd DataLabel="State">@item.State</MudTd>
                                         <MudTd DataLabel="Description">
                                             @if (@item.Description == "")
@@ -126,7 +126,7 @@
                                         </MudTd>
                                     </RowTemplate>
                                     <RowEditingTemplate Context="item">
-                                        <MudTd DataLabel="Id">@(manifest.Items.IndexOf(item) + 1)</MudTd>
+                                        <MudTd DataLabel="Id">@(_manifest.Items.IndexOf(item) + 1)</MudTd>
                                         <MudTd DataLabel="State">
                                             <MudSelect @bind-Value="@item.State" Margin="Margin.Dense">
                                                 @foreach (Core.State? state in Enum.GetValues(typeof(Core.State)))

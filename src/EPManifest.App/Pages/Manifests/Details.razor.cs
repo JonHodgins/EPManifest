@@ -20,13 +20,10 @@ namespace EPManifest.App.Pages.Manifests
     public partial class Details : IDisposable
     {
         private bool _isLoaded;
-        private Manifest manifest;
-        private AuthenticationState _principal;
-        private ManifestRepository repo;
+        private Manifest _manifest;
         private string _message = string.Empty;
-
-        [Inject]
-        private IBlazorDownloadFileService BlazorDownloadFileService { get; set; }
+        private AuthenticationState _principal;
+        private ManifestRepository _repo;
 
         [Inject]
         public IDbContextFactory<EPManifestDbContext> ContextFactory { get; set; }
@@ -43,10 +40,24 @@ namespace EPManifest.App.Pages.Manifests
         [CascadingParameter]
         private Task<AuthenticationState> AuthState { get; set; }
 
-        public void Dispose()
+        [Inject]
+        private IBlazorDownloadFileService BlazorDownloadFileService { get; set; }
+
+        public async Task DownloadPDF()
         {
-            Logger.LogInformation($"Disposing manifest {manifest.Id} details");
-            repo.Dispose();
+            var path = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), $"Reports/manifest{_manifest.Id}.pdf");
+            var bytes = File.ReadAllBytes(path);
+            var task = await BlazorDownloadFileService.DownloadFile($"manifest{_manifest.Id}.pdf", bytes.ToList(), CancellationToken.None, "application/octet-stream");
+            if (task.Succeeded)
+            {
+                _message = "Successful download!";
+                Logger.LogInformation($"{_principal.User.FindFirst("name").Value} successfully downloaded report PDF for manifest {_manifest.Id} : {_manifest.Code}");
+            }
+            else
+            {
+                _message = task.ErrorMessage;
+                Logger.LogInformation($"There was an error downloading the PDF: {_message}");
+            }
         }
 
         protected override async Task OnInitializedAsync()
@@ -54,8 +65,8 @@ namespace EPManifest.App.Pages.Manifests
             try
             {
                 _principal = AuthState.Result;
-                repo = new ManifestRepository(ContextFactory.CreateDbContext());
-                manifest = await repo.GetManifestById(Id);
+                _repo = new ManifestRepository(ContextFactory.CreateDbContext());
+                _manifest = await _repo.GetManifestById(Id);
             }
             finally
             {
@@ -68,7 +79,7 @@ namespace EPManifest.App.Pages.Manifests
         private string ConsignorsToString()
         {
             var temp = new List<string>();
-            foreach (var consignor in manifest.Consignors)
+            foreach (var consignor in _manifest.Consignors)
             {
                 temp.Add(consignor.Name.Replace(",", ""));
             }
@@ -77,33 +88,22 @@ namespace EPManifest.App.Pages.Manifests
 
         private void Edit()
         {
-            Logger.LogInformation($"{_principal.User.FindFirst("name").Value} started editing manifest {manifest.Id} : {manifest.Code}");
-            Navigation.NavigateTo("/manifests/edit/" + manifest.Id);
+            Logger.LogInformation($"{_principal.User.FindFirst("name").Value} started editing manifest {_manifest.Id} : {_manifest.Code}");
+            Navigation.NavigateTo("/manifests/edit/" + _manifest.Id);
         }
 
         private async Task GeneratePDFAsync()
         {
-            Logger.LogInformation($"Generating report PDF for manifest {manifest.Id}");
-            await Generator.GenerateManifestPDFAsync(manifest.Id);
-            Logger.LogInformation($"Generated report PDF for manifest {manifest.Id}");
+            Logger.LogInformation($"Generating report PDF for manifest {_manifest.Id}");
+            await Generator.GenerateManifestPDFAsync(_manifest.Id);
+            Logger.LogInformation($"Generated report PDF for manifest {_manifest.Id}");
             await DownloadPDF();
         }
 
-        public async Task DownloadPDF()
+        public void Dispose()
         {
-            var path = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), $"Reports/manifest{manifest.Id}.pdf");
-            var bytes = File.ReadAllBytes(path);
-            var task = await BlazorDownloadFileService.DownloadFile($"manifest{manifest.Id}.pdf", bytes.ToList(), CancellationToken.None, "application/octet-stream");
-            if (task.Succeeded)
-            {
-                _message = "Successful download!";
-                Logger.LogInformation($"{_principal.User.FindFirst("name").Value} successfully downloaded report PDF for manifest {manifest.Id} : {manifest.Code}");
-            }
-            else
-            {
-                _message = task.ErrorMessage;
-                Logger.LogInformation($"There was an error downloading the PDF: {_message}");
-            }
+            Logger.LogInformation($"Disposing manifest {_manifest.Id} details");
+            _repo.Dispose();
         }
     }
 }

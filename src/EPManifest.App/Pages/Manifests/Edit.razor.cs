@@ -8,7 +8,6 @@ using EPManifest.Data;
 using EPManifest.Data.Repositories;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
-using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using MudBlazor;
@@ -17,6 +16,16 @@ namespace EPManifest.App.Pages.Manifests
 {
     public partial class Edit : IDisposable
     {
+        private readonly Converter<string> _formatPostalCode = new()
+        {
+            SetFunc = value => value?.FormatPostalCode(),
+            GetFunc = text => text?.FormatPostalCode(),
+        };
+
+        private readonly string _itemPlaceholderDescription = "Click me";
+
+        private readonly Provinces[] _provinces = (Provinces[])Enum.GetValues(typeof(Provinces));
+
         private readonly Converter<string> _toTitleCase = new()
         {
             SetFunc = value => value?.ToTitleCase(),
@@ -29,19 +38,11 @@ namespace EPManifest.App.Pages.Manifests
             GetFunc = text => text?.ToUpper(),
         };
 
-        private readonly Converter<string> _formatPostalCode = new()
-        {
-            SetFunc = value => value?.FormatPostalCode(),
-            GetFunc = text => text?.FormatPostalCode(),
-        };
-
-        private readonly Provinces[] provinces = (Provinces[])Enum.GetValues(typeof(Provinces));
-        private readonly string _itemPlaceholderDescription = "Click me";
         private bool _isLoaded;
-        private Manifest manifest;
+        private Manifest _manifest;
         private AuthenticationState _principal;
-        private ManifestRepository repo;
-        private HashSet<Consignor> selectedConsignors = new();
+        private ManifestRepository _repo;
+        private HashSet<Consignor> _selectedConsignors = new();
         public IEnumerable<Consignor> Consignors { get; set; }
 
         [Inject]
@@ -64,21 +65,16 @@ namespace EPManifest.App.Pages.Manifests
 
         private HashSet<Consignor> SelectedConsignors
         {
-            get => selectedConsignors;
+            get => _selectedConsignors;
             set
             {
-                selectedConsignors = value;
-                manifest.Consignors.RemoveAll(_ => true);
-                foreach (var consignor in selectedConsignors)
+                _selectedConsignors = value;
+                _manifest.Consignors.RemoveAll(_ => true);
+                foreach (var consignor in _selectedConsignors)
                 {
-                    manifest.Consignors.Add(consignor);
+                    _manifest.Consignors.Add(consignor);
                 }
             }
-        }
-
-        public void Dispose()
-        {
-            repo.Dispose();
         }
 
         protected override async Task OnInitializedAsync()
@@ -86,19 +82,19 @@ namespace EPManifest.App.Pages.Manifests
             try
             {
                 _principal = AuthState.Result;
-                repo = new ManifestRepository(ContextFactory.CreateDbContext());
-                manifest = await repo.GetManifestById(Id);
+                _repo = new ManifestRepository(ContextFactory.CreateDbContext());
+                _manifest = await _repo.GetManifestById(Id);
                 PopulateSelectedConsignors();
-                Consignors = await repo.GetAllConsignors();
+                Consignors = await _repo.GetAllConsignors();
 
-                if (manifest.ConsigneeAddress is null)
+                if (_manifest.ConsigneeAddress is null)
                 {
-                    manifest.ConsigneeAddress = new Address();
+                    _manifest.ConsigneeAddress = new Address();
                 }
 
-                if (manifest.ConsignorAddress is null)
+                if (_manifest.ConsignorAddress is null)
                 {
-                    manifest.ConsignorAddress = new Address();
+                    _manifest.ConsignorAddress = new Address();
                 }
             }
             finally
@@ -112,17 +108,17 @@ namespace EPManifest.App.Pages.Manifests
         //The item methods modify the manifest field instead of the repository so that invalid changes are not persisted to the database.
         private void CreateItemPlaceholder()
         {
-            manifest.Items.Add(new Item() { Description = "", ManifestId = manifest.Id });
+            _manifest.Items.Add(new Item() { Description = "", ManifestId = _manifest.Id });
         }
 
         private void DeleteItem(Item item)
         {
-            manifest.Items.Remove(item);
+            _manifest.Items.Remove(item);
         }
 
         private void PopulateSelectedConsignors()
         {
-            foreach (var consignor in manifest.Consignors)
+            foreach (var consignor in _manifest.Consignors)
             {
                 SelectedConsignors.Add(consignor);
             }
@@ -130,15 +126,20 @@ namespace EPManifest.App.Pages.Manifests
 
         private async Task<IEnumerable<Provinces>> SearchProvinces(string value)
         {
-            return provinces.Where(p => p.ToString().StartsWith(value, StringComparison.InvariantCultureIgnoreCase));
+            return _provinces.Where(p => p.ToString().StartsWith(value, StringComparison.InvariantCultureIgnoreCase));
         }
 
         private async Task Update()
         {
-            await repo.Update();
-            Snackbar.Add($"Successfully updated manifest {manifest.Code} (Id: {manifest.Id})", Severity.Success);
-            Logger.LogInformation($"{_principal.User.FindFirst("name").Value} updated manifest {manifest.Code} (Id: {manifest.Id})");
-            Navigation.NavigateTo($"/manifests/details/{manifest.Id}");
+            await _repo.Update();
+            Snackbar.Add($"Successfully updated manifest {_manifest.Code} (Id: {_manifest.Id})", Severity.Success);
+            Logger.LogInformation($"{_principal.User.FindFirst("name").Value} updated manifest {_manifest.Code} (Id: {_manifest.Id})");
+            Navigation.NavigateTo($"/manifests/details/{_manifest.Id}");
+        }
+
+        public void Dispose()
+        {
+            _repo.Dispose();
         }
     }
 }

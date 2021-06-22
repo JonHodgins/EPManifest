@@ -16,31 +16,29 @@ namespace EPManifest.App.Pages.Manifests
 {
     public partial class Index : IDisposable
     {
-        private bool dense = true;
-        private bool hover = true;
-        private bool striped = true;
-        private bool bordered;
-        private string searchString = "";
-
-        private AuthenticationState _principal;
-        private ManifestRepository repo;
-        private Manifest selectedItem;
-        private List<Manifest> manifests;
-
+        private bool _bordered;
+        private bool _dense = true;
+        private bool _hover = true;
         private bool _isLoaded;
+        private List<Manifest> _manifests;
         private bool _mayRender = true;
-
-        [Inject]
-        public ILogger<Index> Logger { get; set; }
+        private AuthenticationState _principal;
+        private ManifestRepository _repo;
+        private string _searchString = "";
+        private Manifest _selectedItem;
+        private bool _striped = true;
 
         [Inject]
         public IDbContextFactory<EPManifestDbContext> ContextFactory { get; set; }
 
         [Inject]
-        public NavigationManager Navigation { get; set; }
+        public IDialogService DialogService { get; set; }
 
         [Inject]
-        public IDialogService DialogService { get; set; }
+        public ILogger<Index> Logger { get; set; }
+
+        [Inject]
+        public NavigationManager Navigation { get; set; }
 
         [Inject]
         public ISnackbar Snackbar { get; set; }
@@ -48,20 +46,13 @@ namespace EPManifest.App.Pages.Manifests
         [CascadingParameter]
         private Task<AuthenticationState> AuthState { get; set; }
 
-        public void Dispose()
-        {
-            repo.Dispose();
-        }
-
-        protected override bool ShouldRender() => _mayRender;
-
         protected override async Task OnInitializedAsync()
         {
             try
             {
                 _principal = AuthState.Result;
-                repo = new ManifestRepository(ContextFactory.CreateDbContext());
-                manifests = await repo.GetAllManifests();
+                _repo = new ManifestRepository(ContextFactory.CreateDbContext());
+                _manifests = await _repo.GetAllManifests();
             }
             finally
             {
@@ -69,6 +60,14 @@ namespace EPManifest.App.Pages.Manifests
             }
 
             await base.OnInitializedAsync();
+        }
+
+        protected override bool ShouldRender() => _mayRender;
+
+        private void Create()
+        {
+            Logger.LogInformation($"{_principal.User.FindFirst("name").Value} started creating a new manifest");
+            Navigation.NavigateTo("/manifests/create/");
         }
 
         private async Task Delete(Manifest manifest)
@@ -91,11 +90,11 @@ namespace EPManifest.App.Pages.Manifests
                 _mayRender = false;
                 try
                 {
-                    await repo.Delete(manifest);
+                    await _repo.Delete(manifest);
                     //Recreate DbContext after deleting to prevent change tracking errors on subsequent deletes
                     Dispose();
-                    repo = new ManifestRepository(ContextFactory.CreateDbContext());
-                    manifests.Remove(manifest);
+                    _repo = new ManifestRepository(ContextFactory.CreateDbContext());
+                    _manifests.Remove(manifest);
                     Logger.LogInformation($"{_principal.User.FindFirst("name").Value} deleted manifest {manifest.Id} : {manifest.Code}");
                     Snackbar.Add($"Deleted manifest id:{manifest.Id}", Severity.Success);
                 }
@@ -106,35 +105,34 @@ namespace EPManifest.App.Pages.Manifests
             }
         }
 
-        private void Edit(int manifestId)
-        {
-            Logger.LogInformation($"{_principal.User.FindFirst("name").Value} started editing manifest {manifestId}");
-            Navigation.NavigateTo("/manifests/edit/" + manifestId);
-        }
-
-        private void Create()
-        {
-            Logger.LogInformation($"{_principal.User.FindFirst("name").Value} started creating a new manifest");
-            Navigation.NavigateTo("/manifests/create/");
-        }
-
         private void Details(int manifestId)
         {
             Logger.LogInformation($"{_principal.User.FindFirst("name").Value} is viewing manifest {manifestId}");
             Navigation.NavigateTo("/manifests/details/" + manifestId);
         }
 
+        private void Edit(int manifestId)
+        {
+            Logger.LogInformation($"{_principal.User.FindFirst("name").Value} started editing manifest {manifestId}");
+            Navigation.NavigateTo("/manifests/edit/" + manifestId);
+        }
+
         private bool FilterFunc(Manifest manifest)
         {
-            if (string.IsNullOrWhiteSpace(searchString))
+            if (string.IsNullOrWhiteSpace(_searchString))
                 return true;
-            if (manifest.Consignors.Any(c => c.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase)))
+            if (manifest.Consignors.Any(c => c.Name.Contains(_searchString, StringComparison.OrdinalIgnoreCase)))
                 return true;
-            if (manifest.Consignee.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            if (manifest.Consignee.Name.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
                 return true;
-            if (manifest.Carrier.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            if (manifest.Carrier.Name.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
                 return true;
             return false;
+        }
+
+        public void Dispose()
+        {
+            _repo.Dispose();
         }
     }
 }

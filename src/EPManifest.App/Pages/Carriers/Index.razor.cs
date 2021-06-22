@@ -14,13 +14,10 @@ namespace EPManifest.App.Pages.Carriers
 {
     public partial class Index : IDisposable
     {
+        private List<Carrier> _carriers;
         private bool _isLoaded;
-
         private bool _mayRender = true;
-
-        private List<Carrier> carriers;
-
-        private CarrierRepository repo;
+        private CarrierRepository _repo;
 
         [Inject]
         public IDbContextFactory<EPManifestDbContext> ContextFactory { get; set; }
@@ -37,17 +34,12 @@ namespace EPManifest.App.Pages.Carriers
         [Inject]
         public ISnackbar Snackbar { get; set; }
 
-        public void Dispose()
-        {
-            repo.Dispose();
-        }
-
         protected override async Task OnInitializedAsync()
         {
             try
             {
-                repo = new CarrierRepository(ContextFactory.CreateDbContext());
-                carriers = await repo.GetAllCarriers();
+                _repo = new CarrierRepository(ContextFactory.CreateDbContext());
+                _carriers = await _repo.GetAllCarriers();
             }
             finally
             {
@@ -56,6 +48,8 @@ namespace EPManifest.App.Pages.Carriers
 
             await base.OnInitializedAsync();
         }
+
+        protected override bool ShouldRender() => _mayRender;
 
         private async Task Create()
         {
@@ -76,7 +70,7 @@ namespace EPManifest.App.Pages.Carriers
                 _mayRender = false;
                 try
                 {
-                    carriers.Add((Carrier)result.Data);
+                    _carriers.Add((Carrier)result.Data);
                     Snackbar.Add($"Created carrier:{((Carrier)result.Data).Id}", Severity.Success);
                 }
                 finally
@@ -106,8 +100,8 @@ namespace EPManifest.App.Pages.Carriers
                 _mayRender = false;
                 try
                 {
-                    await repo.Delete(carrier);
-                    carriers.Remove(carrier);
+                    await _repo.Delete(carrier);
+                    _carriers.Remove(carrier);
                     Logger.LogInformation($"Carrier: {carrier.Id}, Code: {carrier.Code}, Name: {carrier.Name}, was deleted.");
                     Snackbar.Add($"Deleted carrier {carrier.Code}: {carrier.Name}", Severity.Success);
                 }
@@ -142,8 +136,8 @@ namespace EPManifest.App.Pages.Carriers
                 _mayRender = false;
                 try
                 {
-                    carriers[carriers.IndexOf(carrier)].Code = ((Carrier)result.Data).Code;
-                    carriers[carriers.IndexOf(carrier)].Name = ((Carrier)result.Data).Name;
+                    _carriers[_carriers.IndexOf(carrier)].Code = ((Carrier)result.Data).Code;
+                    _carriers[_carriers.IndexOf(carrier)].Name = ((Carrier)result.Data).Name;
                     Snackbar.Add($"Updated carrier id:{carrier.Id}", Severity.Success);
                 }
                 finally
@@ -151,6 +145,11 @@ namespace EPManifest.App.Pages.Carriers
                     _mayRender = true;
                 }
             }
+        }
+
+        public void Dispose()
+        {
+            _repo.Dispose();
         }
     }
 }

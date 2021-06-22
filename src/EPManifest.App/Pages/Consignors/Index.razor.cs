@@ -15,12 +15,9 @@ namespace EPManifest.App.Pages.Consignors
     public partial class Index : IDisposable
     {
         private bool _isLoaded;
-
         private bool _mayRender = true;
-
-        private List<Consignor> consignors;
-
-        private ConsignorRepository repo;
+        private List<Consignor> _consignors;
+        private ConsignorRepository _repo;
 
         [Inject]
         public IDbContextFactory<EPManifestDbContext> ContextFactory { get; set; }
@@ -37,17 +34,12 @@ namespace EPManifest.App.Pages.Consignors
         [Inject]
         public ISnackbar Snackbar { get; set; }
 
-        public void Dispose()
-        {
-            repo.Dispose();
-        }
-
         protected override async Task OnInitializedAsync()
         {
             try
             {
-                repo = new ConsignorRepository(ContextFactory.CreateDbContext());
-                consignors = await repo.GetAllConsignors();
+                _repo = new ConsignorRepository(ContextFactory.CreateDbContext());
+                _consignors = await _repo.GetAllConsignors();
             }
             finally
             {
@@ -56,6 +48,8 @@ namespace EPManifest.App.Pages.Consignors
 
             await base.OnInitializedAsync();
         }
+
+        protected override bool ShouldRender() => _mayRender;
 
         private async Task Create()
         {
@@ -76,7 +70,7 @@ namespace EPManifest.App.Pages.Consignors
                 _mayRender = false;
                 try
                 {
-                    consignors.Add((Consignor)result.Data);
+                    _consignors.Add((Consignor)result.Data);
                     Snackbar.Add($"Created consignor:{((Consignor)result.Data).Id}", Severity.Success);
                 }
                 finally
@@ -106,8 +100,8 @@ namespace EPManifest.App.Pages.Consignors
                 _mayRender = false;
                 try
                 {
-                    await repo.Delete(consignor);
-                    consignors.Remove(consignor);
+                    await _repo.Delete(consignor);
+                    _consignors.Remove(consignor);
                     Logger.LogInformation($"consignor: {consignor.Id}, Code: {consignor.Code}, Name: {consignor.Name}, was deleted.");
                     Snackbar.Add($"Deleted consignor {consignor.Code}: {consignor.Name}", Severity.Success);
                 }
@@ -142,8 +136,8 @@ namespace EPManifest.App.Pages.Consignors
                 _mayRender = false;
                 try
                 {
-                    consignors[consignors.IndexOf(consignor)].Code = ((Consignor)result.Data).Code;
-                    consignors[consignors.IndexOf(consignor)].Name = ((Consignor)result.Data).Name;
+                    _consignors[_consignors.IndexOf(consignor)].Code = ((Consignor)result.Data).Code;
+                    _consignors[_consignors.IndexOf(consignor)].Name = ((Consignor)result.Data).Name;
                     Snackbar.Add($"Updated consignor id:{consignor.Id}", Severity.Success);
                 }
                 finally
@@ -151,6 +145,11 @@ namespace EPManifest.App.Pages.Consignors
                     _mayRender = true;
                 }
             }
+        }
+
+        public void Dispose()
+        {
+            _repo.Dispose();
         }
     }
 }
