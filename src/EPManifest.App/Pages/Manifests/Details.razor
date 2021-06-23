@@ -84,13 +84,13 @@
                                     <MudTh>#</MudTh>
                                     <MudTh>State</MudTh>
                                     <MudTh>Description</MudTh>
-                                    <MudTh Style="padding-left: 16px">Quantity</MudTh>
+                                    <MudTh>Quantity</MudTh>
                                 </HeaderContent>
                                 <RowTemplate Context="item">
                                     <MudTd DataLabel="Id">@(_manifest.Items.IndexOf(item) + 1)</MudTd>
                                     <MudTd DataLabel="State">@item.State</MudTd>
                                     <MudTd DataLabel="Description">@item.Description</MudTd>
-                                    <MudTd DataLabel="Quantity" Style="padding-left: 16px">@item.Quantity.ToString("###,###,###,###.##") @item.Unit</MudTd>
+                                    <MudTd DataLabel="Quantity">@item.Quantity.ToString("###,###,###,###.##") @item.Unit</MudTd>
                                 </RowTemplate>
                             </MudTable>
                         </MudPaper>
