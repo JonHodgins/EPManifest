@@ -46,7 +46,7 @@
                                               For="@(() => _manifest.ConsignorAddress.City)" Converter="_toTitleCase">
                                 </MudTextField>
                                 <MudAutocomplete T="Core.Provinces" Label="Province/Territory" @bind-Value="@_manifest.ConsignorAddress.Province"
-                                                 SearchFunc="SearchProvinces" CoerceText="true" />
+                                                 SearchFunc="SearchProvinces" CoerceText="true" SelectValueOnTab="true"/>
                                 <MudTextField Label="Postal Code" @bind-Value="@_manifest.ConsignorAddress.PostalCode"
                                               For="@(() => _manifest.ConsignorAddress.PostalCode)" Converter="_formatPostalCode">
                                 </MudTextField>
@@ -58,7 +58,7 @@
                                 <MudAutocomplete T="Core.Consignee" Label="Consignee" @bind-Value="_manifest.Consignee" SearchFunc="_repo.SearchConsignees"
                                                  ToStringFunc="@(c => c == null? null : c.Name)"
                                                  ResetValueOnEmptyText="true"
-                                                 CoerceText="true" CoerceValue="true" For="(() => _manifest.Consignee)" />
+                                                 CoerceText="true" CoerceValue="true" For="(() => _manifest.Consignee)" SelectValueOnTab="true"/>
                                 <MudTextField Label="Address Line 1" @bind-Value="@_manifest.ConsigneeAddress.AddressLine1"
                                               For="@(() => _manifest.ConsigneeAddress.AddressLine1)">
                                 </MudTextField>
@@ -69,7 +69,7 @@
                                               For="@(() => _manifest.ConsigneeAddress.City)" Converter="_toTitleCase">
                                 </MudTextField>
                                 <MudAutocomplete T="Core.Provinces" Label="Province/Territory" @bind-Value="@_manifest.ConsigneeAddress.Province"
-                                                 SearchFunc="SearchProvinces" CoerceText="true" />
+                                                 SearchFunc="SearchProvinces" CoerceText="true" SelectValueOnTab="true"/>
                                 <MudTextField Label="Postal Code" @bind-Value="@_manifest.ConsigneeAddress.PostalCode"
                                               For="@(() => _manifest.ConsigneeAddress.PostalCode)" Converter="_formatPostalCode">
                                 </MudTextField>
@@ -82,7 +82,7 @@
                                 <MudAutocomplete T="Core.Carrier" Label="Carrier" @bind-Value="_manifest.Carrier" SearchFunc="_repo.SearchCarriers"
                                                  ToStringFunc="@(c => c == null? null : c.Name)"
                                                  ResetValueOnEmptyText="true"
-                                                 CoerceText="true" CoerceValue="true" For="(() => _manifest.Carrier)" />
+                                                 CoerceText="true" CoerceValue="true" For="(() => _manifest.Carrier)" SelectValueOnTab="true"/>
                             </MudPaper>
                         </MudItem>
 
