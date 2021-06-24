@@ -23,6 +23,7 @@ namespace EPManifest.App.Pages.Manifests
         private List<Manifest> _manifests;
         private bool _mayRender = true;
         private AuthenticationState _principal;
+        private string _userName;
         private ManifestRepository _repo;
         private string _searchString = "";
         private Manifest _selectedItem;
@@ -51,6 +52,7 @@ namespace EPManifest.App.Pages.Manifests
             try
             {
                 _principal = await AuthStateTask;
+                _userName = _principal.User.FindFirst("name").Value;
                 _repo = new ManifestRepository(ContextFactory.CreateDbContext());
                 _manifests = await _repo.GetAllManifests();
             }
@@ -66,7 +68,7 @@ namespace EPManifest.App.Pages.Manifests
 
         private void Create()
         {
-            Logger.LogInformation($"{_principal.User.FindFirst("name").Value} started creating a new manifest");
+            Logger.LogInformation("{UserName} is creating a new manifest", _userName);
             Navigation.NavigateTo("/manifests/create/");
         }
 
@@ -95,7 +97,7 @@ namespace EPManifest.App.Pages.Manifests
                     Dispose();
                     _repo = new ManifestRepository(ContextFactory.CreateDbContext());
                     _manifests.Remove(manifest);
-                    Logger.LogInformation($"{_principal.User.FindFirst("name").Value} deleted manifest {manifest.Id} : {manifest.Code}");
+                    Logger.LogInformation("{UserName} deleted manifest {ManifestId}, {ManifestCode}", _userName, manifest.Id, manifest.Code);
                     Snackbar.Add($"Deleted manifest id:{manifest.Id}", Severity.Success);
                 }
                 finally
@@ -107,13 +109,13 @@ namespace EPManifest.App.Pages.Manifests
 
         private void Details(int manifestId)
         {
-            Logger.LogInformation($"{_principal.User.FindFirst("name").Value} is viewing manifest {manifestId}");
+            Logger.LogInformation("{UserName} is viewing manifest {ManifestId}", _userName, manifestId);
             Navigation.NavigateTo("/manifests/details/" + manifestId);
         }
 
         private void Edit(int manifestId)
         {
-            Logger.LogInformation($"{_principal.User.FindFirst("name").Value} started editing manifest {manifestId}");
+            Logger.LogInformation("{UserName} is editing manifest {ManifestId}", _userName, manifestId);
             Navigation.NavigateTo("/manifests/edit/" + manifestId);
         }
 

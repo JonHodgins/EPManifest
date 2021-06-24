@@ -7,6 +7,7 @@ using EPManifest.Core;
 using EPManifest.Data;
 using EPManifest.Data.Repositories;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using MudBlazor;
@@ -39,6 +40,8 @@ namespace EPManifest.App.Pages.Manifests
 
         private bool _isLoaded;
         private Manifest _manifest;
+        private AuthenticationState _principal;
+        private string _userName;
         private ManifestRepository _repo;
         private HashSet<Consignor> _selectedConsignors;
 
@@ -59,6 +62,9 @@ namespace EPManifest.App.Pages.Manifests
         [Inject]
         public ISnackbar Snackbar { get; set; }
 
+        [CascadingParameter]
+        private Task<AuthenticationState> AuthStateTask { get; set; }
+
         private HashSet<Consignor> SelectedConsignors
         {
             get => _selectedConsignors;
@@ -77,6 +83,8 @@ namespace EPManifest.App.Pages.Manifests
         {
             try
             {
+                _principal = await AuthStateTask;
+                _userName = _principal.User.FindFirst("name").Value;
                 _repo = new ManifestRepository(ContextFactory.CreateDbContext());
                 Consignors = await _repo.GetAllConsignors();
                 _manifest = new Manifest
@@ -104,7 +112,7 @@ namespace EPManifest.App.Pages.Manifests
         {
             await _repo.Create(_manifest);
             Snackbar.Add($"Successfully created manifest {_manifest.Code} (Id: {_manifest.Id})", Severity.Success);
-            Logger.LogInformation($"Successfully created manifest {_manifest.Code} (Id: {_manifest.Id})");
+            Logger.LogInformation("{UserName} created manifest {ManifestId}, {ManifestCode}", _userName, _manifest.Id, _manifest.Code);
             Navigation.NavigateTo($"/manifests/details/{_manifest.Id}");
         }
 

@@ -41,6 +41,7 @@ namespace EPManifest.App.Pages.Manifests
         private bool _isLoaded;
         private Manifest _manifest;
         private AuthenticationState _principal;
+        private string _userName;
         private ManifestRepository _repo;
         private HashSet<Consignor> _selectedConsignors = new();
         public IEnumerable<Consignor> Consignors { get; set; }
@@ -82,6 +83,7 @@ namespace EPManifest.App.Pages.Manifests
             try
             {
                 _principal = await AuthStateTask;
+                _userName = _principal.User.FindFirst("name").Value;
                 _repo = new ManifestRepository(ContextFactory.CreateDbContext());
                 _manifest = await _repo.GetManifestById(Id);
                 PopulateSelectedConsignors();
@@ -133,7 +135,7 @@ namespace EPManifest.App.Pages.Manifests
         {
             await _repo.Update();
             Snackbar.Add($"Successfully updated manifest {_manifest.Code} (Id: {_manifest.Id})", Severity.Success);
-            Logger.LogInformation($"{_principal.User.FindFirst("name").Value} updated manifest {_manifest.Code} (Id: {_manifest.Id})");
+            Logger.LogInformation("{UserName} updated manifest {ManifestId}, {ManifestCode}", _userName, _manifest.Id, _manifest.Code);
             Navigation.NavigateTo($"/manifests/details/{_manifest.Id}");
         }
 

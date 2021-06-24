@@ -23,6 +23,7 @@ namespace EPManifest.App.Pages.Manifests
         private Manifest _manifest;
         private string _message = string.Empty;
         private AuthenticationState _principal;
+        private string _userName;
         private ManifestRepository _repo;
 
         [Inject]
@@ -51,12 +52,12 @@ namespace EPManifest.App.Pages.Manifests
             if (task.Succeeded)
             {
                 _message = "Successful download!";
-                Logger.LogInformation($"{_principal.User.FindFirst("name").Value} successfully downloaded report PDF for manifest {_manifest.Id} : {_manifest.Code}");
+                Logger.LogInformation("{UserName} successfully downloaded report PDF for manifest {ManifestId}, {ManifestCode}", _userName, _manifest.Id, _manifest.Code);
             }
             else
             {
                 _message = task.ErrorMessage;
-                Logger.LogInformation($"There was an error downloading the PDF: {_message}");
+                Logger.LogInformation("There was an error downloading the PDF: {ErrorMessage}", _message);
             }
         }
 
@@ -65,6 +66,7 @@ namespace EPManifest.App.Pages.Manifests
             try
             {
                 _principal = await AuthStateTask;
+                _userName = _principal.User.FindFirst("name").Value;
                 _repo = new ManifestRepository(ContextFactory.CreateDbContext());
                 _manifest = await _repo.GetManifestById(Id);
             }
@@ -88,21 +90,21 @@ namespace EPManifest.App.Pages.Manifests
 
         private void Edit()
         {
-            Logger.LogInformation($"{_principal.User.FindFirst("name").Value} started editing manifest {_manifest.Id} : {_manifest.Code}");
+            Logger.LogInformation("{UserName} is editing manifest {ManifestId}, {ManifestCode}", _userName, _manifest.Id, _manifest.Code);
             Navigation.NavigateTo("/manifests/edit/" + _manifest.Id);
         }
 
         private async Task GeneratePDFAsync()
         {
-            Logger.LogInformation($"Generating report PDF for manifest {_manifest.Id}");
+            Logger.LogInformation("Generating report PDF for manifest {ManifestId}", _manifest.Id);
             await Generator.GenerateManifestPDFAsync(_manifest.Id);
-            Logger.LogInformation($"Generated report PDF for manifest {_manifest.Id}");
+            Logger.LogInformation("Generated report PDF for manifest {ManifestId}", _manifest.Id);
             await DownloadPDF();
         }
 
         public void Dispose()
         {
-            Logger.LogInformation($"Disposing manifest {_manifest.Id} details");
+            Logger.LogDebug("Disposing manifest {ManifestId} details", _manifest.Id);
             _repo.Dispose();
         }
     }
