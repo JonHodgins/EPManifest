@@ -1,5 +1,4 @@
 ﻿using System.Threading.Tasks;
-using EPManifest.Core;
 
 namespace EPManifest.Data.Repositories
 {

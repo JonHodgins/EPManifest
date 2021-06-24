@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using EPManifest.Core;
+﻿using System.Threading.Tasks;
 using EPManifest.Data;
 using EPManifest.Data.Repositories;
 using Microsoft.EntityFrameworkCore;

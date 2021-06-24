@@ -1,9 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using EPManifest.Core;
-using EPManifest.Reports.Data;
 using SkiaSharp;
 
 namespace EPManifest.Reports
