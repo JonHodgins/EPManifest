@@ -124,9 +124,9 @@ namespace EPManifest.App.Pages.Manifests
             }
         }
 
-        private async Task<IEnumerable<Provinces>> SearchProvinces(string value)
+        private Task<IEnumerable<Provinces>> SearchProvinces(string value)
         {
-            return _provinces.Where(p => p.ToString().StartsWith(value, StringComparison.InvariantCultureIgnoreCase));
+            return Task.FromResult(_provinces.Where(p => p.ToString().StartsWith(value, StringComparison.InvariantCultureIgnoreCase)));
         }
 
         private async Task Update()
