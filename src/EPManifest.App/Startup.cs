@@ -32,11 +32,12 @@ namespace EPManifest.App
             services.AddControllersWithViews()
                 .AddMicrosoftIdentityUI();
 
-            services.AddAuthorization(options =>
-            {
-                // By default, all incoming requests will be authorized according to the default policy
-                options.FallbackPolicy = options.DefaultPolicy;
-            });
+            //Prevents unauthenticated users from viewing non-secure pages in the app (if commented out, unauthenticated users are still required to sign in with an authorized account to view secure pages)
+            //services.AddAuthorization(options =>
+            //{
+            //    // By default, all incoming requests will be authorized according to the default policy
+            //    options.FallbackPolicy = options.DefaultPolicy;
+            //});
 
             services.AddRazorPages();
             services.AddServerSideBlazor()
