@@ -38,7 +38,7 @@ namespace EPManifest.App.Pages.Manifests
         public NavigationManager Navigation { get; set; }
 
         [CascadingParameter]
-        private Task<AuthenticationState> AuthState { get; set; }
+        private Task<AuthenticationState> AuthStateTask { get; set; }
 
         [Inject]
         private IBlazorDownloadFileService BlazorDownloadFileService { get; set; }
@@ -64,7 +64,7 @@ namespace EPManifest.App.Pages.Manifests
         {
             try
             {
-                _principal = AuthState.Result;
+                _principal = await AuthStateTask;
                 _repo = new ManifestRepository(ContextFactory.CreateDbContext());
                 _manifest = await _repo.GetManifestById(Id);
             }

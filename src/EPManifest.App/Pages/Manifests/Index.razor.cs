@@ -44,13 +44,13 @@ namespace EPManifest.App.Pages.Manifests
         public ISnackbar Snackbar { get; set; }
 
         [CascadingParameter]
-        private Task<AuthenticationState> AuthState { get; set; }
+        private Task<AuthenticationState> AuthStateTask { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
             try
             {
-                _principal = AuthState.Result;
+                _principal = await AuthStateTask;
                 _repo = new ManifestRepository(ContextFactory.CreateDbContext());
                 _manifests = await _repo.GetAllManifests();
             }
