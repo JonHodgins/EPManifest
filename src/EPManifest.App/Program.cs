@@ -38,10 +38,7 @@ namespace EPManifest.App
                 .UseSerilog((context, services, configuration) => configuration
                     .ReadFrom.Configuration(context.Configuration)
                     .ReadFrom.Services(services)
-                    .Enrich.FromLogContext()
-                    //.MinimumLevel.Override("Microsoft.EntityFrameworkCore", LogEventLevel.Debug)
-                    .WriteTo.Seq("http://localhost:5341")
-                    .WriteTo.Console())
+                    .Enrich.FromLogContext())
                 .ConfigureWebHostDefaults(webBuilder => webBuilder.UseStartup<Startup>());
     }
 }
