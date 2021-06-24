@@ -19,23 +19,23 @@ namespace EPManifest.Data
 
         public void Init()
         {
-            modelBuilder.Entity<Consignor>().HasData(new Consignor { Id = 1, Code = "OXP-4", Name = "Carmacks Health Clinic" });
-            modelBuilder.Entity<Consignor>().HasData(new Consignor { Id = 2, Code = "A-000", Name = "Mayo Health Centre" });
-            modelBuilder.Entity<Consignor>().HasData(new Consignor { Id = 3, Code = "B-5010", Name = "Whitehorse General Hospital" });
-            modelBuilder.Entity<Consignor>().HasData(new Consignor { Id = 4, Code = "A1-102", Name = "Teslin Health Centre" });
-            modelBuilder.Entity<Consignor>().HasData(new Consignor { Id = 5, Code = "A840", Name = "Whistle Bend Place" });
+            modelBuilder.Entity<Consignor>().HasData(new Consignor { Id = 1, Code = "YG41-235", Name = "Carmacks Health Clinic" });
+            modelBuilder.Entity<Consignor>().HasData(new Consignor { Id = 2, Code = "YG42-501", Name = "Mayo Health Centre" });
+            modelBuilder.Entity<Consignor>().HasData(new Consignor { Id = 3, Code = "YG42-890", Name = "Whitehorse General Hospital" });
+            modelBuilder.Entity<Consignor>().HasData(new Consignor { Id = 4, Code = "YG81-153", Name = "Teslin Health Centre" });
+            modelBuilder.Entity<Consignor>().HasData(new Consignor { Id = 5, Code = "44-041", Name = "Whistle Bend Place" });
 
-            modelBuilder.Entity<Consignee>().HasData(new Consignee { Id = 1, Code = "AB-120", Name = "Pete's Disposal" });
-            modelBuilder.Entity<Consignee>().HasData(new Consignee { Id = 2, Code = "AB-410", Name = "ATI Environmental" });
-            modelBuilder.Entity<Consignee>().HasData(new Consignee { Id = 3, Code = "AB-019", Name = "EQ Enviro" });
-            modelBuilder.Entity<Consignee>().HasData(new Consignee { Id = 4, Code = "AB-918", Name = "Whitehorse Landfill" });
-            modelBuilder.Entity<Consignee>().HasData(new Consignee { Id = 5, Code = "AB-412", Name = "YAE" });
+            modelBuilder.Entity<Consignee>().HasData(new Consignee { Id = 1, Code = "YG80-120", Name = "Pete's Disposal" });
+            modelBuilder.Entity<Consignee>().HasData(new Consignee { Id = 2, Code = "YG81-301", Name = "ATI Environmental" });
+            modelBuilder.Entity<Consignee>().HasData(new Consignee { Id = 3, Code = "YG42-757", Name = "EQ Enviro" });
+            modelBuilder.Entity<Consignee>().HasData(new Consignee { Id = 4, Code = "YG81-486", Name = "Whitehorse Landfill" });
+            modelBuilder.Entity<Consignee>().HasData(new Consignee { Id = 5, Code = "YG41-309", Name = "YAE" });
 
-            modelBuilder.Entity<Carrier>().HasData(new Carrier { Id = 1, Code = "50101", Name = "A1 Delivery" });
-            modelBuilder.Entity<Carrier>().HasData(new Carrier { Id = 2, Code = "10-4010", Name = "Pacific Northwest Freight" });
-            modelBuilder.Entity<Carrier>().HasData(new Carrier { Id = 3, Code = "40-020", Name = "AP Freight" });
-            modelBuilder.Entity<Carrier>().HasData(new Carrier { Id = 4, Code = "60-10", Name = "NM Shipping Inc" });
-            modelBuilder.Entity<Carrier>().HasData(new Carrier { Id = 5, Code = "60-05", Name = "Frank's Freight" });
+            modelBuilder.Entity<Carrier>().HasData(new Carrier { Id = 1, Code = "YG80-899", Name = "A1 Delivery" });
+            modelBuilder.Entity<Carrier>().HasData(new Carrier { Id = 2, Code = "YG81-671", Name = "Pacific Northwest Freight" });
+            modelBuilder.Entity<Carrier>().HasData(new Carrier { Id = 3, Code = "YG80-909", Name = "AP Freight" });
+            modelBuilder.Entity<Carrier>().HasData(new Carrier { Id = 4, Code = "YG42-554", Name = "NM Shipping Inc" });
+            modelBuilder.Entity<Carrier>().HasData(new Carrier { Id = 5, Code = "YG81-241", Name = "Frank's Freight" });
 
             //Ensures faker data is deterministic
             //Randomizer.Seed = new Random(29034025);
@@ -43,14 +43,14 @@ namespace EPManifest.Data
             var consignorId = 6;
             var consignors = new Faker<Consignor>("en_CA")
                 .RuleFor(c => c.Id, _ => consignorId++)
-                .RuleFor(c => c.Code, _ => _.Random.Replace("**-***"))
+                .RuleFor(c => c.Code, _ => _.Random.Replace("44-###"))
                 .RuleFor(c => c.Name, _ => _.Company.CompanyName());
             modelBuilder.Entity<Consignor>().HasData(consignors.Generate(10));
 
             var manifestId = 1;
             var manifests = new Faker<Manifest>("en_CA")
                 .RuleFor(m => m.Id, _ => manifestId++)
-                .RuleFor(m => m.Code, _ => _.Random.Replace("**-####"))
+                .RuleFor(m => m.Code, _ => _.Random.Replace("YT#####-#"))
                 .RuleFor(m => m.ConsigneeId, _ => _.Random.Number(1, 5))
                 .RuleFor(m => m.CarrierId, _ => _.Random.Number(1, 5))
                 .RuleFor(m => m.DateShipped, _ => _.Date.Between(new DateTime(2021, 05, 08), new DateTime(2021, 08, 31)))
@@ -89,7 +89,7 @@ namespace EPManifest.Data
             var items = new Faker<Item>("en_CA")
                 .RuleFor(i => i.Id, _ => itemId++)
                 .RuleFor(i => i.State, _ => _.PickRandom<State>())
-                .RuleFor(i => i.Description, _ => _.Lorem.Sentence())
+                .RuleFor(i => i.Description, _ => _.Lorem.Sentence(3, 4))
                 .RuleFor(i => i.Quantity, _ => _.Random.Number(1, 20000))
                 .RuleFor(i => i.Unit, _ => _.PickRandom<Unit>())
                 .RuleFor(i => i.ManifestId, _ => manifestId++);
@@ -99,7 +99,7 @@ namespace EPManifest.Data
             items = new Faker<Item>("en_CA")
                 .RuleFor(i => i.Id, _ => itemId++)
                 .RuleFor(i => i.State, _ => _.PickRandom<State>())
-                .RuleFor(i => i.Description, _ => _.Lorem.Sentence())
+                .RuleFor(i => i.Description, _ => _.Lorem.Sentence(3, 4))
                 .RuleFor(i => i.Quantity, _ => _.Random.Number(1, 20000))
                 .RuleFor(i => i.Unit, _ => _.PickRandom<Unit>())
                 .RuleFor(i => i.ManifestId, _ => _.Random.Number(1, numManifests));
