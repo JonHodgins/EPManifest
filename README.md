@@ -12,13 +12,14 @@ This is a proof of concept web application that demonstrates the use of web tech
 
 ## Features
 
-* Supports unlimited* concurrent users (*~5000)
-* Responsive UI (usable on phones and tablets)
+* Responsive UI (usable on phones, tablets, and desktops)
+* Unlimited* concurrent users (*~5000)
+* Single sign-on using OpenID Connect
 * Address geocoding using the ArcGIS JS API
-* PDF reports
 * Integrated PowerBI dashboard (planned)
 * In-app user documentation
 * Light/dark mode
+* PDF reports
 
 ## Stack
 
