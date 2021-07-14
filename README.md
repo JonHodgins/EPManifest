@@ -14,8 +14,8 @@ This is a proof of concept web application that demonstrates the use of web tech
 
 * Responsive UI (usable on phones, tablets, and desktops)
 * Unlimited* concurrent users (*~5000)
-* Single sign-on using OpenID Connect
-* Address geocoding using the ArcGIS JS API
+* Single sign-on with OpenID Connect
+* Address geocoding provided by the ArcGIS JS API
 * Integrated PowerBI dashboard (planned)
 * In-app user documentation
 * Light/dark mode
