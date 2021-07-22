@@ -1,4 +1,4 @@
-# EP Manifest Proof of Concept
+# Waste Manifests proof of concept
 
 This is a proof of concept web application that demonstrates the use of web technologies to modernize internal apps at Environment. The Environmental Protection and Assessment branch’s Waste Manifest app was chosen for this demonstration. This app is used to track [Special Waste Manifests](https://yukon.ca/en/get-special-waste-permit).
 
